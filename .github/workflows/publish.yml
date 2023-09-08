@@ -13,7 +13,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: "18.x"
       - run: npm ci
       - run: npx @cloudflare/next-on-pages@1
       - name: Publish to Cloudflare Pages
@@ -28,3 +28,4 @@ jobs:
           # Optional: Switch what branch you are publishing to.
           # By default this will be the branch which triggered this workflow
           branch: main
+          wranglerVersion: "2"
