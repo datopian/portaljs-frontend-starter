@@ -29,7 +29,7 @@ Testing can be done using the cypress commands, just start running the app(ideal
 
 First, run the development server:
 
-```bash
+```bash 
 npm run dev
 # or
 yarn dev
