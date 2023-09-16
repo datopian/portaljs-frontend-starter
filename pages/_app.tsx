@@ -1,6 +1,22 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import "@portaljs/components/styles.css";
+import "@/styles/globals.scss";
+import "@/styles/tabs.scss";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import type { AppProps } from "next/app";
+import { DefaultSeo } from "next-seo";
+
+import SEO from "../next-seo.config";
+
+import Loader from "../components/_shared/Loader";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      <Loader />
+      <Component {...pageProps} />
+    </>
+  );
 }
+
+export default MyApp;

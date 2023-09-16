@@ -1,0 +1,128 @@
+.dataExplorerTable {
+  & thead > tr > th {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #808080;
+    padding: 1rem 0.5rem;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 1px solid #f3f3f3;
+  }
+
+  & table {
+    width: 100%;
+    border: 1px solid #f3f3f3;
+  }
+
+  & thead > tr > th > span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 70px;
+    padding: 0rem 0.5rem;
+  }
+
+  & thead > tr > :not(:last-child) > span {
+    border-right: solid 1px #f3f3f3;
+  }
+
+  & tbody > tr > td {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #202020;
+    padding: 1.4rem 0.5rem;
+    border: 1px solid #f3f3f3;
+  }
+
+  & tr {
+    border-radius: 5px;
+  }
+
+  & tr:nth-child(odd) > td {
+    background-color: #ffffff;
+  }
+
+  & tr:nth-child(even) > td {
+    background-color: #fcfcfc;
+  }
+
+  & tr:hover > td {
+    background: #e6f4ff !important;
+  }
+
+  & input,
+  & select {
+    margin-block-end: 1rem;
+    margin-inline-end: 1rem;
+  }
+
+  & input {
+    -webkit-appearance: none;
+    border: 1px solid #e8eaed;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098a9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 0.5em 1em 0.5em 1em;
+    transition: all 150ms ease;
+  }
+
+  & select {
+    -webkit-appearance: none;
+    padding: 0.5em 3.5em 0.5em 1em;
+    border: 1px solid #e8eaed;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098a9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 150ms ease;
+    background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+      linear-gradient(135deg, gray 50%, transparent 50%),
+      linear-gradient(to right, #ccc, #ccc);
+    background-position: calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-repeat: no-repeat;
+
+    &:required:invalid {
+      color: #5a667f;
+    }
+
+    & option {
+      color: #223254;
+      &[value=""][disabled] {
+        display: none;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #0077ff;
+      box-shadow: 0 0 0 2px rgba(#0077ff, 0.2);
+    }
+
+    &:hover + svg {
+      stroke: #0077ff;
+    }
+  }
+
+  & button {
+    margin-block-end: 0.5rem;
+    padding-block: 0.5rem;
+    min-width: 30px;
+  }
+
+  & dl > div {
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 0 2px rgba(#f3f3f3, 0.4);
+  }
+}

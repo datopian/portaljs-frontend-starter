@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --light-gray: #f7fafc;
+  --light-gray-2: #eaeaea;
+  --mid-blue: #0070f3;
+  --accent: hsl(182, 100%, 38%);
+  --indicator-size: 3px;
+  --text-active-color: black;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  scroll-padding-top: 10vh;
+}
+
+.custom-container {
+  width: min(1200px, 95%);
+  margin: 0 auto;
+}
+
+.homepage-padding {
+  padding-bottom: min(7vh, 10rem);
+}
+
+.tag-checkbox:checked + label {
+  background-color: #00bbc2;
+  color: white;
+  transition: 0.1s;
+}
+
+snap-tabs {
+  --hue: 328deg;
+  --accent: var(--hue) 100% 54%;
+  --indicator-size: 2px;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+}
+
+// Data Explorer
+// Styles that cant be used in the sass module because of scope
+.dq-main-container form::before {
+  content: "Filter By";
+}
+
+.dq-rule-submit::before {
+  content: "Sort by";
+}
+
+.data-explorer-pagination {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding-block: 0.5rem;
+}
+.data-explorer-pagination > button {
+  padding: 0 !important;
+  background: none !important;
+}
+
+.css-7eceai-Grid-1 {
+  display: none !important;
+}

@@ -1,0 +1,50 @@
+.navBar ul {
+  list-style: none;
+  padding: 0rem;
+  margin: 0rem;
+  display: flex;
+  justify-content: space-between;
+  & > li {
+    font-size: 1.5rem;
+    gap: 1rem;
+    align-items: center;
+  }
+}
+
+.navBar {
+  background-color: white;
+}
+.navBar .menuDesktop {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.navBar .menuMobile {
+  max-height: 0;
+  padding-top: 1rem;
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+  & li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    & * {
+      margin-right: auto;
+    }
+  }
+}
+
+.menuMobile:target {
+  max-height: 100vh;
+  transition: 0.3s;
+  transition: max-height 0.3s ease-in;
+}
+
+@media (min-width: 768px) {
+  .navBar .menuMobile,
+  #sidenavButton {
+    display: none;
+  }
+}
