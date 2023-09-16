@@ -1,4 +1,3 @@
-export const runtime = "experimental-edge";
 import { GetStaticProps } from "next";
 import { format } from "timeago.js";
 import ResourceCard from "../../../components/dataset/_shared/ResourceCard";

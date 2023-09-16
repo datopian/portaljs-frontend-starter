@@ -1,4 +1,3 @@
-export const runtime = "experimental-edge";
 import type { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";

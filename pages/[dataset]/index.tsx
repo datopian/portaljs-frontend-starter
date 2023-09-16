@@ -1,7 +1,5 @@
-export const runtime = "experimental-edge";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import getConfig from "next/config";
 import DatasetInfo from "@/components/dataset/individualPage/DatasetInfo";
 import DatasetOverview from "@/components/dataset/individualPage/DatasetOverview";
 import DatasetNavCrumbs from "@/components/dataset/individualPage/NavCrumbs";
@@ -13,7 +11,6 @@ import TopBar from "@/components/_shared/TopBar";
 import { Dataset as DatasetType } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import styles from "@/styles/DatasetInfo.module.scss";
-import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
 export async function getStaticPaths() {
   const DMS = process.env.NEXT_PUBLIC_DMS;
