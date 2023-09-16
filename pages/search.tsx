@@ -15,7 +15,8 @@ import ListOfDatasets from "@/components/dataset/search/ListOfDatasets";
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export async function getStaticProps() {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   const search_result = await ckan.packageSearch({
     offset: 0,
     limit: 5,

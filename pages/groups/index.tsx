@@ -11,36 +11,23 @@ import { useState } from "react";
 import TopBar from "../../components/_shared/TopBar";
 import SearchHero from "../../components/dataset/_shared/SearchHero";
 import { Group } from "@portaljs/ckan";
-import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
 export async function getStaticProps() {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   const groups = await ckan.getGroupsWithDetails();
 
   return {
     props: {
-      fallback: {
-        [unstable_serialize(["groups"])]: groups,
-      },
+      groups,
     },
     revalidate: 1800,
   };
 }
 
 export default function GroupsPage({
-  fallback,
+  groups,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
-  return (
-    <SWRConfig value={{ fallback }}>
-      <Groups />
-    </SWRConfig>
-  );
-}
-function Groups(): JSX.Element {
-  const { data: groups } = useSWR(["groups"], async () => {
-    const ckan = new CKAN("https://demo.dev.datopian.com");
-    return await ckan.getGroupsWithDetails();
-  });
   const miniSearch = new MiniSearch({
     fields: ["description", "display_name"], // fields to index for full-text search
     storeFields: ["description", "display_name", "image_display_url", "name"], // fields to return with search results

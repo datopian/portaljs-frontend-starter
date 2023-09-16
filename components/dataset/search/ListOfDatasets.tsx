@@ -33,7 +33,8 @@ function ListItems({
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
   const { data } = useSWR(["package_search", options], async () => {
-    const ckan = new CKAN("https://demo.dev.datopian.com");
+    const DMS = process.env.NEXT_PUBLIC_DMS;
+    const ckan = new CKAN(DMS);
     return ckan.packageSearch({
       ...options,
       orgs: [process.env.NEXT_PUBLIC_ORG],

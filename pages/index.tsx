@@ -9,7 +9,8 @@ import Layout from "../components/_shared/Layout";
 import { CKAN } from "@portaljs/ckan";
 
 export async function getStaticProps() {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   const datasets = await ckan.packageSearch({
     offset: 0,
     limit: 5,

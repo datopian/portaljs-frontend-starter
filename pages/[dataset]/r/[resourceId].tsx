@@ -26,7 +26,8 @@ const RawCsvViewer = dynamic(
 );
 
 export const getServerSideProps: GetStaticProps = async (context) => {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   try {
     const resourceId = context.params?.resourceId;
     if (!resourceId) {

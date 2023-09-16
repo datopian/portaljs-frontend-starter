@@ -16,7 +16,8 @@ import styles from "@/styles/DatasetInfo.module.scss";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
 export async function getStaticPaths() {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   const paths = (
     await ckan.getDatasetsListWithDetails({ offset: 0, limit: 1000 })
   ).map((dataset: DatasetType) => ({
@@ -29,7 +30,8 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const ckan = new CKAN("https://demo.dev.datopian.com");
+  const DMS = process.env.NEXT_PUBLIC_DMS;
+  const ckan = new CKAN(DMS);
   try {
     const datasetName = context.params?.dataset;
     if (!datasetName) {
