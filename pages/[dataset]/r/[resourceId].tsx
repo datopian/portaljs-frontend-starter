@@ -24,6 +24,11 @@ const RawCsvViewer = dynamic(
   { ssr: false }
 );
 
+const MapViewer = dynamic(
+  () => import("@portaljs/components").then((mod) => mod.Map),
+  { ssr: false }
+);
+
 export const getServerSideProps: GetStaticProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
@@ -179,6 +184,9 @@ export default function ResourcePage({
                 )}
                 {["xlsx", "xls"].includes(resourceFormat) && (
                   <ExcelViewer url={resource.url} />
+                )}
+                {resourceFormat == "geojson" && (
+                  <MapViewer layers={[{ data: resource.url, name: "Geojson" }]} title={resource.name} />
                 )}
               </div>
             </div>
