@@ -132,7 +132,13 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="custom-container flex flex-col flex-wrap py-6 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
-        <img src="/images/logos/MainLogo.svg" alt="Portal.js" />
+        <a
+          href="https://portaljs.org"
+          target="_blank"
+          className="text-xl font-medium"
+        >
+          🌀 PortalJS
+        </a>
       </div>
     </footer>
   );

@@ -50,7 +50,6 @@ export default function Home({
       <Layout>
         <Hero stats={stats} />
         <MainSection groups={groups} datasets={datasets} />
-        <BlogSection />
       </Layout>
     </>
   );
