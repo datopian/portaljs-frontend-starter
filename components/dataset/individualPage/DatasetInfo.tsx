@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { format } from "timeago.js";
 import { Dataset, Resource, Tag } from "@portaljs/ckan";
+import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 
 function uniqueFormat(resources) {
   const formats = resources.map((item: Resource) => item.format);
@@ -8,6 +9,11 @@ function uniqueFormat(resources) {
 }
 
 export default function DatasetInfo({ dataset }: { dataset: Dataset }) {
+  const metaFormats = [
+    { format: "jsonld", label: "JSON-LD" },
+    { format: "rdf", label: "RDF" },
+    { format: "ttl", label: "TTL" },
+  ];
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-y-3">
@@ -27,30 +33,6 @@ export default function DatasetInfo({ dataset }: { dataset: Dataset }) {
             />
           </svg>
           Files: {dataset.resources.length}
-        </span>
-        <span className="font-medium text-gray-500 inline">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="h-5 w-5 text-accent inline mr-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-            />
-          </svg>
-          Size:{" "}
-          {dataset.resources
-            .reduce(
-              (acc, crr) =>
-                crr.size / (1024 * 1024) ? crr.size / (1024 * 1024) + acc : acc,
-              0
-            )
-            .toFixed(2) + " MB" || "N/A"}
         </span>
         <span className="font-medium text-gray-500 inline">
           <svg
@@ -121,6 +103,24 @@ export default function DatasetInfo({ dataset }: { dataset: Dataset }) {
           </span>
         ))}
       </div>
+      <span className="font-medium text-gray-500 inline">
+        <div className="flex flex-wrap gap-x-2 items-center">
+          <div>Export metadata as: </div>
+          {metaFormats.map((item) => (
+            <div key={item.format}>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_DMS}/dataset/${dataset.name}.${item.format}`}
+                className="font-semibold group flex gap-0.5 hover:text-darkaccent"
+              >
+                <div className="text-accent group-hover:text-darkaccent transition flex items-center justify-center">
+                  <ArrowDownTrayIcon className="h-4 w-4" />
+                </div>
+                <div className="uppercase">{item.label}</div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </span>
     </div>
   );
 }
