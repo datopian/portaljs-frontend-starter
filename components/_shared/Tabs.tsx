@@ -11,13 +11,13 @@ export default function Tabs({ items }: TabProps) {
           {items.map((item, index) => (
             <Tab key={item.id}>
               {({ selected }) => (
-                <button
+                <span
                   className={`font-semibold text-xs px-6 py-4 focus:outline-0 border-[#00bbc2] ${
                     selected ? "border-b-2" : ""
                   } `}
                 >
                   {item.title}
-                </button>
+                </span>
               )}
             </Tab>
           ))}

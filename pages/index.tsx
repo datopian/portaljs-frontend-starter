@@ -1,24 +1,26 @@
 import type { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import BlogSection from "../components/home/blogSection/BlogSection";
 import Hero from "../components/home/heroSection/Hero";
 import { StatsProps } from "../components/home/heroSection/Stats";
 import MainSection from "../components/home/mainSection/MainSection";
 import Layout from "../components/_shared/Layout";
 import { CKAN } from "@portaljs/ckan";
+import {
+  getAllGroups,
+  getAllOrganizations,
+  searchDatasets,
+} from "@/lib/queries";
 
 export async function getStaticProps() {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
-  const datasets = await ckan.packageSearch({
+  const datasets = await searchDatasets({
     offset: 0,
     limit: 5,
     tags: [],
     groups: [],
     orgs: [],
   });
-  const groups = await ckan.getGroupsWithDetails();
-  const orgs = await ckan.getOrgsWithDetails();
+  const groups = await getAllGroups({ detailed: true });
+  const orgs = await getAllOrganizations({ detailed: true });
   const stats: StatsProps = {
     datasetCount: datasets.count,
     groupCount: groups.length,

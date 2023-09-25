@@ -10,21 +10,24 @@ import { CKAN } from "@portaljs/ckan";
 import DatasetSearchForm from "@/components/dataset/search/DatasetSearchForm";
 import DatasetSearchFilters from "@/components/dataset/search/DatasetSearchFilters";
 import ListOfDatasets from "@/components/dataset/search/ListOfDatasets";
+import {
+  getAllGroups,
+  getAllOrganizations,
+  searchDatasets,
+} from "@/lib/queries";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export async function getStaticProps() {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
-  const search_result = await ckan.packageSearch({
+  const search_result = await searchDatasets({
     offset: 0,
     limit: 5,
     tags: [],
     groups: [],
-    orgs: [mainOrg],
+    orgs: [],
   });
-  const groups = await ckan.getGroupsWithDetails();
-  const tags = await ckan.getAllTags();
+  const groups = await getAllGroups({ detailed: true });
+  const orgs = await getAllOrganizations({ detailed: true });
   return {
     props: {
       fallback: {
@@ -35,12 +38,12 @@ export async function getStaticProps() {
             limit: 5,
             tags: [],
             groups: [],
-            orgs: [mainOrg],
+            orgs: [],
           },
         ])]: search_result,
       },
       groups,
-      tags,
+      orgs,
     },
   };
 }
@@ -48,7 +51,7 @@ export async function getStaticProps() {
 export default function DatasetSearch({
   fallback,
   groups,
-  tags,
+  orgs,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
   const router = useRouter();
   const { q } = router.query;
@@ -57,7 +60,7 @@ export default function DatasetSearch({
     limit: 5,
     tags: [],
     groups: [],
-    orgs: [mainOrg],
+    orgs: [],
     query: q as string,
   });
 
@@ -110,7 +113,7 @@ export default function DatasetSearch({
             <div className="lg:col-span-3">
               <DatasetSearchFilters
                 groups={groups}
-                tags={tags}
+                orgs={orgs}
                 options={options}
                 setOptions={setOptions}
               />
