@@ -4,7 +4,7 @@ import { PackageSearchOptions } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import Pagination from "./Pagination";
 import DatasetCard from "./DatasetCard";
-import { searchDatasets } from "@/lib/queries";
+import { searchDatasets } from "@/lib/queries/dataset";
 
 export default function ListOfDatasets({
   options,

@@ -10,7 +10,7 @@ import { useState } from "react";
 import TopBar from "../../components/_shared/TopBar";
 import SearchHero from "../../components/dataset/_shared/SearchHero";
 import { Group } from "@portaljs/ckan";
-import { getAllGroups } from "@/lib/queries";
+import { getAllGroups } from "@/lib/queries/groups";
 
 export async function getStaticProps() {
   const groups = await getAllGroups({ detailed: true });

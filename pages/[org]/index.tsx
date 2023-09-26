@@ -1,19 +1,16 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import OrgNavCrumbs from "../../components/organization/individualPage/OrgNavCrumbs";
-import OrgInfo from "../../components/organization/individualPage/OrgInfo";
-import ActivityStream from "../../components/_shared/ActivityStream";
-import Layout from "../../components/_shared/Layout";
-import Tabs from "../../components/_shared/Tabs";
-import TopBar from "../../components/_shared/TopBar";
+import OrgNavCrumbs from "@/components/organization/individualPage/OrgNavCrumbs";
+import OrgInfo from "@/components/organization/individualPage/OrgInfo";
+import ActivityStream from "@/components/_shared/ActivityStream";
+import Layout from "@/components/_shared/Layout";
+import Tabs from "@/components/_shared/Tabs";
+import TopBar from "@/components/_shared/TopBar";
 import styles from "styles/DatasetInfo.module.scss";
-import DatasetList from "../../components/_shared/DatasetList";
-import {
-  getAllOrganizations,
-  getDataset,
-  getOrganization,
-} from "@/lib/queries";
+import DatasetList from "@/components/_shared/DatasetList";
 import { CKAN, Organization } from "@portaljs/ckan";
+import { getAllOrganizations, getOrganization } from "@/lib/queries/orgs";
+import { getDataset } from "@/lib/queries/dataset";
 
 export async function getStaticPaths() {
   const paths = (await getAllOrganizations({ detailed: false })).map(

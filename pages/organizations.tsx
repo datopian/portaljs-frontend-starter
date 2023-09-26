@@ -7,7 +7,7 @@ import ListOfOrgs from "../components/organization/ListOfOrganizations";
 import Layout from "../components/_shared/Layout";
 import TopBar from "../components/_shared/TopBar";
 import { Organization } from "@portaljs/ckan";
-import { getAllOrganizations } from "@/lib/queries";
+import { getAllOrganizations } from "@/lib/queries/orgs";
 
 export async function getStaticProps() {
   const orgs = await getAllOrganizations({ detailed: true });

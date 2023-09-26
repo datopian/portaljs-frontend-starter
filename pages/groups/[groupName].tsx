@@ -9,12 +9,8 @@ import { CKAN, Group } from "@portaljs/ckan";
 import styles from "@/styles/DatasetInfo.module.scss";
 import GroupNavCrumbs from "../../components/groups/individualPage/GroupNavCrumbs";
 import GroupInfo from "../../components/groups/individualPage/GroupInfo";
-import {
-  getAllGroups,
-  getDataset,
-  getGroup,
-  publicToPrivateGroupName,
-} from "@/lib/queries";
+import { getAllGroups, getGroup } from "@/lib/queries/groups";
+import { getDataset } from "@/lib/queries/dataset";
 
 export async function getStaticPaths() {
   const paths = (await getAllGroups({ detailed: false })).map(

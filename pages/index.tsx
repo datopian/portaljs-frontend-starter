@@ -4,12 +4,9 @@ import Hero from "../components/home/heroSection/Hero";
 import { StatsProps } from "../components/home/heroSection/Stats";
 import MainSection from "../components/home/mainSection/MainSection";
 import Layout from "../components/_shared/Layout";
-import { CKAN } from "@portaljs/ckan";
-import {
-  getAllGroups,
-  getAllOrganizations,
-  searchDatasets,
-} from "@/lib/queries";
+import { searchDatasets } from "@/lib/queries/dataset";
+import { getAllGroups } from "@/lib/queries/groups";
+import { getAllOrganizations } from "@/lib/queries/orgs";
 
 export async function getStaticProps() {
   const datasets = await searchDatasets({

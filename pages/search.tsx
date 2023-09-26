@@ -6,15 +6,12 @@ import { SWRConfig, unstable_serialize } from "swr";
 import Layout from "@/components/_shared/Layout";
 import TopBar from "@/components/_shared/TopBar";
 import { PackageSearchOptions } from "@portaljs/ckan";
-import { CKAN } from "@portaljs/ckan";
 import DatasetSearchForm from "@/components/dataset/search/DatasetSearchForm";
 import DatasetSearchFilters from "@/components/dataset/search/DatasetSearchFilters";
 import ListOfDatasets from "@/components/dataset/search/ListOfDatasets";
-import {
-  getAllGroups,
-  getAllOrganizations,
-  searchDatasets,
-} from "@/lib/queries";
+import { searchDatasets } from "@/lib/queries/dataset";
+import { getAllGroups } from "@/lib/queries/groups";
+import { getAllOrganizations } from "@/lib/queries/orgs";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
