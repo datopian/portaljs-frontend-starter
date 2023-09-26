@@ -1,14 +1,16 @@
 import { Field, Form, Formik } from "formik";
 import { Dispatch, SetStateAction } from "react";
-import { PackageSearchOptions } from "@portaljs/ckan";
+import { Organization, PackageSearchOptions } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
 
 export default function DatasetSearchForm({
   groups,
+  orgs,
   setOptions,
   options,
 }: {
   groups: Array<Group>;
+  orgs: Array<Organization>;
   options: PackageSearchOptions;
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
@@ -21,19 +23,20 @@ export default function DatasetSearchForm({
       }}
       enableReinitialize={true}
       onSubmit={async (values) => {
+        const org = orgs.find((org) => org.title === values.org);
         const group = groups.find(
           (group) => group.display_name === values.group
         );
         setOptions({
           ...options,
           groups: group ? [group.name] : [],
-          orgs: [],
+          orgs: org ? [org.name] : [],
           query: values.query,
         });
       }}
     >
       <div className="mx-auto" style={{ width: "min(1100px, 95vw)" }}>
-        <Form className="min-h-[80px] flex flex-col lg:flex-row bg-white inline-block px-5 py-3 rounded-xl">
+        <Form className="min-h-[80px] flex flex-col lg:flex-row bg-white px-5 py-3 rounded-xl">
           <Field
             type="text"
             placeholder="Search Datasets"
@@ -51,6 +54,18 @@ export default function DatasetSearchForm({
             <option value="">Theme</option>
             {groups.map((group, index) => (
               <option key={index}>{group.display_name}</option>
+            ))}
+          </datalist>
+          <Field
+            list="orgs"
+            name="org"
+            placeholder="Organization"
+            className="lg:border-l p-4 mx-2 placeholder:text-neutral-400"
+          ></Field>
+          <datalist aria-label="Formats" id="orgs">
+            <option value="">Organization</option>
+            {orgs.map((org, index) => (
+              <option key={index}>{org.title}</option>
             ))}
           </datalist>
           <button

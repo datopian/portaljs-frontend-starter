@@ -97,6 +97,7 @@ export default function DatasetSearch({
           <section className="grid row-start-3 row-span-2 col-span-full">
             <DatasetSearchForm
               options={options}
+              orgs={orgs}
               groups={groups}
               setOptions={setOptions}
             />
