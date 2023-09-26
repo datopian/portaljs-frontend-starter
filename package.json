@@ -22,6 +22,7 @@
     "formik": "^2.2.9",
     "gray-matter": "^4.0.3",
     "hastscript": "^7.0.2",
+    "ky": "^1.0.1",
     "minisearch": "^5.0.0",
     "next": "^13.0.0",
     "next-seo": "^5.5.0",

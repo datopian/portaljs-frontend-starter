@@ -57,7 +57,7 @@ export default function ResourcesList({
               resource.format.toLowerCase()
             ) && (
               <Link
-                href={`/${datasetName}/r/${resource.id}`}
+                href={`/${orgName}/${datasetName}/r/${resource.id}`}
                 className="bg-lightaccent h-auto py-2 px-4 text-sm text-gray-800 rounded-xl font-roboto font-bold hover:bg-accent duration-150 flex items-center gap-1"
               >
                 Preview{" "}

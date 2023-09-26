@@ -1,5 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
+import getConfig from "next/config";
 import DatasetInfo from "@/components/dataset/individualPage/DatasetInfo";
 import DatasetOverview from "@/components/dataset/individualPage/DatasetOverview";
 import DatasetNavCrumbs from "@/components/dataset/individualPage/NavCrumbs";
@@ -10,16 +11,25 @@ import Tabs from "@/components/_shared/Tabs";
 import TopBar from "@/components/_shared/TopBar";
 import { Dataset as DatasetType } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
-import styles from "@/styles/DatasetInfo.module.scss";
+import styles from "styles/DatasetInfo.module.scss";
+import { getAvailableOrgs, privateToPublicOrgName } from "@/lib/queries/utils";
+import { getDataset } from "@/lib/queries/dataset";
 
 export async function getStaticPaths() {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
+  const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
+  const mainOrg = process.env.NEXT_PUBLIC_ORG;
+  const availableOrgs = await getAvailableOrgs(mainOrg);
   const paths = (
     await ckan.getDatasetsListWithDetails({ offset: 0, limit: 1000 })
-  ).map((dataset: DatasetType) => ({
-    params: { dataset: dataset.name, org: dataset.organization?.name },
-  }));
+  )
+    //Only create routes for datasets whose owner_orgs is in the availableOrgs list
+    .filter((dataset) => availableOrgs.includes(dataset.organization.name))
+    .map((dataset: DatasetType) => ({
+      params: {
+        dataset: dataset.name,
+        org: privateToPublicOrgName(dataset.organization?.name, mainOrg),
+      },
+    }));
   return {
     paths,
     fallback: "blocking",
@@ -27,16 +37,15 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
   try {
+    const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
     const datasetName = context.params?.dataset;
     if (!datasetName) {
       return {
         notFound: true,
       };
     }
-    const dataset = await ckan.getDatasetDetails(datasetName as string);
+    let dataset = await getDataset({ name: datasetName as string });
     if (!dataset) {
       return {
         notFound: true,
@@ -45,13 +54,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const activityStream = await ckan.getDatasetActivityStream(
       datasetName as string
     );
-    const datasetWithActivityStream = {
+    dataset = {
       ...dataset,
       activity_stream: activityStream,
     };
     return {
       props: {
-        dataset: datasetWithActivityStream,
+        dataset,
       },
       revalidate: 1800,
     };

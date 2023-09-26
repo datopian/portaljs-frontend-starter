@@ -1,13 +1,12 @@
 import { GetStaticProps } from "next";
 import { format } from "timeago.js";
-import ResourceCard from "../../../components/dataset/_shared/ResourceCard";
-import Layout from "../../../components/_shared/Layout";
-import TopBar from "../../../components/_shared/TopBar";
+import ResourceCard from "@/components/dataset/_shared/ResourceCard";
+import Layout from "@/components/_shared/Layout";
+import TopBar from "@/components/_shared/TopBar";
 import { Resource } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import getConfig from "next/config";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -186,7 +185,10 @@ export default function ResourcePage({
                   <ExcelViewer url={resource.url} />
                 )}
                 {resourceFormat == "geojson" && (
-                  <MapViewer layers={[{ data: resource.url, name: "Geojson" }]} title={resource.name} />
+                  <MapViewer
+                    layers={[{ data: resource.url, name: "Geojson" }]}
+                    title={resource.name}
+                  />
                 )}
               </div>
             </div>

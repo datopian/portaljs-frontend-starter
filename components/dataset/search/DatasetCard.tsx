@@ -3,7 +3,13 @@ import { format } from "timeago.js";
 import { Dataset } from "@portaljs/ckan";
 import ResourceCard from "./ResourceCard";
 
-export default function DatasetCard({ dataset }: { dataset: Dataset }) {
+export default function DatasetCard({
+  dataset,
+  showOrg = true,
+}: {
+  dataset: Dataset;
+  showOrg?: boolean;
+}) {
   const resourceBgColors = {
     PDF: "bg-cyan-300",
     CSV: "bg-emerald-300",
@@ -29,6 +35,19 @@ export default function DatasetCard({ dataset }: { dataset: Dataset }) {
       <div className="flex align-center gap-2">
         {(dataset.resources.length > 0 && dataset.resources[0].format && (
           <>
+            {showOrg !== false && (
+              <span
+                className={`${
+                  resourceBgColors[
+                    dataset.resources[0].format as keyof typeof resourceBgColors
+                  ]
+                } px-4 py-1 rounded-full text-xs`}
+              >
+                {dataset.organization
+                  ? dataset.organization.title
+                  : "No organization"}
+              </span>
+            )}
             <span
               className={`${
                 resourceBgColorsProxy[
@@ -41,6 +60,13 @@ export default function DatasetCard({ dataset }: { dataset: Dataset }) {
           </>
         )) || (
           <>
+            {showOrg !== false && (
+              <span className="bg-gray-200 px-4 py-1 rounded-full text-xs">
+                {dataset.organization
+                  ? dataset.organization.title
+                  : "No organization"}
+              </span>
+            )}
             <span className="bg-gray-200 px-4 py-1 rounded-full text-xs">
               {dataset.metadata_created && format(dataset.metadata_created)}
             </span>
@@ -56,7 +82,7 @@ export default function DatasetCard({ dataset }: { dataset: Dataset }) {
         resource={dataset?.resources.find((resource) => resource.format)}
       />
       <div className="col-span-6 place-content-start flex flex-col gap-1">
-        <Link href={`/${dataset.name}`}>
+        <Link href={`/${dataset.organization.name}/${dataset.name}`}>
           <h1 className="m-auto md:m-0 font-semibold text-lg text-zinc-900">
             {dataset.title || "No title"}
           </h1>

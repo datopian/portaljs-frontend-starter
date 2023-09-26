@@ -4,6 +4,7 @@ import { PackageSearchOptions } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import Pagination from "./Pagination";
 import DatasetCard from "./DatasetCard";
+import { searchDatasets } from "@/lib/queries/dataset";
 
 export default function ListOfDatasets({
   options,
@@ -33,12 +34,8 @@ function ListItems({
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
   const { data } = useSWR(["package_search", options], async () => {
-    const DMS = process.env.NEXT_PUBLIC_DMS;
-    const ckan = new CKAN(DMS);
-    return ckan.packageSearch({
-      ...options,
-      orgs: [process.env.NEXT_PUBLIC_ORG],
-    });
+    console.log("Options", options);
+    return searchDatasets(options);
   });
   //Define which page buttons are going to be displayed in the pagination list
   const [subsetOfPages, setSubsetOfPages] = useState(0);
@@ -49,7 +46,7 @@ function ListItems({
         {data?.count} Datasets
       </h2>
       {data?.datasets?.map((dataset) => (
-        <DatasetCard key={dataset.id} dataset={dataset} />
+        <DatasetCard key={dataset.id} dataset={dataset} showOrg={true} />
       ))}
       {data?.count && (
         <Pagination

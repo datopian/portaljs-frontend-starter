@@ -1,6 +1,6 @@
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { PackageSearchOptions, Tag } from "@portaljs/ckan";
+import { Organization, PackageSearchOptions, Tag } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
 function AutoSubmit({
   setOptions,
@@ -26,17 +26,17 @@ function AutoSubmit({
 }
 
 export default function DatasetSearchFilters({
-  tags,
+  orgs,
   groups,
   setOptions,
   options,
 }: {
-  tags: Array<Tag>;
+  orgs: Array<Organization>;
   groups: Array<Group>;
   options: PackageSearchOptions;
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
-  const [seeMoreTags, setSeeMoreTags] = useState(false);
+  const [seeMoreOrgs, setSeeMoreOrgs] = useState(false);
   const [seeMoreGroups, setSeeMoreGroups] = useState(false);
   return (
     <Formik
@@ -76,33 +76,27 @@ export default function DatasetSearchFilters({
           )}
         </section>
         <section className="bg-white rounded-lg xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto">
-          <h1 className="font-bold pb-4">Refine by Keyword</h1>
-          <div className="flex gap-2 flex-wrap">
-            {tags.slice(0, seeMoreTags ? tags.length : 5).map((tag) => (
-              <div key={tag.id}>
-                <Field
-                  type="checkbox"
-                  className="hidden tag-checkbox"
-                  id={tag.id}
-                  name="tags"
-                  value={tag.name}
-                ></Field>
-                <label
-                  className="bg-gray-200 px-4 py-1 rounded-full text-xs block"
-                  htmlFor={tag.id}
-                >
-                  {tag.display_name}
-                </label>
-              </div>
-            ))}
-          </div>
-          {tags.length > 5 && (
+          <h1 className="font-bold pb-4">Refine by Organization</h1>
+          {orgs.slice(0, seeMoreOrgs ? orgs.length : 5).map((org) => (
+            <div key={org.id}>
+              <Field
+                type="checkbox"
+                id={org.id}
+                name="orgs"
+                value={org.name}
+              ></Field>
+              <label className="ml-1.5" htmlFor={org.id}>
+                {org.display_name}
+              </label>
+            </div>
+          ))}
+          {orgs.length > 5 && (
             <button
-              onClick={() => setSeeMoreTags(!seeMoreTags)}
+              onClick={() => setSeeMoreOrgs(!seeMoreOrgs)}
               type="button"
               className="bg-gray-300 px-2 rounded text-gray-600 mt-2"
             >
-              See {seeMoreTags ? "less" : "more..."}
+              See {seeMoreOrgs ? "less" : "more..."}
             </button>
           )}
         </section>

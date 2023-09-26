@@ -27,6 +27,12 @@ export default function Example() {
               <Link href="/search" className="font-semibold text-white my-auto">
                 DATASETS
               </Link>
+              <Link
+                href="/organizations"
+                className="font-semibold text-white my-auto"
+              >
+                ORGS
+              </Link>
               <Link href="/groups" className="font-semibold text-white my-auto">
                 GROUPS
               </Link>
@@ -79,6 +85,12 @@ export default function Example() {
                   className="font-semibold text-white my-auto"
                 >
                   DATASETS
+                </Link>
+                <Link
+                  href="/organizations"
+                  className="font-semibold text-white my-auto"
+                >
+                  ORGS
                 </Link>
                 <Link
                   href="/groups"
