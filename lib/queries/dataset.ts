@@ -66,7 +66,6 @@ export const getDataset = async ({ name }: { name: string }) => {
   const ckan = new CKAN(DMS);
   const privateName = publicToPrivateDatasetName(name, mainOrg);
   const dataset = await ckan.getDatasetDetails(privateName);
-  console.log(dataset);
   dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
   return {
     ...dataset,
