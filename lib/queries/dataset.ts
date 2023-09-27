@@ -69,6 +69,7 @@ export const getDataset = async ({ name }: { name: string }) => {
   dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
   return {
     ...dataset,
+    _name: privateName,
     organization: {
       ...dataset.organization,
       name: privateToPublicOrgName(dataset.organization.name, mainOrg),
