@@ -1,6 +1,7 @@
 import { Dataset, Group } from "@portaljs/ckan";
 import {
   CkanResponse,
+  privateToPublicDatasetName,
   privateToPublicGroupName,
   privateToPublicOrgName,
   publicToPrivateGroupName,
@@ -68,6 +69,12 @@ export const getGroup = async ({
         mainOrg
       );
       dataset.organization.name = publicOrgName;
+
+      const publicDatasetName = privateToPublicDatasetName(
+        dataset.name,
+        mainOrg
+      );
+      dataset.name = publicDatasetName;
     });
   }
 

@@ -7,6 +7,27 @@ export interface CkanResponse<T> {
   result: T;
 }
 
+export const publicToPrivateDatasetName = (
+  publicName: string,
+  mainOrg: string
+) => {
+  return `${mainOrg}--${publicName}`;
+};
+
+export const privateToPublicDatasetName = (
+  privateName: string,
+  mainOrg: string
+) => {
+  const mainOrgPrefix = `${mainOrg}--`;
+  let publicName = privateName;
+
+  if (privateName.startsWith(mainOrgPrefix)) {
+    publicName = publicName.slice(mainOrgPrefix.length);
+  }
+
+  return publicName;
+};
+
 export const publicToPrivateGroupName = (
   publicName: string,
   mainGroup: string

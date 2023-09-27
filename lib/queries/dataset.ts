@@ -2,7 +2,9 @@ import { CKAN, Organization, PackageSearchOptions } from "@portaljs/ckan";
 import {
   CkanResponse,
   getAvailableOrgs,
+  privateToPublicDatasetName,
   privateToPublicOrgName,
+  publicToPrivateDatasetName,
 } from "./utils";
 import ky from "ky";
 
@@ -50,7 +52,9 @@ export async function searchDatasets(input: PackageSearchOptions) {
         : d.organization.name.slice(mainOrgPrefix.length);
     const organization = { ...d.organization, name: owner_org };
 
-    return { ...d, organization, groups };
+    const publicName = privateToPublicDatasetName(d.name, mainOrg);
+
+    return { ...d, organization, name: publicName, groups };
   });
 
   return { datasets: results, count: datasets.count };
@@ -60,7 +64,10 @@ export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
   const ckan = new CKAN(DMS);
-  const dataset = await ckan.getDatasetDetails(name);
+  const privateName = publicToPrivateDatasetName(name, mainOrg);
+  const dataset = await ckan.getDatasetDetails(privateName);
+  console.log(dataset);
+  dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
   return {
     ...dataset,
     organization: {
