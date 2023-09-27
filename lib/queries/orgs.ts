@@ -1,6 +1,7 @@
 import { Dataset, Organization } from "@portaljs/ckan";
 import {
   CkanResponse,
+  privateToPublicDatasetName,
   privateToPublicOrgName,
   publicToPrivateOrgName,
 } from "./utils";
@@ -25,6 +26,7 @@ export const getOrganization = async ({
   if (include_datasets) {
     organization.result.packages.forEach((dataset: Dataset) => {
       dataset.organization.name = name;
+      dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
     });
   }
 

@@ -19,7 +19,11 @@ export default function PopularDatasets({
         <h1 className="font-inter font-black text-4xl mt-6">Highlights</h1>
         <div className="flex flex-col">
           {datasets.map((dataset, index) => (
-            <Link key={index} href={`/${dataset.name}`} className="block mt-6">
+            <Link
+              key={index}
+              href={`/${dataset.organization.name}/${dataset.name}`}
+              className="block mt-6"
+            >
               <DatasetLink
                 key={dataset.id}
                 title={dataset.title}

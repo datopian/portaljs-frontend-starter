@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Dataset } from "ckan";
+import { Dataset } from "@portaljs/ckan";
 import styles from "../../styles/IndividualPage.module.scss";
 
 export default function ListOfDatasets({

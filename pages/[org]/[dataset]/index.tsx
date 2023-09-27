@@ -12,7 +12,12 @@ import TopBar from "@/components/_shared/TopBar";
 import { Dataset as DatasetType } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import styles from "styles/DatasetInfo.module.scss";
-import { getAvailableOrgs, privateToPublicOrgName } from "@/lib/queries/utils";
+import {
+  getAvailableOrgs,
+  privateToPublicDatasetName,
+  privateToPublicOrgName,
+  publicToPrivateDatasetName,
+} from "@/lib/queries/utils";
 import { getDataset } from "@/lib/queries/dataset";
 
 export async function getStaticPaths() {
@@ -26,7 +31,7 @@ export async function getStaticPaths() {
     .filter((dataset) => availableOrgs.includes(dataset.organization.name))
     .map((dataset: DatasetType) => ({
       params: {
-        dataset: dataset.name,
+        dataset: privateToPublicDatasetName(dataset.name, mainOrg),
         org: privateToPublicOrgName(dataset.organization?.name, mainOrg),
       },
     }));
@@ -39,7 +44,9 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
     const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
-    const datasetName = context.params?.dataset;
+    const mainOrg = process.env.NEXT_PUBLIC_ORG;
+    const datasetName = context.params?.dataset as string;
+    const privateDatasetName = publicToPrivateDatasetName(datasetName, mainOrg);
     if (!datasetName) {
       return {
         notFound: true,
@@ -52,7 +59,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       };
     }
     const activityStream = await ckan.getDatasetActivityStream(
-      datasetName as string
+      privateDatasetName
     );
     dataset = {
       ...dataset,
