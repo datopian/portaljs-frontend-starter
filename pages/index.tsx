@@ -30,6 +30,7 @@ export async function getStaticProps() {
       orgs,
       stats,
     },
+    revalidate: 1800,
   };
 }
 
