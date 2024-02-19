@@ -2,6 +2,10 @@ import { Field, Form, Formik, useFormikContext } from "formik";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Organization, PackageSearchOptions, Tag } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
+import useSWR from "swr";
+import { getAllGroups } from "@/lib/queries/groups";
+import { getAllOrganizations } from "@/lib/queries/orgs";
+
 function AutoSubmit({
   setOptions,
   options,
@@ -38,6 +42,12 @@ export default function DatasetSearchFilters({
 }) {
   const [seeMoreOrgs, setSeeMoreOrgs] = useState(false);
   const [seeMoreGroups, setSeeMoreGroups] = useState(false);
+  const { data: groupsData } = useSWR('groups', () => {
+    return getAllGroups({ detailed: true });
+  }, { fallbackData: groups})
+  const { data: orgsData } = useSWR('orgs', () => {
+    return getAllOrganizations({ detailed: true });
+  }, { fallbackData: orgs })
   return (
     <Formik
       initialValues={{
@@ -52,7 +62,7 @@ export default function DatasetSearchFilters({
       <Form>
         <section className="bg-white rounded-lg xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto">
           <h1 className="font-bold pb-4">Refine by Theme</h1>
-          {groups.slice(0, seeMoreGroups ? groups.length : 5).map((group) => (
+          {groupsData.slice(0, seeMoreGroups ? groupsData.length : 5).map((group) => (
             <div key={group.id}>
               <Field
                 type="checkbox"
@@ -65,7 +75,7 @@ export default function DatasetSearchFilters({
               </label>
             </div>
           ))}
-          {groups.length > 5 && (
+          {groupsData.length > 5 && (
             <button
               onClick={() => setSeeMoreGroups(!seeMoreGroups)}
               type="button"
@@ -77,7 +87,7 @@ export default function DatasetSearchFilters({
         </section>
         <section className="bg-white rounded-lg xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto">
           <h1 className="font-bold pb-4">Refine by Organization</h1>
-          {orgs.slice(0, seeMoreOrgs ? orgs.length : 5).map((org) => (
+          {orgsData.slice(0, seeMoreOrgs ? orgsData.length : 5).map((org) => (
             <div key={org.id}>
               <Field
                 type="checkbox"
@@ -90,7 +100,7 @@ export default function DatasetSearchFilters({
               </label>
             </div>
           ))}
-          {orgs.length > 5 && (
+          {orgsData.length > 5 && (
             <button
               onClick={() => setSeeMoreOrgs(!seeMoreOrgs)}
               type="button"
