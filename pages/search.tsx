@@ -42,6 +42,7 @@ export async function getStaticProps() {
       groups,
       orgs,
     },
+    revalidate: 1800,
   };
 }
 
