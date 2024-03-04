@@ -18,7 +18,7 @@ export default function DatasetOverview({ dataset }: { dataset: Dataset }) {
         <p className="font-semibold">
           {dataset.author_email
             ? dataset.author_email
-            : "datopian@datopian.com"}
+            : ""}
         </p>
       </div>
       <div className="  pb-5">
