@@ -21,7 +21,7 @@ export default function GroupCard({
         src={
           image_display_url &&
           url &&
-          (process.env.DOMAINS ?? []).includes(url.hostname)
+          (getConfig().publicRuntimeConfig.DOMAINS ?? []).includes(url.hostname)
             ? image_display_url
             : "/images/logos/DefaultOrgLogo.svg"
         }
