@@ -1,7 +1,7 @@
 // const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
-const domains = ["demo.dev.datopian.com", "admin.opendatani.gov.uk"];
+const domains = ['demo.dev.datopian.com', 'blob.datopian.com']
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -16,6 +16,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-};
+  publicRuntimeConfig: {
+    DOMAINS: domains, // Make domains accessible at runtime
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

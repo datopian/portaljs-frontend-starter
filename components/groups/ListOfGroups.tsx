@@ -16,6 +16,7 @@ export default function ListOfGroups({
 
   //We also only hide the element instead of recreating
   //Because thats faster especially to the display image
+  console.log(groups)
   return (
     <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {groups.map((group) => (
