@@ -1,12 +1,12 @@
-import getConfig from "next/config";
-import Image from "next/image";
-import Link from "next/link";
-import { Group } from "@portaljs/ckan";
+import getConfig from 'next/config'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Group } from '@portaljs/ckan'
 
 type GroupCardProps = Pick<
   Group,
-  "display_name" | "image_display_url" | "description" | "name"
->;
+  'display_name' | 'image_display_url' | 'description' | 'name'
+>
 
 export default function GroupCard({
   display_name,
@@ -14,7 +14,7 @@ export default function GroupCard({
   description,
   name,
 }: GroupCardProps) {
-  const url = image_display_url ? new URL(image_display_url) : undefined;
+  const url = image_display_url ? new URL(image_display_url) : undefined
   return (
     <div className="bg-white p-8 col-span-3 rounded-lg h-full shadow-lg">
       <Image
@@ -23,7 +23,7 @@ export default function GroupCard({
           url &&
           (getConfig().publicRuntimeConfig.DOMAINS ?? []).includes(url.hostname)
             ? image_display_url
-            : "/images/logos/DefaultOrgLogo.svg"
+            : '/images/logos/datasets.png'
         }
         alt={`${name}-collection`}
         width="43"
@@ -39,5 +39,5 @@ export default function GroupCard({
         </span>
       </Link>
     </div>
-  );
+  )
 }

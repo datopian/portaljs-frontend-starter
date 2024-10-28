@@ -1,44 +1,44 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import useSWR from "swr";
-import { PackageSearchOptions } from "@portaljs/ckan";
-import { CKAN } from "@portaljs/ckan";
-import Pagination from "./Pagination";
-import DatasetCard from "./DatasetCard";
-import { searchDatasets } from "@/lib/queries/dataset";
+import { Dispatch, SetStateAction, useState } from 'react'
+import useSWR from 'swr'
+import { PackageSearchOptions } from '@portaljs/ckan'
+import { CKAN } from '@portaljs/ckan'
+import Pagination from './Pagination'
+import DatasetCard from './DatasetCard'
+import { searchDatasets } from '@/lib/queries/dataset'
 
 export default function ListOfDatasets({
   options,
   setOptions,
 }: {
-  options: PackageSearchOptions;
-  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
+  options: PackageSearchOptions
+  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>
 }) {
   return (
     <div className="grid grid-cols-1 gap-4 homepage-padding">
       <ListItems setOptions={setOptions} options={options} />
-      <div style={{ display: "none" }}>
+      <div style={{ display: 'none' }}>
         <ListItems
           setOptions={setOptions}
           options={{ ...options, offset: options.offset + 5 }}
         />
       </div>
     </div>
-  );
+  )
 }
 
 function ListItems({
   options,
   setOptions,
 }: {
-  options: PackageSearchOptions;
-  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
+  options: PackageSearchOptions
+  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>
 }) {
-  const { data } = useSWR(["package_search", options], async () => {
-    console.log("Options", options);
-    return searchDatasets(options);
-  });
+  const { data } = useSWR(['package_search', options], async () => {
+    console.log('Options', options)
+    return searchDatasets(options)
+  })
   //Define which page buttons are going to be displayed in the pagination list
-  const [subsetOfPages, setSubsetOfPages] = useState(0);
+  const [subsetOfPages, setSubsetOfPages] = useState(0)
 
   return (
     <>
@@ -58,5 +58,5 @@ function ListItems({
         />
       )}
     </>
-  );
+  )
 }
