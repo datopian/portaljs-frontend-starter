@@ -14,7 +14,7 @@ export default function Hero({ stats }: { stats: StatsProps }) {
             minHeight: "95vh",
           }}
         >
-          <TopBar />
+          {/*<TopBar />*/}
           <div className="grid lg:grid-cols-2 mx-auto items-center grow custom-container">
             <div className="col-span-1">
               <h3 className="text-xs font-medium pb-2 uppercase text-gray-400 tracking-widest sm:text-base lg:text-sm xl:text-base">

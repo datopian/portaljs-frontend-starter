@@ -7,6 +7,9 @@ import Layout from "../components/_shared/Layout";
 import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
+import HeroSectionLight from "@/components/home/heroSectionLight";
+import { CiSearch } from "react-icons/ci";
+import ActionCard from "@/components/home/actions/actionCard";
 
 export async function getStaticProps() {
   const datasets = await searchDatasets({
@@ -47,10 +50,8 @@ export default function Home({
         <meta name="description" content="Open Data Portal Demo" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Hero stats={stats} />
-        <MainSection groups={groups} datasets={datasets} />
-      </Layout>
+      <HeroSectionLight stats={stats} />
+      <MainSection groups={groups} datasets={datasets} />
     </>
   );
 }

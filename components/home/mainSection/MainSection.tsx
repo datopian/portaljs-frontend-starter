@@ -2,6 +2,8 @@ import { Dataset } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
 import GroupCard from "../../groups/GroupCard";
 import PopularDatasets from "./PopularDatasets";
+import { CiSearch } from "react-icons/ci";
+import ActionCard from "../actions/actionCard";
 
 export default function MainSection({
   groups,
@@ -12,6 +14,30 @@ export default function MainSection({
 }) {
   return (
     <section className="custom-container homepage-padding">
+      <div className="flex flex-col md:flex-row md:items-start gap-8 mb-[100px]">
+        {[
+          {
+            title: "Find Data",
+            description: "Find, share, use and gain insights from data.",
+            href: "/search",
+            icon: "/images/icons/search.svg",
+          },
+          {
+            title: "Add Data",
+            description: "Make your dataset available on Portal.",
+            href: "#",
+            icon: "/images/icons/upload.png",
+          },
+          {
+            title: "Request Data",
+            description: "Send us a request for the data you didn’t find.",
+            href: "#",
+            icon: "/images/icons/request.svg",
+          },
+        ].map((item, i) => (
+          <ActionCard {...item} key={i} />
+        ))}
+      </div>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
         <section className="col-span-1 md:pr-2">
           <PopularDatasets datasets={datasets} />
