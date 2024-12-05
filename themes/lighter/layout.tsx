@@ -1,5 +1,10 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./styles.module.scss";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 const LigtherTheme = ({
   Header,
@@ -14,7 +19,7 @@ const LigtherTheme = ({
 }) => {
   return (
     <>
-      <div className={` ${styles.LightTheme}`}>
+      <div className={` ${styles.LightTheme} ${inter.className}`}>
         {Header && <Header />}
         <div className="content-wrapper">
           {Sidebar && <Sidebar />}
