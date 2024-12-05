@@ -78,7 +78,7 @@ export default function DatasetSearch({
                 backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
               }}
             >
-              <TopBar />
+              {/*<TopBar />*/}
               <div
                 className="grid md:grid-cols-2 mx-auto items-center grow"
                 //This lines up the text with the search form below
