@@ -29,7 +29,7 @@ const SearchForm: React.FC = () => {
         }}
         placeholder="GDP data..."
         aria-label="Search"
-        className="w-3/4  rounded-[10px] bg-[var(--input-bg)] p-4 border rounded-md leading-none bg-white placeholder-gray-500"
+        className="w-3/4  rounded-[10px] bg-[var(--input-bg)] p-4 border rounded-md leading-none placeholder-gray-500"
       />
       <button
         type="submit"
