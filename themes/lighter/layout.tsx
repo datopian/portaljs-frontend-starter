@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import styles from "./styles.module.scss";
 
 const LigtherTheme = ({
@@ -7,10 +7,10 @@ const LigtherTheme = ({
   Footer,
   children,
 }: {
-  Header?: React.JSXElementConstructor<any>;
-  Sidebar?: React.JSXElementConstructor<any>;
-  Footer?: React.JSXElementConstructor<any>;
-  children: React.ReactElement;
+  Header?: FC;
+  Sidebar?: FC;
+  Footer?: FC;
+  children: ReactNode;
 }) => {
   return (
     <>

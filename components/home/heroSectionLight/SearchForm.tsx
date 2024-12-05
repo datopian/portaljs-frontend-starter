@@ -1,9 +1,13 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
+import { useTheme } from "@/components/theme/theme-provider";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 const SearchForm: React.FC = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const { theme } = useTheme();
+  const { styles } = theme;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (e) {
@@ -29,13 +33,14 @@ const SearchForm: React.FC = () => {
         }}
         placeholder="GDP data..."
         aria-label="Search"
-        className="w-3/4  rounded-[10px] bg-[var(--input-bg)] p-4 border rounded-md leading-none placeholder-gray-500"
+        className="w-3/4  rounded-[10px] bg-[var(--input-bg)] py-3 px-4 md:py-4 md:px-4 border rounded-md leading-none placeholder-gray-500"
       />
       <button
         type="submit"
-        className="text-lg rounded-[10px] bg-[var(--dark)] text-[var(--text-light)] uppercase font-medium px-10 py-4 leading-none   lg:mt-0 "
+        className={`text-lg rounded-[10px] ${styles.bgDark}  uppercase font-medium px-3 py-3 md:px-10 md:py-4 leading-none lg:mt-0 ${styles.textLight} `}
       >
-        Search
+        <MagnifyingGlassIcon width={24} className="sm:hidden" />
+        <span className="hidden sm:block">Search</span>
       </button>
     </form>
   );

@@ -7,13 +7,13 @@ export default function HeroSectionLight({ stats }) {
   return (
     <div>
       <div className="custom-container mx-auto">
-        <div className="flex flex-col lg:flex-row lg:items-center py-[80px] lg:py-[140px] gap-10 lg:gap-0">
+        <div className="flex flex-col lg:flex-row lg:items-center py-[30px] md:py-[80px] lg:py-[140px] gap-10 lg:gap-0">
           <div className="lg:max-w-[478px]">
-            <h1 className="font-black text-[55px] flex flex-col leading-[65px]">
+            <h1 className="font-black text-[40px] md:text-[55px] flex flex-col leading-[50px] md:leading-[65px]">
               <span>Find and Share</span>
               <span className="text-[var(--accent)]">Quality Data.</span>
             </h1>
-            <p className="text-[20px] text-[var(--text-base)] mt-[10px] mb-[30px]">
+            <p className="text-[16px] md:text-[20px] text-[var(--text-base)] mt-[10px] mb-[30px]">
               At Portal, we have over thousands of datasets for free and a
               Premium Data Service for additional or customised data with
               guaranteed updates.
@@ -63,10 +63,10 @@ export default function HeroSectionLight({ stats }) {
               />
               <div className="flex flex-col gap-0">
                 <span className="font-black text-[32px] leading-[32px]">
-                  {stats.groupCount}
+                  {stats.orgCount}
                 </span>
                 <span className="text-[16px] leading-[20px]">
-                  Organization{stats.groupCount > 1 ? "s" : ""}
+                  Organization{stats.orgCount > 1 ? "s" : ""}
                 </span>
               </div>
             </Link>

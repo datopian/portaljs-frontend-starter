@@ -44,7 +44,7 @@ export default function MainSection({
         </section>
         <section className="col-span-1 grid sm:grid-cols-2 gap-4 md:pl-2">
           {groups.slice(0, 4).map((group) => (
-            <article key={group.id} className="col-span-1">
+            <article key={group.id} className="col-span-1 h-fit">
               <GroupCard
                 description={group.description}
                 display_name={group.display_name}

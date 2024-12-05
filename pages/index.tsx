@@ -1,15 +1,15 @@
 import type { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import Hero from "../components/home/heroSection/Hero";
 import { StatsProps } from "../components/home/heroSection/Stats";
 import MainSection from "../components/home/mainSection/MainSection";
-import Layout from "../components/_shared/Layout";
 import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
 import HeroSectionLight from "@/components/home/heroSectionLight";
-import { CiSearch } from "react-icons/ci";
-import ActionCard from "@/components/home/actions/actionCard";
+import dynamic from "next/dynamic";
+//import { LineChart } from "@portaljs/components";
+
+//const LineChart = dynamic(() => import('@portaljs/components'));
 
 export async function getStaticProps() {
   const datasets = await searchDatasets({
@@ -43,6 +43,10 @@ export default function Home({
   orgs,
   stats,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+  const LineChart = dynamic(
+    () => import("@portaljs/components").then((mod) => mod.LineChart),
+    { ssr: false }
+  );
   return (
     <>
       <Head>
@@ -52,6 +56,17 @@ export default function Home({
       </Head>
       <HeroSectionLight stats={stats} />
       <MainSection groups={groups} datasets={datasets} />
+
+      <div className="mt-5 custom-container">
+        <LineChart
+          data={
+            "https://raw.githubusercontent.com/datasets/oil-prices/main/data/wti-year.csv"
+          }
+          xAxisTimeUnit="year"
+          xAxis="Date"
+          yAxis="Price"
+        />
+      </div>
     </>
   );
 }

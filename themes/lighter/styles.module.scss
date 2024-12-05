@@ -7,7 +7,10 @@
   --text-accent:var(--accent);
   --text-light:white;
   --input-bg: #E9E9E9;
-  --box-shadow-md: 0px 4px 50px 0px #0000000D;
+  --shadow-md: 0px 4px 50px 0px #0000000D;
+  --shadow-md-hover: 0px 4px 20px 0px #00000003;
+  --shadow-sm: 0px 4px 30px 0px #E2E2E24D;
+  --shadow-sm-hover: 0px 4px 15px 0px #e2e2e21f;
 
 
   color:var(--text-base);
@@ -15,7 +18,60 @@
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  
+  //background-image: url(./assets/background-blur.png);
+  background-size: cover;
+  background-position: center;
 
 }
-  
+
+.shadowSm{
+  transition: all .3s;
+  box-shadow: var(--shadow-sm);
+  &:hover{
+    box-shadow: var(--shadow-sm-hover)
+  }
+}
+
+.shadowMd{
+  transition: all .3s;
+  box-shadow: var(--shadow-md);
+  &:hover{
+    box-shadow: var(--shadow-md-hover)
+  }
+}
+
+.inputBg{
+  background-color: var(--input-bg);
+}
+
+.textLight{
+  color: var(--text-light);
+}
+
+.textBase{
+  color:var(--text-base)
+}
+
+.textAccent{
+  color: var(--text-accent);
+  transition: color .3s;
+  &:hover{
+    color: darken($color: #517FB5D9, $amount: 10)
+  }
+}
+
+.bgDark{
+  transition: background-color .35s;
+  background-color: var(--dark);
+  &:hover{
+    background-color: black;
+  }
+}
+
+.bgAccent{
+  background-color: var(--accent);
+}
+
+.borderAccent{
+  border-color: var(--accent);
+}
