@@ -100,7 +100,7 @@ const LigtherTheme = ({
               mode: "bounce",
             },
             move: {
-              enable: true,
+              enable: false,
               speed: 1,
               outModes: "bounce",
             },
