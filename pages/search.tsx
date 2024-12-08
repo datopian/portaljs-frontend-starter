@@ -12,6 +12,7 @@ import ListOfDatasets from "@/components/dataset/search/ListOfDatasets";
 import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
+import HeroSection from "@/components/_shared/HeroSection";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
@@ -71,31 +72,8 @@ export default function DatasetSearch({
       </Head>
       <Layout>
         <div className="grid grid-rows-searchpage-hero">
-          <section className="row-start-1 row-span-3 col-span-full">
-            <div
-              className="bg-cover bg-center bg-no-repeat bg-black h-[414px] flex flex-col"
-              style={{
-                backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-              }}
-            >
-              {/*<TopBar />*/}
-              <div
-                className="grid md:grid-cols-2 mx-auto items-center grow"
-                //This lines up the text with the search form below
-                style={{ width: "min(1100px, 95vw)" }}
-              >
-                <div className="col-span-1">
-                  <h1 className="text-6xl font-black text-white">
-                    Search Datasets
-                  </h1>
-                  <h2 className="text-xl text-white py-6">
-                    Search datasets and filter by organizations or groups.
-                  </h2>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="grid row-start-3 row-span-2 col-span-full">
+          <HeroSection />
+          <section className="grid row-start-3 row-span-2 col-span-full bg-[whitesmoke] py-4">
             <DatasetSearchForm
               options={options}
               orgs={orgs}

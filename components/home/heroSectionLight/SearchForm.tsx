@@ -31,7 +31,7 @@ const SearchForm: React.FC = () => {
         onChange={(e) => {
           setSearchQuery(e.target.value);
         }}
-        placeholder="GDP data..."
+        placeholder="Find datasets..."
         aria-label="Search"
         className="w-3/4  rounded-[10px] bg-[var(--input-bg)] py-3 px-4 md:py-4 md:px-4 border rounded-md leading-none placeholder-gray-500"
       />

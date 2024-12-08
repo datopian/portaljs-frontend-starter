@@ -77,7 +77,7 @@ const LigtherTheme = ({
               value: 10,
             },
             color: {
-              value: ["#00DEF2", "#6990BE", "#00375F"],
+              value: ["#00DEF2", "#6990BE", "#00375F", "#FFB88A"],
             },
             shape: {
               type: "circle",

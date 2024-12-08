@@ -3,7 +3,6 @@ import Link from "next/link";
 import SearchForm from "./SearchForm";
 
 export default function HeroSectionLight({ stats }) {
-  console.log(stats);
   return (
     <div>
       <div className="custom-container mx-auto">

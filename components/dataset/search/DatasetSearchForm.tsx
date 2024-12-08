@@ -5,6 +5,7 @@ import { Group } from "@portaljs/ckan";
 import useSWR from "swr";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
+import { useTheme } from "@/components/theme/theme-provider";
 
 export default function DatasetSearchForm({
   groups,
@@ -17,12 +18,21 @@ export default function DatasetSearchForm({
   options: PackageSearchOptions;
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
-  const { data: groupsData } = useSWR('groups', () => {
-    return getAllGroups({ detailed: true });
-  }, { fallbackData: groups})
-  const { data: orgsData } = useSWR('orgs', () => {
-    return getAllOrganizations({ detailed: true });
-  }, { fallbackData: orgs })
+  const { theme } = useTheme();
+  const { data: groupsData } = useSWR(
+    "groups",
+    () => {
+      return getAllGroups({ detailed: true });
+    },
+    { fallbackData: groups }
+  );
+  const { data: orgsData } = useSWR(
+    "orgs",
+    () => {
+      return getAllOrganizations({ detailed: true });
+    },
+    { fallbackData: orgs }
+  );
   return (
     <Formik
       initialValues={{
@@ -78,7 +88,7 @@ export default function DatasetSearchForm({
             ))}
           </datalist>
           <button
-            className="font-bold text-black px-12 py-4 rounded-lg bg-accent hover:bg-cyan-500 duration-150"
+            className={`font-bold text-white px-12 py-4 rounded-lg bg-accent hover:bg-cyan-500 duration-150 ${theme.styles.bgDark}`}
             type="submit"
           >
             SEARCH

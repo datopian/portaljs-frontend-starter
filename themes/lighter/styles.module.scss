@@ -72,3 +72,11 @@
 .borderAccent{
   border-color: var(--accent);
 }
+
+.btnAccent{
+  background-color: var(--accent);
+  color: white;
+  &:hover{
+    background-color: darken($color: #517FB5D9, $amount: 5);
+  }
+}

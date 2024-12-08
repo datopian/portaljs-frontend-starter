@@ -25,17 +25,14 @@ export default function LighterThemeHeader() {
           </Link>
           <div className="hidden lg:flex lg:gap-x-12">
             <div className="flex gap-x-8 align-center">
-              <Link href="/blog" className="font-semibold my-auto">
-                BLOG
-              </Link>
               <Link href="/search" className="font-semibold my-auto">
                 SEARCH
               </Link>
-              <Link href="/docs" className="font-semibold my-auto">
-                DOCS
+              <Link href="/organizations" className="font-semibold my-auto">
+                ORGANIZATIONS
               </Link>
-              <Link href="/github" className="font-semibold my-auto">
-                GITHUB
+              <Link href="/groups" className="font-semibold my-auto">
+                GROUPS
               </Link>
             </div>
           </div>
