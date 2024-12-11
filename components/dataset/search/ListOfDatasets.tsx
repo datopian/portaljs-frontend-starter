@@ -14,7 +14,7 @@ export default function ListOfDatasets({
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-8 homepage-padding">
+    <div className="grid grid-cols-1 gap-8 ">
       <ListItems setOptions={setOptions} options={options} />
       <div style={{ display: "none" }}>
         <ListItems

@@ -29,7 +29,7 @@ const LigtherTheme = ({
 
   return (
     <>
-      {/*<Particles
+      <Particles
         id="tsparticles"
         init={particlesInit}
         loaded={particlesLoaded}
@@ -111,7 +111,7 @@ const LigtherTheme = ({
             color: "transparent",
           },
         }}
-      />*/}
+      />
       <div className={` ${styles.LightTheme} ${inter.className} relative`}>
         {Header && <Header />}
         <div className="content-wrapper">

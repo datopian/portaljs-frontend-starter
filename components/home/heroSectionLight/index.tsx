@@ -12,7 +12,7 @@ const poppins = Poppins({
 export default function HeroSectionLight({ stats }) {
   return (
     <div>
-      <div className="custom-container mx-auto">
+      <div className="custom-container mx-auto bg-white">
         <div className="flex flex-col lg:flex-row lg:items-center py-[30px] md:py-[80px] lg:py-[140px] gap-10 lg:gap-0">
           <div className="lg:max-w-[478px]">
             <h1 className="font-black text-[40px] md:text-[55px] flex flex-col leading-[50px] md:leading-[65px]">

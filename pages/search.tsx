@@ -79,7 +79,7 @@ export default function DatasetSearch({
           <section
             className={`grid row-start-3 row-span-2 col-span-full pt-4 `}
           >
-            <div className={`custom-container ${styles.shadowMd}`}>
+            <div className={`custom-container bg-white ${styles.shadowMd}`}>
               <DatasetSearchForm
                 options={options}
                 orgs={orgs}
@@ -89,7 +89,7 @@ export default function DatasetSearch({
             </div>
           </section>
         </div>
-        <main className="custom-container">
+        <main className="custom-container bg-white">
           <article className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12 pt-[30px] pb-[30px]">
             <div className="lg:col-span-3">
               <DatasetSearchFilters
