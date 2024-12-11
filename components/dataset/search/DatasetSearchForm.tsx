@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
 import { useTheme } from "@/components/theme/theme-provider";
+import SelectCombobox from "@/components/_shared/SelectCombobox";
 
 export default function DatasetSearchForm({
   groups,
@@ -19,33 +20,18 @@ export default function DatasetSearchForm({
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
   const { theme } = useTheme();
-  const { data: groupsData } = useSWR(
-    "groups",
-    () => {
-      return getAllGroups({ detailed: true });
-    },
-    { fallbackData: groups }
-  );
-  const { data: orgsData } = useSWR(
-    "orgs",
-    () => {
-      return getAllOrganizations({ detailed: true });
-    },
-    { fallbackData: orgs }
-  );
+
   return (
     <Formik
       initialValues={{
         org: "",
         group: "",
-        query: options.query ? options.query : "",
+        query: options.query || "",
       }}
       enableReinitialize={true}
       onSubmit={async (values) => {
-        const org = orgsData.find((org) => org.title === values.org);
-        const group = groupsData.find(
-          (group) => group.display_name === values.group
-        );
+        const org = orgs.find((org) => org.name === values.org);
+        const group = groups.find((group) => group.name === values.group);
         setOptions({
           ...options,
           groups: group ? [group.name] : [],
@@ -54,41 +40,35 @@ export default function DatasetSearchForm({
         });
       }}
     >
-      <div className="mx-auto" style={{ width: "min(1100px, 95vw)" }}>
-        <Form className="min-h-[80px] flex flex-col lg:flex-row bg-white px-5 py-3 rounded-xl">
+      <div className="">
+        <Form className="min-h-[70px] flex flex-col lg:flex-row bg-white pr-5 py-3 rounded-xl">
           <Field
             type="text"
-            placeholder="Search Datasets"
-            className="mx-4 grow py-4 border-0 placeholder:text-neutral-400"
+            placeholder="Type in keyword..."
+            className="mx-4 grow py-3 border-0 placeholder:text-neutral-400 outline-0"
             name="query"
           />
-          <Field
-            list="groups"
-            name="group"
-            placeholder="Themes"
-            className="lg:border-l p-4 mx-2 placeholder:text-neutral-400"
-          ></Field>
 
-          <datalist aria-label="Formats" id="groups">
-            <option value="">Theme</option>
-            {groupsData.map((group, index) => (
-              <option key={index}>{group.display_name}</option>
-            ))}
-          </datalist>
-          <Field
-            list="orgs"
+          <SelectCombobox
+            name="group"
+            placeholder="Select a theme"
+            options={groups?.map((group) => ({
+              name: group.display_name,
+              value: group.name,
+            }))}
+          />
+
+          <SelectCombobox
             name="org"
-            placeholder="Organization"
-            className="lg:border-l p-4 mx-2 placeholder:text-neutral-400"
-          ></Field>
-          <datalist aria-label="Formats" id="orgs">
-            <option value="">Organization</option>
-            {orgsData.map((org, index) => (
-              <option key={index}>{org.title}</option>
-            ))}
-          </datalist>
+            placeholder="Select an organization"
+            options={orgs?.map((org) => ({
+              name: org.display_name,
+              value: org.name,
+            }))}
+          />
+
           <button
-            className={`font-bold text-white px-12 py-4 rounded-lg bg-accent hover:bg-cyan-500 duration-150 ${theme.styles.bgDark}`}
+            className={`font-bold text-white px-12 py-3 rounded-lg bg-accent hover:bg-cyan-500 duration-150 ${theme.styles.bgDark}`}
             type="submit"
           >
             SEARCH

@@ -1,15 +1,19 @@
 .LightTheme {
   --accent:#517FB5D9;
   --dark:#313131;
+  --gray:#5C5C5C;
+  --gray-dark:#494949;
   --background-color: white;
   --text-base: var(--dark);
+  --text-gray:var(--gray);
+  --text-gray-dark: var(--gray-dark);
   --text-accent:var(--accent);
   --text-light:white;
   --input-bg: #E9E9E9;
   --shadow-md: 0px 4px 50px 0px #0000000D;
-  --shadow-md-hover: 0px 4px 20px 0px #00000003;
+  --shadow-md-hover: 0px 4px 20px 0px #00000010;
   --shadow-sm: 0px 4px 30px 0px #E2E2E24D;
-  --shadow-sm-hover: 0px 4px 15px 0px #e2e2e21f;
+  --shadow-sm-hover: 0px 4px 15px 0px #00000010;
 
   color:var(--text-base);
   font-optical-sizing: auto;
@@ -19,6 +23,10 @@
   background-size: cover;
   background-position: center;
 
+}
+
+.containerWide{
+  width: min(1400px, 95%);
 }
 
 .shadowSm{

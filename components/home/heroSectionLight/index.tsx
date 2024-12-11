@@ -2,6 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
 
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
 export default function HeroSectionLight({ stats }) {
   return (
     <div>
@@ -12,7 +19,7 @@ export default function HeroSectionLight({ stats }) {
               <span>Find and Share</span>
               <span className="text-[var(--accent)]">Quality Data.</span>
             </h1>
-            <p className="text-[16px] md:text-[20px] text-[var(--text-base)] mt-[10px] mb-[30px]">
+            <p className="text-[16px] md:text-[20px] text-[var(--text-gray)] mt-[10px] mb-[30px]">
               At Portal, we have over thousands of datasets for free and a
               Premium Data Service for additional or customised data with
               guaranteed updates.
@@ -20,8 +27,10 @@ export default function HeroSectionLight({ stats }) {
 
             <SearchForm />
           </div>
-          <div className="lg:ml-auto lg:pr-[135px] flex lg:flex-col justify-start gap-[40px] flex flex-wrap ">
-            <Link href={`/search`} className="flex items-center gap-[20px]">
+          <div
+            className={`${poppins.className} lg:ml-auto lg:pr-[135px] flex lg:flex-col justify-start gap-[40px] flex flex-wrap `}
+          >
+            <Link href={`/search`} className={`flex items-center gap-[20px] `}>
               <Image
                 src={`/images/icons/stats-bullet.svg`}
                 alt="stats-bullet"
@@ -29,10 +38,10 @@ export default function HeroSectionLight({ stats }) {
                 height={38}
               />
               <div className="flex flex-col gap-0">
-                <span className="font-black text-[32px] leading-[32px]">
+                <span className="font-bold text-[32px] leading-[40px]">
                   {stats.datasetCount}
                 </span>
-                <span className="text-[16px] leading-[20px]">
+                <span className="text-[16px] leading-[24px]">
                   Dataset{stats.datasetCount > 1 ? "s" : ""}
                 </span>
               </div>
@@ -45,10 +54,10 @@ export default function HeroSectionLight({ stats }) {
                 height={38}
               />
               <div className="flex flex-col gap-0">
-                <span className="font-black text-[32px] leading-[32px]">
+                <span className="font-bold text-[32px] leading-[40px]">
                   {stats.groupCount}
                 </span>
-                <span className="text-[16px] leading-[20px]">
+                <span className="text-[16px] leading-[24px]">
                   Group{stats.groupCount > 1 ? "s" : ""}
                 </span>
               </div>
@@ -61,10 +70,10 @@ export default function HeroSectionLight({ stats }) {
                 height={38}
               />
               <div className="flex flex-col gap-0">
-                <span className="font-black text-[32px] leading-[32px]">
+                <span className="font-bold text-[32px] leading-[40px]">
                   {stats.orgCount}
                 </span>
-                <span className="text-[16px] leading-[20px]">
+                <span className="text-[16px] leading-[24px]">
                   Organization{stats.orgCount > 1 ? "s" : ""}
                 </span>
               </div>

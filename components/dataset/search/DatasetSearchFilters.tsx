@@ -5,6 +5,8 @@ import { Group } from "@portaljs/ckan";
 import useSWR from "swr";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
+import { useTheme } from "@/components/theme/theme-provider";
+import MultiCheckbox from "@/components/_shared/MultiCheckbox";
 
 function AutoSubmit({
   setOptions,
@@ -40,14 +42,28 @@ export default function DatasetSearchFilters({
   options: PackageSearchOptions;
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
+  const {
+    theme: { styles },
+  } = useTheme();
   const [seeMoreOrgs, setSeeMoreOrgs] = useState(false);
   const [seeMoreGroups, setSeeMoreGroups] = useState(false);
-  const { data: groupsData } = useSWR('groups', () => {
-    return getAllGroups({ detailed: true });
-  }, { fallbackData: groups})
-  const { data: orgsData } = useSWR('orgs', () => {
-    return getAllOrganizations({ detailed: true });
-  }, { fallbackData: orgs })
+  const { data: groupsData } = useSWR(
+    "groups",
+    () => {
+      return getAllGroups({ detailed: true });
+    },
+    { fallbackData: groups }
+  );
+  const { data: orgsData } = useSWR(
+    "orgs",
+    () => {
+      return getAllOrganizations({ detailed: true });
+    },
+    { fallbackData: orgs }
+  );
+
+  const maxPerView = 5;
+
   return (
     <Formik
       initialValues={{
@@ -56,60 +72,59 @@ export default function DatasetSearchFilters({
         groups: [],
       }}
       onSubmit={async (values) => {
-        alert(JSON.stringify(values, null, 2));
+        //alert(JSON.stringify(values, null, 2));
       }}
     >
       <Form>
-        <section className="bg-white rounded-lg xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto">
-          <h1 className="font-bold pb-4">Refine by Theme</h1>
-          {groupsData.slice(0, seeMoreGroups ? groupsData.length : 5).map((group) => (
-            <div key={group.id}>
-              <Field
-                type="checkbox"
-                id={group.id}
-                name="groups"
-                value={group.name}
-              ></Field>
-              <label className="ml-1.5" htmlFor={group.id}>
-                {group.display_name}
-              </label>
-            </div>
-          ))}
-          {groupsData.length > 5 && (
-            <button
-              onClick={() => setSeeMoreGroups(!seeMoreGroups)}
-              type="button"
-              className="bg-gray-300 px-2 rounded text-gray-600 mt-2"
-            >
-              See {seeMoreGroups ? "less" : "more..."}
-            </button>
-          )}
-        </section>
-        <section className="bg-white rounded-lg xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto">
+        <section
+          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
+        >
           <h1 className="font-bold pb-4">Refine by Organization</h1>
-          {orgsData.slice(0, seeMoreOrgs ? orgsData.length : 5).map((org) => (
-            <div key={org.id}>
-              <Field
-                type="checkbox"
-                id={org.id}
-                name="orgs"
+          {orgsData
+            .slice(0, seeMoreOrgs ? orgsData.length : maxPerView)
+            .map((org) => (
+              <MultiCheckbox
+                name={"orgs"}
                 value={org.name}
-              ></Field>
-              <label className="ml-1.5" htmlFor={org.id}>
-                {org.display_name}
-              </label>
-            </div>
-          ))}
-          {orgsData.length > 5 && (
+                label={org.display_name}
+                key={org.id}
+              />
+            ))}
+          {orgsData.length > maxPerView && (
             <button
               onClick={() => setSeeMoreOrgs(!seeMoreOrgs)}
               type="button"
-              className="bg-gray-300 px-2 rounded text-gray-600 mt-2"
+              className="bg-[var(--dark)] hover:bg-black text-white py-[10px] px-[12px] rounded-[4px] mt-2 transition font-[600] text-[12px] leading-[15px]"
             >
-              See {seeMoreOrgs ? "less" : "more..."}
+              See {seeMoreOrgs ? "Less" : "More"}
             </button>
           )}
         </section>
+        <section
+          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
+        >
+          <h1 className="font-bold pb-4">Refine by Theme</h1>
+          {groupsData
+            .slice(0, seeMoreGroups ? groupsData.length : maxPerView)
+            .map((group) => (
+              <MultiCheckbox
+                name={"groups"}
+                value={group.name}
+                label={group.display_name}
+                key={group.id}
+              />
+            ))}
+          {groupsData.length > maxPerView && (
+            <button
+              onClick={() => setSeeMoreGroups(!seeMoreGroups)}
+              type="button"
+              className="bg-[var(--dark)] hover:bg-black text-white py-[10px] px-[12px] rounded-[4px] mt-2 transition font-[600] text-[12px] leading-[15px]"
+            >
+              See {seeMoreGroups ? "Less" : "More"}
+            </button>
+          )}
+        </section>
+
         <AutoSubmit options={options} setOptions={setOptions} />
       </Form>
     </Formik>

@@ -2,8 +2,15 @@ import { Dataset } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
 import GroupCard from "../../groups/GroupCard";
 import PopularDatasets from "./PopularDatasets";
-import { CiSearch } from "react-icons/ci";
 import ActionCard from "../actions/actionCard";
+import Link from "next/link";
+
+import { Montserrat } from "next/font/google";
+import { ArrowLongRightIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+});
 
 export default function MainSection({
   groups,
@@ -42,17 +49,26 @@ export default function MainSection({
         <section className="col-span-1 md:pr-2">
           <PopularDatasets datasets={datasets} />
         </section>
-        <section className="col-span-1 grid sm:grid-cols-2 gap-4 md:pl-2">
-          {groups.slice(0, 4).map((group) => (
-            <article key={group.id} className="col-span-1 h-fit">
-              <GroupCard
-                description={group.description}
-                display_name={group.display_name}
-                image_display_url={group.image_display_url}
-                name={group.name}
-              />
-            </article>
-          ))}
+        <section className="relative">
+          <Link
+            href="/groups"
+            className={`${montserrat.className} flex items-center gap-1 uppercase hover:text-black ml-auto w-fit absolute right-0 top-[-30px]`}
+          >
+            View all categories
+            <ArrowLongRightIcon width={16} />
+          </Link>
+          <div className="col-span-1 grid sm:grid-cols-2 gap-4 md:pl-2">
+            {groups.slice(0, 4).map((group) => (
+              <article key={group.id} className="col-span-1 h-fit">
+                <GroupCard
+                  description={group.description}
+                  display_name={group.display_name}
+                  image_display_url={group.image_display_url}
+                  name={group.name}
+                />
+              </article>
+            ))}
+          </div>
         </section>
       </section>
     </section>

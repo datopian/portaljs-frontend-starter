@@ -9,6 +9,8 @@ const SearchForm: React.FC = () => {
   const { theme } = useTheme();
   const { styles } = theme;
 
+  console.log(styles.shadowMd);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (e) {
       e.preventDefault();
@@ -31,9 +33,9 @@ const SearchForm: React.FC = () => {
         onChange={(e) => {
           setSearchQuery(e.target.value);
         }}
-        placeholder="Find datasets..."
-        aria-label="Search"
-        className="w-3/4  rounded-[10px] bg-[var(--input-bg)] py-3 px-4 md:py-4 md:px-4 border rounded-md leading-none placeholder-gray-500"
+        placeholder="Search datasets..."
+        aria-label="Search datasets"
+        className={`w-3/4  rounded-[10px] border-0 bg-white outline-0 py-3 px-4 md:py-4 md:px-4 border leading-none placeholder-gray-500 ${styles.shadowMd}`}
       />
       <button
         type="submit"

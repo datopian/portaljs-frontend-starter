@@ -2,8 +2,7 @@ import React, { FC, ReactNode, useCallback } from "react";
 import styles from "./styles.module.scss";
 import { Inter } from "next/font/google";
 import Particles from "react-particles";
-//import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
-import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSlim`, install the "tsparticles-slim" package too.
+import { loadSlim } from "tsparticles-slim";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,11 +20,6 @@ const LigtherTheme = ({
   children: ReactNode;
 }) => {
   const particlesInit = useCallback(async (engine) => {
-    console.log(engine);
-    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
-    //await loadFull(engine);
     await loadSlim(engine);
   }, []);
 
@@ -35,7 +29,7 @@ const LigtherTheme = ({
 
   return (
     <>
-      <Particles
+      {/*<Particles
         id="tsparticles"
         init={particlesInit}
         loaded={particlesLoaded}
@@ -74,7 +68,7 @@ const LigtherTheme = ({
               },
             },
             number: {
-              value: 10,
+              value: 20,
             },
             color: {
               value: ["#00DEF2", "#6990BE", "#00375F", "#FFB88A"],
@@ -100,7 +94,7 @@ const LigtherTheme = ({
               mode: "bounce",
             },
             move: {
-              enable: false,
+              enable: true,
               speed: 1,
               outModes: "bounce",
             },
@@ -117,7 +111,7 @@ const LigtherTheme = ({
             color: "transparent",
           },
         }}
-      />
+      />*/}
       <div className={` ${styles.LightTheme} ${inter.className} relative`}>
         {Header && <Header />}
         <div className="content-wrapper">

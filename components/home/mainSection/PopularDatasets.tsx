@@ -12,7 +12,9 @@ export default function PopularDatasets({
 }) {
   const { theme } = useTheme();
   return (
-    <div className={`bg-white p-8 rounded-lg  h-full ${theme.styles.shadowSm}`}>
+    <div
+      className={`bg-white text-black p-8 rounded-lg  h-full ${theme.styles.shadowSm}`}
+    >
       <div>
         <div
           className={`inline-block align-middle w-12 h-0.5 border ${theme.styles.borderAccent}`}
@@ -45,7 +47,7 @@ function DatasetLink({ title, metadata_modified }: DatasetLinkProps) {
   return (
     <div>
       <h3 className="font-inter font-semibold text-xl">{title}</h3>
-      <span className="font-roboto font-light text-xs flex items-center gap-1">
+      <span className="font-roboto font-light text-[12px] flex items-center gap-1 text-[#1F2633] font-light">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

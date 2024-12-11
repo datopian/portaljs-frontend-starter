@@ -15,7 +15,7 @@ export default function Pagination({
   count: number;
 }) {
   return (
-    <div className="flex gap-2 align-center">
+    <div className="flex gap-2 align-center mt-[30px]">
       {subsetOfPages !== 0 && (
         <button
           className="font-semibold flex items-center gap-2"
@@ -42,7 +42,7 @@ export default function Pagination({
         <button
           key={x}
           className={`${
-            x == options.offset / 5 ? "bg-orange-500 text-white" : ""
+            x == options.offset / 5 ? "bg-accent text-white" : ""
           } px-2 rounded font-semibold`}
           onClick={() => setOptions({ ...options, offset: x * 5 })}
           style={{

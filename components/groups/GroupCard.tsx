@@ -21,7 +21,7 @@ export default function GroupCard({
   return (
     <Link
       href={`/groups/${name}`}
-      className={`bg-white p-8 col-span-3 rounded-lg block h-full ${theme.styles.textAccent} ${theme.styles.shadowSm}`}
+      className={`bg-white  p-8 col-span-3 rounded-lg block h-full ${theme.styles.textAccent} ${theme.styles.shadowSm}`}
     >
       <Image
         src={
@@ -35,8 +35,8 @@ export default function GroupCard({
         width="54"
         height="54"
       ></Image>
-      <div className={`${theme.styles.textBase}`}>
-        <h3 className="font-inter font-semibold text-lg mt-4">
+      <div className={`text-black`}>
+        <h3 className="font-inter font-semibold text-lg mt-4 ">
           {display_name}
         </h3>
         <p className="font-inter font-medium text-sm mt-1 mb-6 line-clamp-2">

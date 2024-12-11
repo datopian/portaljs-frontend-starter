@@ -13,6 +13,7 @@ import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
 import HeroSection from "@/components/_shared/HeroSection";
+import { useTheme } from "@/components/theme/theme-provider";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
@@ -62,7 +63,9 @@ export default function DatasetSearch({
     orgs: [],
     query: q as string,
   });
-
+  const {
+    theme: { styles },
+  } = useTheme();
   return (
     <>
       <Head>
@@ -73,20 +76,21 @@ export default function DatasetSearch({
       <Layout>
         <div className="grid grid-rows-searchpage-hero">
           <HeroSection />
-          <section className="grid row-start-3 row-span-2 col-span-full bg-[whitesmoke] py-4">
-            <DatasetSearchForm
-              options={options}
-              orgs={orgs}
-              groups={groups}
-              setOptions={setOptions}
-            />
+          <section
+            className={`grid row-start-3 row-span-2 col-span-full pt-4 `}
+          >
+            <div className={`custom-container ${styles.shadowMd}`}>
+              <DatasetSearchForm
+                options={options}
+                orgs={orgs}
+                groups={groups}
+                setOptions={setOptions}
+              />
+            </div>
           </section>
         </div>
         <main className="custom-container">
-          <article
-            className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12"
-            style={{ paddingBlock: "min(8vh, 10rem)" }}
-          >
+          <article className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12 pt-[30px] pb-[30px]">
             <div className="lg:col-span-3">
               <DatasetSearchFilters
                 groups={groups}

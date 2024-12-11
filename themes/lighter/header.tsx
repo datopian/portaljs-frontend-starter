@@ -1,3 +1,4 @@
+import { useTheme } from "@/components/theme/theme-provider";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
@@ -6,11 +7,12 @@ import { useState } from "react";
 
 export default function LighterThemeHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
     <header className="bg-transparent ">
       <nav
-        className="mx-auto py-4 flex custom-container items-center justify-between "
+        className={`mx-auto py-4 flex custom-container items-center justify-between  ${theme.styles.containerWide}`}
         aria-label="Global"
       >
         <div className="flex items-center gap-x-12">
