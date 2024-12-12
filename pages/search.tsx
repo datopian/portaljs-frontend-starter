@@ -26,6 +26,7 @@ export async function getStaticProps() {
     orgs: [],
   });
   const groups = await getAllGroups({ detailed: true });
+
   const orgs = await getAllOrganizations({ detailed: true });
   return {
     props: {
@@ -60,12 +61,18 @@ export default function DatasetSearch({
     limit: 5,
     tags: [],
     groups: [],
+    resFormat: [],
     orgs: [],
+    sort: "score desc",
     query: q as string,
   });
+
+  const [formats, setFormats] = useState([]);
+
   const {
     theme: { styles },
   } = useTheme();
+
   return (
     <>
       <Head>
@@ -90,21 +97,26 @@ export default function DatasetSearch({
           </section>
         </div>
         <main className="custom-container bg-white">
-          <article className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12 pt-[30px] pb-[30px]">
-            <div className="lg:col-span-3">
-              <DatasetSearchFilters
-                groups={groups}
-                orgs={orgs}
-                options={options}
-                setOptions={setOptions}
-              />
-            </div>
-            <div className="lg:col-span-6">
-              <SWRConfig value={{ fallback }}>
-                <ListOfDatasets options={options} setOptions={setOptions} />
-              </SWRConfig>
-            </div>
-          </article>
+          <SWRConfig value={{ fallback }}>
+            <article className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12 pt-[30px] pb-[30px]">
+              <div className="lg:col-span-3">
+                <DatasetSearchFilters
+                  groups={groups}
+                  orgs={orgs}
+                  formats={formats}
+                  options={options}
+                  setOptions={setOptions}
+                />
+              </div>
+              <div className="lg:col-span-6">
+                <ListOfDatasets
+                  options={options}
+                  setOptions={setOptions}
+                  setFormats={setFormats}
+                />
+              </div>
+            </article>
+          </SWRConfig>
         </main>
       </Layout>
     </>

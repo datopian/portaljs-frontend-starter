@@ -19,6 +19,7 @@ function AutoSubmit({
     tags: string[];
     orgs: string[];
     groups: string[];
+    formats: string[];
   }>();
   useEffect(() => {
     setOptions({
@@ -26,6 +27,8 @@ function AutoSubmit({
       groups: values.groups,
       tags: values.tags,
       orgs: values.orgs,
+      resFormat: values.formats,
+      offset: 0,
     });
   }, [values]);
   return null;
@@ -34,11 +37,13 @@ function AutoSubmit({
 export default function DatasetSearchFilters({
   orgs,
   groups,
+  formats,
   setOptions,
   options,
 }: {
   orgs: Array<Organization>;
   groups: Array<Group>;
+  formats: string[];
   options: PackageSearchOptions;
   setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
 }) {
@@ -70,6 +75,7 @@ export default function DatasetSearchFilters({
         tags: [],
         orgs: [],
         groups: [],
+        formats: [],
       }}
       onSubmit={async (values) => {
         //alert(JSON.stringify(values, null, 2));
@@ -124,7 +130,19 @@ export default function DatasetSearchFilters({
             </button>
           )}
         </section>
-
+        <section
+          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
+        >
+          <h1 className="font-bold pb-4">Refine by Formats</h1>
+          {formats.map((format) => (
+            <MultiCheckbox
+              name={"formats"}
+              value={format}
+              label={format}
+              key={format}
+            />
+          ))}
+        </section>
         <AutoSubmit options={options} setOptions={setOptions} />
       </Form>
     </Formik>
