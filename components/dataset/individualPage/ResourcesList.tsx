@@ -1,6 +1,7 @@
 import { Resource } from "@portaljs/ckan";
 import ResourceCard from "../_shared/ResourceCard";
 import Link from "next/link";
+import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
 
 interface ResourcesListProps {
   resources: Array<Resource>;
@@ -20,7 +21,8 @@ export default function ResourcesList({
           className="flex flex-col sm:flex-row justify-between w-full pb-4"
         >
           <article className="grid grid-cols-1 sm:grid-cols-6 gap-x-2 grow">
-            <ResourceCard resource={resource} />
+            <MultipleResourcesCard resources={[resource]} />
+
             <div className="col-span-5 place-content-start flex flex-col gap-0">
               <h4 className="m-auto md:m-0 font-semibold text-lg text-zinc-900 leading-tight line-clamp-3 pr-5">
                 {resource.name || "No title"}
@@ -34,7 +36,7 @@ export default function ResourcesList({
             {resource.url && (
               <Link
                 href={resource.url}
-                className="bg-accent h-auto py-2 px-4 text-sm text-gray-800 rounded-xl font-roboto font-bold hover:bg-cyan-800 hover:text-white duration-150 flex items-center gap-1"
+                className="bg-accent h-auto py-2 px-4 text-sm text-white rounded-xl font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center gap-1"
               >
                 Download
                 <svg
@@ -58,7 +60,7 @@ export default function ResourcesList({
             ) && (
               <Link
                 href={`/${orgName}/${datasetName}/r/${resource.id}`}
-                className="bg-lightaccent h-auto py-2 px-4 text-sm text-gray-800 rounded-xl font-roboto font-bold hover:bg-accent duration-150 flex items-center gap-1"
+                className="bg-[#00375fd9] h-auto py-2 px-4 text-sm text-white rounded-xl font-roboto font-bold hover:text-white hover:bg-[#00375F] duration-150 flex items-center gap-1"
               >
                 Preview{" "}
                 <svg

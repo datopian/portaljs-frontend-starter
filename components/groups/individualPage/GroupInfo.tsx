@@ -11,16 +11,11 @@ export default function GroupInfo({ group }: { group: Group }) {
   return (
     <div className="flex flex-col">
       <Image
-        width={120}
-        height={120}
-        src={
-          group.image_display_url &&
-          url &&
-          (process.env.DOMAINS ?? []).includes(url.hostname)
-            ? group.image_display_url
-            : "/images/logos/DefaultGroupLogo.svg"
-        }
+        width={54}
+        height={56}
+        src={group.image_display_url}
         alt={`${group.name}-collection`}
+        className="object-fit"
       />
       <div className="flex flex-col gap-y-3 mt-8">
         <span className="font-medium text-gray-500 inline">

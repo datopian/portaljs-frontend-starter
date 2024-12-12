@@ -12,6 +12,8 @@ import { CKAN, Organization } from "@portaljs/ckan";
 import { getAllOrganizations, getOrganization } from "@/lib/queries/orgs";
 import { getDataset } from "@/lib/queries/dataset";
 
+import HeroSection from "@/components/_shared/HeroSection";
+
 export async function getStaticPaths() {
   const paths = (await getAllOrganizations({ detailed: false })).map(
     (org: Organization) => ({
@@ -93,33 +95,14 @@ export default function OrgPage({
       </Head>
       {org && (
         <Layout>
-          <div className="grid grid-rows-datasetpage-hero">
-            <section className="row-start-1 row-end-3 col-span-full">
-              <div
-                className="bg-cover h-full bg-center bg-no-repeat bg-black flex flex-col"
-                style={{
-                  backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-                }}
-              >
-                <TopBar />
-                <OrgNavCrumbs
-                  org={{
-                    name: org?.name,
-                    title: org?.title,
-                  }}
-                />
-                <div
-                  className="grid mx-auto items-center grow custom-container grow"
-                  style={{ marginBlock: "8rem" }}
-                >
-                  <div className="col-span-1">
-                    <h1 className="text-6xl font-black text-white">
-                      {org.title}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </section>
+          <HeroSection title={org.title} cols="6" />
+          <OrgNavCrumbs
+            org={{
+              name: org?.name,
+              title: org?.title,
+            }}
+          />
+          <div className="grid mt-8 grid-rows-datasetpage-hero">
             <section className="grid row-start-2 row-span-2 col-span-full">
               <div className="custom-container">
                 {org && (

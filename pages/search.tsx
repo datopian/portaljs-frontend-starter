@@ -82,7 +82,7 @@ export default function DatasetSearch({
       </Head>
       <Layout>
         <div className="grid grid-rows-searchpage-hero">
-          <HeroSection />
+          <HeroSection title="Search" titleAccent="datasets" />
           <section
             className={`grid row-start-3 row-span-2 col-span-full pt-4 `}
           >
