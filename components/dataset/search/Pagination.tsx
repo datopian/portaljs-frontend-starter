@@ -48,11 +48,12 @@ export default function Pagination({
           } px-2 font-semibold`}
           onClick={() => {
             setOptions({ ...options, offset: x * max });
-
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth", // Makes the scroll smooth
-            });
+            if (typeof window !== "undefined") {
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth", // Makes the scroll smooth
+              });
+            }
           }}
           style={{
             display:
