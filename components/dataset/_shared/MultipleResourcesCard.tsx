@@ -41,7 +41,11 @@ const LayeredCard = ({ firstResource, layers }) => {
       {visibleLayers.map((_, index) => {
         //const
         const offset =
-          window.innerWidth < 768 ? (index + 1) * 4 : (index + 1) * 6;
+          typeof window !== "undefined"
+            ? window.innerWidth < 768
+              ? (index + 1) * 4
+              : (index + 1) * 6
+            : 0;
         return (
           <div
             key={index}
