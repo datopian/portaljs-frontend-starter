@@ -6,6 +6,8 @@ import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { resourceBgColors } from "../_shared/FormatsColors";
 
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
+
 export default function DatasetCard({
   dataset,
   showOrg = true,
@@ -49,7 +51,7 @@ export default function DatasetCard({
               } px-2 py-1 rounded-full text-xs flex items-center gap-1`}
             >
               <img src="/images/icons/clock.svg" alt="" />
-              {dataset.metadata_created && format(dataset.metadata_created)}
+              {dataset.metadata_modified && format(dataset.metadata_modified)}
             </span>
           </>
         )) || (
@@ -62,7 +64,7 @@ export default function DatasetCard({
               </span>
             )}
             <span className="bg-gray-200 px-4 py-1 rounded-full text-xs">
-              {dataset.metadata_created && format(dataset.metadata_created)}
+              {dataset.metadata_modified && format(dataset.metadata_modified)}
             </span>
           </>
         )}
@@ -70,23 +72,26 @@ export default function DatasetCard({
     );
   }
 
+  const datasetName =
+    dataset.name?.indexOf(`${mainOrg}--`) >= 0
+      ? dataset.name?.split(`${mainOrg}--`)[1]
+      : dataset.name;
+
   return (
-    <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2">
-      <MultipleResourcesCard resources={dataset.resources} />
-      <div className="col-span-6 place-content-start flex flex-col gap-1 mt-4 lg:mt-0 ml-0 lg:ml-4">
-        <Link
-          href={`/${dataset.organization.name}/${dataset.name}`}
-          className=""
-        >
+    <Link href={`/@${dataset.organization.name}/${datasetName}`} className="">
+      <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2 mb-6">
+        <MultipleResourcesCard resources={dataset.resources} />
+        <div className="col-span-6 place-content-start flex flex-col gap-1 mt-4 lg:mt-0 ml-0 lg:ml-4">
           <h1 className="m-auto md:m-0 font-semibold text-lg text-[#202020] break-words">
             {dataset.title || "No title"}
           </h1>
-        </Link>
-        <p className="text-sm font-normal text-[#575757]  line-clamp-2 h-[44px] overflow-y-hidden ">
-          {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
-        </p>
-        <DatasetInformations />
-      </div>
-    </article>
+
+          <p className="text-sm font-normal text-[#575757]  line-clamp-2 h-[44px] overflow-y-hidden ">
+            {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
+          </p>
+          <DatasetInformations />
+        </div>
+      </article>
+    </Link>
   );
 }

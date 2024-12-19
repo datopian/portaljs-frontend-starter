@@ -13,7 +13,7 @@ export default function HeroSection({
           className={`grid md:grid-cols-${cols} mx-auto items-center grow mx-auto custom-container bg-white`}
         >
           <div className="col-span-1">
-            <h1 className="text-[55px] font-black ">
+            <h1 className="text-[55px] font-black lg:max-w-[80%]">
               {title}{" "}
               <span className="text-[var(--accent)]">{titleAccent}</span>
             </h1>

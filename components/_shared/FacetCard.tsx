@@ -25,7 +25,7 @@ export default function FacetCard({
         <div>
           <span
             role="button"
-            className="text-sm cursor-pointer"
+            className="text-sm cursor-pointer hover:underline"
             onClick={() => clearAction && clearAction()}
           >
             Clear

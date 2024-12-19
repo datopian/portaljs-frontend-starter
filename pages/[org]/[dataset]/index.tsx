@@ -48,6 +48,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const mainOrg = process.env.NEXT_PUBLIC_ORG;
     const datasetName = context.params?.dataset as string;
     const privateDatasetName = publicToPrivateDatasetName(datasetName, mainOrg);
+
     if (!datasetName) {
       return {
         notFound: true,
