@@ -1,4 +1,6 @@
 import { Resource } from "@portaljs/ckan";
+import { useEffect, useState } from "react";
+import { resourceTextColors } from "./FormatsColors";
 
 export default function MultipleResourcesCard({
   resources,
@@ -15,40 +17,31 @@ export default function MultipleResourcesCard({
 
 const LayeredCard = ({ firstResource, layers }) => {
   const visibleLayers = layers.slice(0, 3);
-  const resourceTextColors = {
-    PDF: "text-[#C9EEEF]",
-    CSV: "text-[#E0DBDE]",
-    JSON: "text-[#DBC9EB]",
-    ODS: "text-amber-400",
-    XLS: "text-[#C9DAEB]",
-    XLSX: "text-[#C9DAEB]",
-    DOC: "text-red-300",
-    SHP: "text-purple-400",
-    HTML: "text-pink-300",
-  };
 
   return (
-    <div className="relative w-20 h-20">
+    <div className="relative w-16 h-16 md:w-20 md:h-20  sm:mx-0 p-0.5">
       <div
-        className="absolute border border-white top-0 left-0 w-full h-full bg-[var(--dark)] rounded-lg shadow-lg flex items-center justify-center"
+        className="absolute  border border-white top-0 left-0 w-full h-full bg-[var(--dark)] rounded-lg shadow-lg flex items-center justify-center"
         style={{ zIndex: 10 }}
       >
         <span
           className={`${
             resourceTextColors[
-              firstResource.format as keyof typeof resourceTextColors
+              firstResource?.format?.toUpperCase() as keyof typeof resourceTextColors
             ]
               ? resourceTextColors[
-                  firstResource.format as keyof typeof resourceTextColors
+                  firstResource?.format?.toUpperCase() as keyof typeof resourceTextColors
                 ]
               : "text-gray-200"
-          } font-bold text-[20px] my-auto`}
+          } font-bold text-[12px] md:text-[15px] my-auto break-all  text-center `}
         >
-          {firstResource.format}
+          {firstResource?.format || "--"}
         </span>
       </div>
       {visibleLayers.map((_, index) => {
-        const offset = (index + 2) * 6;
+        //const
+        const offset =
+          window.innerWidth < 768 ? (index + 1) * 4 : (index + 1) * 6;
         return (
           <div
             key={index}
@@ -57,7 +50,7 @@ const LayeredCard = ({ firstResource, layers }) => {
               left: `${offset}px`,
               zIndex: 5 - index,
             }}
-            className={`absolute  w-[75px] h-[75px] bg-[var(--dark)] border border-white rounded-lg shadow-lg`}
+            className={`absolute  w-16 md:w-20 h-16 md:h-20 bg-[var(--dark)] border border-white rounded-lg shadow-lg`}
           />
         );
       })}

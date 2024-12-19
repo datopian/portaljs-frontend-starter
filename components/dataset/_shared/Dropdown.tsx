@@ -33,7 +33,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div className="flex items-center gap-3 bg-white pl-4 rounded-lg">
+      <div className="flex items-center gap-3 bg-white md:pl-4 rounded-lg">
         <h2 className="text-[#313131] text-[14px] font-normal leading-normal">
           Sort by:
         </h2>

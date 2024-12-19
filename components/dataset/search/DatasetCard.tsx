@@ -4,6 +4,7 @@ import { Dataset } from "@portaljs/ckan";
 import ResourceCard from "./ResourceCard";
 import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
 import { ClockIcon } from "@heroicons/react/20/solid";
+import { resourceBgColors } from "../_shared/FormatsColors";
 
 export default function DatasetCard({
   dataset,
@@ -12,18 +13,6 @@ export default function DatasetCard({
   dataset: Dataset;
   showOrg?: boolean;
 }) {
-  const resourceBgColors = {
-    PDF: "bg-[#C9EEEF]",
-    CSV: "bg-[#E0DBDE]",
-    JSON: "bg-[#DBC9EB]",
-    ODS: "bg-amber-400",
-    XLS: "bg-[#C9DAEB]",
-    XLSX: "bg-[#C9DAEB]",
-    DOC: "bg-red-300",
-    SHP: "bg-purple-400",
-    HTML: "bg-pink-300",
-  };
-
   const resourceBgColorsProxy = new Proxy(resourceBgColors, {
     get: (obj, prop) => {
       if (prop in obj) {
@@ -35,14 +24,14 @@ export default function DatasetCard({
 
   function DatasetInformations() {
     return (
-      <div className="flex align-center gap-2">
+      <div className="flex align-center gap-2 flex-wrap">
         {(dataset.resources.length > 0 && dataset.resources[0].format && (
           <>
             {showOrg !== false && (
               <span
                 className={`${
                   resourceBgColors[
-                    dataset.resources[0].format as keyof typeof resourceBgColors
+                    dataset.resources[0].format?.toUpperCase() as keyof typeof resourceBgColors
                   ]
                 } px-2 py-1 rounded-full text-xs flex items-center gap-1`}
               >
@@ -55,7 +44,7 @@ export default function DatasetCard({
             <span
               className={`${
                 resourceBgColorsProxy[
-                  dataset.resources[0].format as keyof typeof resourceBgColors
+                  dataset.resources[0].format?.toUpperCase() as keyof typeof resourceBgColors
                 ]
               } px-2 py-1 rounded-full text-xs flex items-center gap-1`}
             >
@@ -85,8 +74,11 @@ export default function DatasetCard({
     <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2">
       <MultipleResourcesCard resources={dataset.resources} />
       <div className="col-span-6 place-content-start flex flex-col gap-1 mt-4 lg:mt-0 ml-0 lg:ml-4">
-        <Link href={`/${dataset.organization.name}/${dataset.name}`}>
-          <h1 className="m-auto md:m-0 font-semibold text-lg text-[#202020]">
+        <Link
+          href={`/${dataset.organization.name}/${dataset.name}`}
+          className=""
+        >
+          <h1 className="m-auto md:m-0 font-semibold text-lg text-[#202020] break-words">
             {dataset.title || "No title"}
           </h1>
         </Link>

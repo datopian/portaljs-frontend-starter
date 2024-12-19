@@ -1,102 +1,48 @@
-import { Field, Form, Formik, useFormikContext } from "formik";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Organization, PackageSearchOptions, Tag } from "@portaljs/ckan";
-import { Group } from "@portaljs/ckan";
-import useSWR from "swr";
-import { getAllGroups } from "@/lib/queries/groups";
-import { getAllOrganizations } from "@/lib/queries/orgs";
-import { useTheme } from "@/components/theme/theme-provider";
+import { useState } from "react";
 import MultiCheckbox from "@/components/_shared/MultiCheckbox";
+import { useSearchState } from "./SearchContext";
+import FacetCard from "@/components/_shared/FacetCard";
+import { PackageFacetOptions } from "@/schemas/dataset.interface";
 
-function AutoSubmit({
-  setOptions,
-  options,
-}: {
-  options: PackageSearchOptions;
-  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
-}) {
-  const { values } = useFormikContext<{
-    tags: string[];
-    orgs: string[];
-    groups: string[];
-    formats: string[];
-  }>();
-  useEffect(() => {
-    setOptions({
-      ...options,
-      groups: values.groups,
-      tags: values.tags,
-      orgs: values.orgs,
-      resFormat: values.formats,
-      offset: 0,
-    });
-  }, [values]);
-  return null;
-}
-
-export default function DatasetSearchFilters({
-  orgs,
-  groups,
-  formats,
-  setOptions,
-  options,
-}: {
-  orgs: Array<Organization>;
-  groups: Array<Group>;
-  formats: string[];
-  options: PackageSearchOptions;
-  setOptions: Dispatch<SetStateAction<PackageSearchOptions>>;
-}) {
-  const {
-    theme: { styles },
-  } = useTheme();
+export default function DatasetSearchFilters() {
   const [seeMoreOrgs, setSeeMoreOrgs] = useState(false);
   const [seeMoreGroups, setSeeMoreGroups] = useState(false);
-  const { data: groupsData } = useSWR(
-    "groups",
-    () => {
-      return getAllGroups({ detailed: true });
-    },
-    { fallbackData: groups }
-  );
-  const { data: orgsData } = useSWR(
-    "orgs",
-    () => {
-      return getAllOrganizations({ detailed: true });
-    },
-    { fallbackData: orgs }
-  );
-
-  const maxPerView = 5;
+  const { searchFacets, options, setOptions } = useSearchState();
+  const maxPerView = 6;
 
   return (
-    <Formik
-      initialValues={{
-        tags: [],
-        orgs: [],
-        groups: [],
-        formats: [],
-      }}
-      onSubmit={async (values) => {
-        //alert(JSON.stringify(values, null, 2));
-      }}
-    >
-      <Form>
-        <section
-          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
-        >
-          <h1 className="font-bold pb-4">Refine by Organization</h1>
-          {orgsData
-            .slice(0, seeMoreOrgs ? orgsData.length : maxPerView)
-            .map((org) => (
-              <MultiCheckbox
-                name={"orgs"}
-                value={org.name}
-                label={org.display_name}
-                key={org.id}
-              />
-            ))}
-          {orgsData.length > maxPerView && (
+    <div>
+      <FacetCard
+        title="Refine by Organization"
+        showClear={options.orgs.length > 0}
+        clearAction={() => {
+          setOptions({
+            orgs: [],
+            offset: 0,
+          });
+        }}
+      >
+        <div>
+          <div className="max-h-[400px] overflow-y-auto">
+            {searchFacets.organization?.items
+              ?.slice(
+                0,
+                seeMoreOrgs
+                  ? searchFacets.organization?.items?.length
+                  : maxPerView
+              )
+              .map((org: PackageFacetOptions) => (
+                <MultiCheckbox
+                  name={"orgs"}
+                  value={org.name}
+                  label={org.display_name}
+                  count={org.count}
+                  key={org.name}
+                />
+              ))}
+          </div>
+
+          {searchFacets.organization?.items?.length > maxPerView && (
             <button
               onClick={() => setSeeMoreOrgs(!seeMoreOrgs)}
               type="button"
@@ -105,22 +51,39 @@ export default function DatasetSearchFilters({
               See {seeMoreOrgs ? "Less" : "More"}
             </button>
           )}
-        </section>
-        <section
-          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
-        >
-          <h1 className="font-bold pb-4">Refine by Theme</h1>
-          {groupsData
-            .slice(0, seeMoreGroups ? groupsData.length : maxPerView)
-            .map((group) => (
-              <MultiCheckbox
-                name={"groups"}
-                value={group.name}
-                label={group.display_name}
-                key={group.id}
-              />
-            ))}
-          {groupsData.length > maxPerView && (
+        </div>
+      </FacetCard>
+
+      <FacetCard
+        title="Refine by Theme"
+        showClear={options.groups.length > 0}
+        clearAction={() => {
+          setOptions({
+            groups: [],
+            offset: 0,
+          });
+        }}
+      >
+        <div>
+          <div className="max-h-[400px] overflow-y-auto">
+            {searchFacets.groups?.items
+              ?.slice(
+                0,
+                seeMoreGroups ? searchFacets.groups?.items?.length : maxPerView
+              )
+              .map((group: PackageFacetOptions) => {
+                return (
+                  <MultiCheckbox
+                    name={"groups"}
+                    value={group.name}
+                    label={group.display_name}
+                    count={group.count}
+                    key={group.name}
+                  />
+                );
+              })}
+          </div>
+          {searchFacets.groups?.items?.length > maxPerView && (
             <button
               onClick={() => setSeeMoreGroups(!seeMoreGroups)}
               type="button"
@@ -129,22 +92,35 @@ export default function DatasetSearchFilters({
               See {seeMoreGroups ? "Less" : "More"}
             </button>
           )}
-        </section>
-        <section
-          className={`bg-white rounded-[10px] xl:p-8 p-4 mb-4 max-h-[400px] overflow-y-auto ${styles.shadowMd}`}
-        >
-          <h1 className="font-bold pb-4">Refine by Formats</h1>
-          {formats.map((format) => (
-            <MultiCheckbox
-              name={"formats"}
-              value={format}
-              label={format}
-              key={format}
-            />
-          ))}
-        </section>
-        <AutoSubmit options={options} setOptions={setOptions} />
-      </Form>
-    </Formik>
+        </div>
+      </FacetCard>
+
+      <FacetCard
+        title="Refine by Format"
+        showClear={options.resFormat.length > 0}
+        clearAction={() => {
+          setOptions({
+            resFormat: [],
+            offset: 0,
+          });
+        }}
+      >
+        <div>
+          <div className="max-h-[400px] overflow-y-auto">
+            {searchFacets?.res_format?.items.map(
+              (format: PackageFacetOptions) => (
+                <MultiCheckbox
+                  name={"resFormat"}
+                  value={format.name}
+                  label={format.display_name}
+                  key={format.name}
+                  count={format.count}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </FacetCard>
+    </div>
   );
 }

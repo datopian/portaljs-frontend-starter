@@ -7,6 +7,8 @@ import {
 } from "./utils";
 import ky from "ky";
 
+const DMS = process.env.NEXT_PUBLIC_DMS;
+
 export const getOrganization = async ({
   name,
   include_datasets = false,
@@ -19,7 +21,7 @@ export const getOrganization = async ({
 
   const organization: CkanResponse<Organization> = await ky
     .get(
-      `https://demo.dev.datopian.com/api/3/action/organization_show?id=${privateName}&include_datasets=${include_datasets}`
+      `${DMS}/api/3/action/organization_show?id=${privateName}&include_datasets=${include_datasets}`
     )
     .json();
 
@@ -53,7 +55,7 @@ export const getAllOrganizations = async ({
     Organization & { children: Organization[]; _name: string }
   > = await ky
     .get(
-      `https://demo.dev.datopian.com/api/3/action/group_tree_section?type=organization&id=${mainOrg}`
+      `${DMS}/api/3/action/group_tree_section?type=organization&id=${mainOrg}`
     )
     .json();
 
