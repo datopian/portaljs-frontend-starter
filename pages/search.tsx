@@ -66,7 +66,7 @@ export default function DatasetSearch({
           </div>
           <main className="custom-container bg-white">
             <SWRConfig value={{ fallback }}>
-              <article className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12 pt-[30px] pb-[30px]">
+              <article className="grid grid-cols-1 lg:grid-cols-9 gap-x-6 xl:gap-x-12 pt-[30px] pb-[30px]">
                 <div className="lg:col-span-3">
                   <DatasetSearchFilters />
                 </div>

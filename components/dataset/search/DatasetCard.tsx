@@ -20,7 +20,7 @@ export default function DatasetCard({
       if (prop in obj) {
         return obj[prop];
       }
-      return "bg-amber-400";
+      return "bg-lightaccent";
     },
   });
 
@@ -82,7 +82,7 @@ export default function DatasetCard({
       <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2 mb-6">
         <MultipleResourcesCard resources={dataset.resources} />
         <div className="col-span-6 place-content-start flex flex-col gap-1 mt-4 lg:mt-0 ml-0 lg:ml-4">
-          <h1 className="m-auto md:m-0 font-semibold text-lg text-[#202020] break-words">
+          <h1 className="  font-semibold text-lg text-[#202020] break-words">
             {dataset.title || "No title"}
           </h1>
 
