@@ -54,73 +54,78 @@ export default function DatasetSearchFilters() {
         </div>
       </FacetCard>
 
-      <FacetCard
-        title="Refine by Theme"
-        showClear={options.groups.length > 0}
-        clearAction={() => {
-          setOptions({
-            groups: [],
-            offset: 0,
-          });
-        }}
-      >
-        <div>
-          <div className="max-h-[400px] overflow-y-auto">
-            {searchFacets.groups?.items
-              ?.slice(
-                0,
-                seeMoreGroups ? searchFacets.groups?.items?.length : maxPerView
-              )
-              .map((group: PackageFacetOptions) => {
-                return (
-                  <MultiCheckbox
-                    name={"groups"}
-                    value={group.name}
-                    label={group.display_name}
-                    count={group.count}
-                    key={group.name}
-                  />
-                );
-              })}
-          </div>
-          {searchFacets.groups?.items?.length > maxPerView && (
-            <button
-              onClick={() => setSeeMoreGroups(!seeMoreGroups)}
-              type="button"
-              className="bg-[var(--dark)] hover:bg-black text-white py-[10px] px-[12px] rounded-[4px] mt-2 transition font-[600] text-[12px] leading-[15px]"
-            >
-              See {seeMoreGroups ? "Less" : "More"}
-            </button>
-          )}
-        </div>
-      </FacetCard>
-
-      <FacetCard
-        title="Refine by Format"
-        showClear={options.resFormat.length > 0}
-        clearAction={() => {
-          setOptions({
-            resFormat: [],
-            offset: 0,
-          });
-        }}
-      >
-        <div>
-          <div className="max-h-[400px] overflow-y-auto">
-            {searchFacets?.res_format?.items.map(
-              (format: PackageFacetOptions) => (
-                <MultiCheckbox
-                  name={"resFormat"}
-                  value={format.name}
-                  label={format.display_name}
-                  key={format.name}
-                  count={format.count}
-                />
-              )
+      {searchFacets.groups?.items.length > 0 && (
+        <FacetCard
+          title="Refine by Theme"
+          showClear={options.groups.length > 0}
+          clearAction={() => {
+            setOptions({
+              groups: [],
+              offset: 0,
+            });
+          }}
+        >
+          <div>
+            <div className="max-h-[400px] overflow-y-auto">
+              {searchFacets.groups?.items
+                ?.slice(
+                  0,
+                  seeMoreGroups
+                    ? searchFacets.groups?.items?.length
+                    : maxPerView
+                )
+                .map((group: PackageFacetOptions) => {
+                  return (
+                    <MultiCheckbox
+                      name={"groups"}
+                      value={group.name}
+                      label={group.display_name}
+                      count={group.count}
+                      key={group.name}
+                    />
+                  );
+                })}
+            </div>
+            {searchFacets.groups?.items?.length > maxPerView && (
+              <button
+                onClick={() => setSeeMoreGroups(!seeMoreGroups)}
+                type="button"
+                className="bg-[var(--dark)] hover:bg-black text-white py-[10px] px-[12px] rounded-[4px] mt-2 transition font-[600] text-[12px] leading-[15px]"
+              >
+                See {seeMoreGroups ? "Less" : "More"}
+              </button>
             )}
           </div>
-        </div>
-      </FacetCard>
+        </FacetCard>
+      )}
+      {searchFacets.res_format?.items?.length > 0 && (
+        <FacetCard
+          title="Refine by Format"
+          showClear={options.resFormat.length > 0}
+          clearAction={() => {
+            setOptions({
+              resFormat: [],
+              offset: 0,
+            });
+          }}
+        >
+          <div>
+            <div className="max-h-[400px] overflow-y-auto">
+              {searchFacets?.res_format?.items.map(
+                (format: PackageFacetOptions) => (
+                  <MultiCheckbox
+                    name={"resFormat"}
+                    value={format.name}
+                    label={format.display_name}
+                    key={format.name}
+                    count={format.count}
+                  />
+                )
+              )}
+            </div>
+          </div>
+        </FacetCard>
+      )}
     </div>
   );
 }
