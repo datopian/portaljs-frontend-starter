@@ -86,7 +86,7 @@ export default function DatasetCard({
             {dataset.title || "No title"}
           </h1>
 
-          <p className="text-sm font-normal text-[#575757]  line-clamp-2 h-[44px] overflow-y-hidden ">
+          <p className="text-sm font-normal text-[#575757]  line-clamp-2  overflow-y-hidden mb-1">
             {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
           </p>
           <DatasetInformations />

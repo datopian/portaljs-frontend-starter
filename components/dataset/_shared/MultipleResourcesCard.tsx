@@ -9,17 +9,17 @@ export default function MultipleResourcesCard({
 }) {
   const [firstResource, ...rest] = resources;
   return (
-    <div className="col-span-1 md:pt-1.5 place-content-center md:place-content-start">
+    <div className="col-span-1 md:pt-1.5 place-content-center md:place-content-start flex items-center">
       <LayeredCard firstResource={firstResource} layers={rest} />
     </div>
   );
 }
 
 const LayeredCard = ({ firstResource, layers }) => {
-  const visibleLayers = layers.slice(0, 3);
+  const visibleLayers = layers.slice(0, 2);
 
   return (
-    <div className="relative w-16 h-16 md:w-20 md:h-20  sm:mx-0 p-0.5">
+    <div className="relative w-16 h-16 md:w-20 md:h-20  sm:mx-0 p-0.5 ">
       <div
         className="absolute  border border-white top-0 left-0 w-full h-full bg-[var(--dark)] rounded-lg shadow-lg flex items-center justify-center"
         style={{ zIndex: 10 }}
