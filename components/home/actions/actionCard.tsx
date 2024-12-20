@@ -7,7 +7,7 @@ export default function ActionCard({ title, description, icon, href }) {
   return (
     <Link
       href={href}
-      className={`w-full bg-[var(--background-color)] ${theme.styles.shadowMd} flex flex-col items-center py-10 lg:py-16  px-5 lg:px-10 text-center rounded-[10px]`}
+      className={`w-full border-b-[4px] border-white hover:border-accent bg-[var(--background-color)] ${theme.styles.shadowMd} flex flex-col items-center py-10 lg:py-16  px-5 lg:px-10 text-center rounded-[10px]`}
     >
       {icon && (
         <span className="mb-4 text-accent text-[52px] font-normal">{icon}</span>

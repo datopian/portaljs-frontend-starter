@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 import { useSearchState } from "./SearchContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import DatasetItem from "./DatasetItem";
 
 export default function ListOfDatasets() {
   return (
@@ -64,10 +65,11 @@ function ListItems() {
       </div>
 
       <FilterBadges />
-
-      {packageSearchResults?.datasets?.map((dataset) => (
-        <DatasetCard key={dataset.id} dataset={dataset} />
-      ))}
+      <div className="flex flex-col gap-8 mt-4">
+        {packageSearchResults?.datasets?.map((dataset) => (
+          <DatasetItem key={dataset.id} dataset={dataset} />
+        ))}
+      </div>
 
       <div className="mt-10">
         <PackagePagination
@@ -85,7 +87,7 @@ function FilterBadges() {
   const { options, setOptions, setSearchFacets, searchFacets } =
     useSearchState();
   return (
-    <div>
+    <div className="border-b border-gray-100 pb-2">
       {(options.resFormat?.length > 0 ||
         options.groups?.length > 0 ||
         options.orgs?.length > 0) && (
