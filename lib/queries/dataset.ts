@@ -1,4 +1,4 @@
-import { CKAN, Organization, PackageSearchOptions } from "@portaljs/ckan";
+import { CKAN, Organization } from "@portaljs/ckan";
 import {
   CkanResponse,
   getAvailableOrgs,
@@ -7,11 +7,13 @@ import {
   publicToPrivateDatasetName,
 } from "./utils";
 import ky from "ky";
+import { PackageSearchOptions } from "@/schemas/dataset.interface";
 
-export async function searchDatasets(input: PackageSearchOptions) {
+export async function searchDatasets_OLD(input: PackageSearchOptions) {
   const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
   const mainGroup = `${mainOrg}-group`;
+
 
   //  Add the main group prefix before querying
   if (input.groups) {
@@ -60,6 +62,80 @@ export async function searchDatasets(input: PackageSearchOptions) {
   return { datasets: results, count: datasets.count };
 }
 
+export async function searchDatasets(options: PackageSearchOptions) {
+  const baseAction = `package_search`;
+  const mainOrg = process.env.NEXT_PUBLIC_ORG;
+
+  const facetFields = [
+    "groups",
+    "organization",
+    "res_format"
+    //"tags",
+  ]
+    .map((f) => `"${f}"`)
+    .join(",");
+
+  let queryParams: string[] = [];
+
+  if (options?.query) {
+      queryParams.push(`q=${options.query}`);
+  }
+
+  if (options?.offset) {
+      queryParams.push(`start=${options.offset}`);
+  }
+
+  if (options?.limit || options?.limit == 0) {
+      queryParams.push(`rows=${options.limit}`);
+  }
+
+  if (options?.sort) {
+      queryParams.push(`sort=${options?.sort}`);
+  }
+
+  
+  let fqList: string[] = [
+    `main_org:${mainOrg}`
+  ];
+  
+  if (options?.fq) {
+      fqList.push(options.fq);
+  }
+
+
+  let fqListGroups: string[] = [];
+  if (options?.orgs?.length) {
+      fqListGroups.push(`organization:(${joinTermsWithOr(options?.orgs)})`);
+  }
+
+  if (options?.groups?.length) {
+      fqListGroups.push(`groups:(${joinTermsWithOr(options?.groups)})`);
+  }
+  
+  if (options?.resFormat?.length) {
+    fqListGroups.push( `res_format:(${joinTermsWithOr( options.resFormat )})`);
+  }
+
+  if (fqListGroups?.length) {
+      fqList.push(`+(${fqListGroups.join(" AND ")})`);
+  }
+
+  if (fqList?.length) {
+      queryParams.push(`fq=${fqList.join(" ")}`);
+  }
+
+  const action = `${baseAction}?${queryParams.join("&")}&facet.field=[${facetFields}]&facet.limit=9999`;
+  
+  const res = await CkanRequest.get(action);
+
+  return { ...res.result, datasets: res.result.results };
+}
+
+const joinTermsWithOr = (tems) => {
+  return tems.map((t) => `"${t}"`).join(" OR ");
+};
+
+
 export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
@@ -67,6 +143,10 @@ export const getDataset = async ({ name }: { name: string }) => {
   const privateName = publicToPrivateDatasetName(name, mainOrg);
   const dataset = await ckan.getDatasetDetails(privateName);
   dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
+
+  console.log('get datast')
+  console.log(privateName)
+
   return {
     ...dataset,
     _name: privateName,
@@ -76,3 +156,19 @@ export const getDataset = async ({ name }: { name: string }) => {
     },
   };
 };
+
+export const CkanRequest = {
+  get : async (endpoint:string)=>{
+    const DMS = process.env.NEXT_PUBLIC_DMS;
+    try {
+      const response = await fetch(`${DMS}/api/3/action/${endpoint}`);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Failed to fetch Data Dictionary:", error);
+    }
+  }
+}

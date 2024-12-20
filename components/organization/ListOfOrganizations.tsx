@@ -1,6 +1,7 @@
 import MiniSearch from "minisearch";
-import { Organization } from "ckan";
+
 import OrgCard from "./OrgCard";
+import { Organization } from "@portaljs/ckan";
 
 export default function ListOfOrgs({
   orgs,

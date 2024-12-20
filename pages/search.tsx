@@ -1,66 +1,49 @@
 import type { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import { SWRConfig, unstable_serialize } from "swr";
 import Layout from "@/components/_shared/Layout";
-import TopBar from "@/components/_shared/TopBar";
-import { PackageSearchOptions } from "@portaljs/ckan";
 import DatasetSearchForm from "@/components/dataset/search/DatasetSearchForm";
 import DatasetSearchFilters from "@/components/dataset/search/DatasetSearchFilters";
 import ListOfDatasets from "@/components/dataset/search/ListOfDatasets";
 import { searchDatasets } from "@/lib/queries/dataset";
-import { getAllGroups } from "@/lib/queries/groups";
-import { getAllOrganizations } from "@/lib/queries/orgs";
-
-const mainOrg = process.env.NEXT_PUBLIC_ORG;
+import HeroSection from "@/components/_shared/HeroSection";
+import { useTheme } from "@/components/theme/theme-provider";
+import { SearchStateProvider } from "@/components/dataset/search/SearchContext";
+import { PackageSearchOptions } from "@portaljs/ckan";
 
 export async function getStaticProps() {
-  const search_result = await searchDatasets({
+  const initialRequestOption: PackageSearchOptions = {
     offset: 0,
-    limit: 5,
+    limit: 10,
     tags: [],
     groups: [],
     orgs: [],
-  });
-  const groups = await getAllGroups({ detailed: true });
-  const orgs = await getAllOrganizations({ detailed: true });
+    resFormat: [],
+  };
+
+  const search_result = await searchDatasets(initialRequestOption);
+
   return {
     props: {
       fallback: {
-        [unstable_serialize([
-          "package_search",
-          {
-            offset: 0,
-            limit: 5,
-            tags: [],
-            groups: [],
-            orgs: [],
-          },
-        ])]: search_result,
+        [unstable_serialize(["package_search", initialRequestOption])]:
+          search_result,
       },
-      groups,
-      orgs,
+      searchFacets: {
+        ...search_result.search_facets,
+      },
     },
-    revalidate: 1800,
+    revalidate: 60,
   };
 }
 
 export default function DatasetSearch({
   fallback,
-  groups,
-  orgs,
+  searchFacets,
 }: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
-  const router = useRouter();
-  const { q } = router.query;
-  const [options, setOptions] = useState<PackageSearchOptions>({
-    offset: 0,
-    limit: 5,
-    tags: [],
-    groups: [],
-    orgs: [],
-    query: q as string,
-  });
+  const {
+    theme: { styles },
+  } = useTheme();
 
   return (
     <>
@@ -70,60 +53,30 @@ export default function DatasetSearch({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="grid grid-rows-searchpage-hero">
-          <section className="row-start-1 row-span-3 col-span-full">
-            <div
-              className="bg-cover bg-center bg-no-repeat bg-black h-[414px] flex flex-col"
-              style={{
-                backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-              }}
+        <SearchStateProvider facets={searchFacets}>
+          <div className="grid grid-rows-searchpage-hero">
+            <HeroSection title="Search" titleAccent="datasets" />
+            <section
+              className={`grid row-start-3 row-span-2 col-span-full pt-4 `}
             >
-              <TopBar />
-              <div
-                className="grid md:grid-cols-2 mx-auto items-center grow"
-                //This lines up the text with the search form below
-                style={{ width: "min(1100px, 95vw)" }}
-              >
-                <div className="col-span-1">
-                  <h1 className="text-6xl font-black text-white">
-                    Search Datasets
-                  </h1>
-                  <h2 className="text-xl text-white py-6">
-                    Search datasets and filter by organizations or groups.
-                  </h2>
-                </div>
+              <div className={`custom-container bg-white ${styles.shadowMd}`}>
+                <DatasetSearchForm />
               </div>
-            </div>
-          </section>
-          <section className="grid row-start-3 row-span-2 col-span-full">
-            <DatasetSearchForm
-              options={options}
-              orgs={orgs}
-              groups={groups}
-              setOptions={setOptions}
-            />
-          </section>
-        </div>
-        <main className="custom-container">
-          <article
-            className="grid grid-cols-1 lg:grid-cols-9 lg:gap-x-2 xl:gap-x-12"
-            style={{ paddingBlock: "min(8vh, 10rem)" }}
-          >
-            <div className="lg:col-span-3">
-              <DatasetSearchFilters
-                groups={groups}
-                orgs={orgs}
-                options={options}
-                setOptions={setOptions}
-              />
-            </div>
-            <div className="lg:col-span-6">
-              <SWRConfig value={{ fallback }}>
-                <ListOfDatasets options={options} setOptions={setOptions} />
-              </SWRConfig>
-            </div>
-          </article>
-        </main>
+            </section>
+          </div>
+          <main className="custom-container bg-white">
+            <SWRConfig value={{ fallback }}>
+              <article className="grid grid-cols-1 lg:grid-cols-9 gap-x-6 xl:gap-x-12 pt-[30px] pb-[30px]">
+                <div className="lg:col-span-3">
+                  <DatasetSearchFilters />
+                </div>
+                <div className="lg:col-span-6">
+                  <ListOfDatasets />
+                </div>
+              </article>
+            </SWRConfig>
+          </main>
+        </SearchStateProvider>
       </Layout>
     </>
   );

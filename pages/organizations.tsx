@@ -49,21 +49,12 @@ function Main({
   const [searchString, setSearchString] = useState("");
   return (
     <Layout>
-      <section className="row-start-1 row-end-3 col-span-full">
-        <div
-          className="bg-cover h-full bg-center bg-no-repeat bg-black flex flex-col"
-          style={{
-            backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-          }}
-        >
-          <TopBar />
-          <SearchHero
-            title="Organizations"
-            searchValue={searchString}
-            onChange={setSearchString}
-          />
-        </div>
-      </section>
+      <SearchHero
+        title="Organizations"
+        searchValue={searchString}
+        onChange={setSearchString}
+      />
+
       <main className="custom-container py-8">
         <ListOfOrgs
           orgs={orgs}

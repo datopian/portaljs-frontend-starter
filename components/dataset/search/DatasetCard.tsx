@@ -2,6 +2,11 @@ import Link from "next/link";
 import { format } from "timeago.js";
 import { Dataset } from "@portaljs/ckan";
 import ResourceCard from "./ResourceCard";
+import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
+import { ClockIcon } from "@heroicons/react/20/solid";
+import { resourceBgColors } from "../_shared/FormatsColors";
+
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export default function DatasetCard({
   dataset,
@@ -10,39 +15,29 @@ export default function DatasetCard({
   dataset: Dataset;
   showOrg?: boolean;
 }) {
-  const resourceBgColors = {
-    PDF: "bg-cyan-300",
-    CSV: "bg-emerald-300",
-    JSON: "bg-yellow-300",
-    ODS: "bg-amber-400",
-    XLS: "bg-orange-300",
-    DOC: "bg-red-300",
-    SHP: "bg-purple-400",
-    HTML: "bg-pink-300",
-  };
-
   const resourceBgColorsProxy = new Proxy(resourceBgColors, {
     get: (obj, prop) => {
       if (prop in obj) {
         return obj[prop];
       }
-      return "bg-amber-400";
+      return "bg-lightaccent";
     },
   });
 
   function DatasetInformations() {
     return (
-      <div className="flex align-center gap-2">
+      <div className="flex align-center gap-2 flex-wrap">
         {(dataset.resources.length > 0 && dataset.resources[0].format && (
           <>
             {showOrg !== false && (
               <span
                 className={`${
                   resourceBgColors[
-                    dataset.resources[0].format as keyof typeof resourceBgColors
+                    dataset.resources[0].format?.toUpperCase() as keyof typeof resourceBgColors
                   ]
-                } px-4 py-1 rounded-full text-xs`}
+                } px-2 py-1 rounded-full text-xs flex items-center gap-1`}
               >
+                <img src="/images/icons/org.svg" alt="" />
                 {dataset.organization
                   ? dataset.organization.title
                   : "No organization"}
@@ -51,11 +46,12 @@ export default function DatasetCard({
             <span
               className={`${
                 resourceBgColorsProxy[
-                  dataset.resources[0].format as keyof typeof resourceBgColors
+                  dataset.resources[0].format?.toUpperCase() as keyof typeof resourceBgColors
                 ]
-              } px-4 py-1 rounded-full text-xs`}
+              } px-2 py-1 rounded-full text-xs flex items-center gap-1`}
             >
-              {dataset.metadata_created && format(dataset.metadata_created)}
+              <img src="/images/icons/clock.svg" alt="" />
+              {dataset.metadata_modified && format(dataset.metadata_modified)}
             </span>
           </>
         )) || (
@@ -68,7 +64,7 @@ export default function DatasetCard({
               </span>
             )}
             <span className="bg-gray-200 px-4 py-1 rounded-full text-xs">
-              {dataset.metadata_created && format(dataset.metadata_created)}
+              {dataset.metadata_modified && format(dataset.metadata_modified)}
             </span>
           </>
         )}
@@ -76,22 +72,26 @@ export default function DatasetCard({
     );
   }
 
+  const datasetName =
+    dataset.name?.indexOf(`${mainOrg}--`) >= 0
+      ? dataset.name?.split(`${mainOrg}--`)[1]
+      : dataset.name;
+
   return (
-    <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2">
-      <ResourceCard
-        resource={dataset?.resources.find((resource) => resource.format)}
-      />
-      <div className="col-span-6 place-content-start flex flex-col gap-1">
-        <Link href={`/${dataset.organization.name}/${dataset.name}`}>
-          <h1 className="m-auto md:m-0 font-semibold text-lg text-zinc-900">
+    <Link href={`/@${dataset.organization.name}/${datasetName}`} className="">
+      <article className="grid grid-cols-1 md:grid-cols-7 gap-x-2 mb-6">
+        <MultipleResourcesCard resources={dataset.resources} />
+        <div className="col-span-6 place-content-start flex flex-col gap-1 mt-4 lg:mt-0 ml-0 lg:ml-4">
+          <h1 className="  font-semibold text-lg text-[#202020] break-words">
             {dataset.title || "No title"}
           </h1>
-        </Link>
-        <p className="text-sm font-normal text-stone-500  line-clamp-2 h-[44px] overflow-y-hidden ">
-          {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
-        </p>
-        <DatasetInformations />
-      </div>
-    </article>
+
+          <p className="text-sm font-normal text-[#575757]  line-clamp-2  overflow-y-hidden mb-1">
+            {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
+          </p>
+          <DatasetInformations />
+        </div>
+      </article>
+    </Link>
   );
 }

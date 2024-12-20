@@ -9,13 +9,16 @@ import SEO from "../next-seo.config";
 
 import Loader from "../components/_shared/Loader";
 
+import ThemeProvider from "../components/theme/theme-provider";
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const theme = pageProps.theme || "lighter";
   return (
-    <>
+    <ThemeProvider themeName={theme}>
       <DefaultSeo {...SEO} />
       <Loader />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }
 

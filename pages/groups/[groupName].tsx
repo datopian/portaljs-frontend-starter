@@ -11,6 +11,7 @@ import GroupNavCrumbs from "../../components/groups/individualPage/GroupNavCrumb
 import GroupInfo from "../../components/groups/individualPage/GroupInfo";
 import { getAllGroups, getGroup } from "@/lib/queries/groups";
 import { getDataset } from "@/lib/queries/dataset";
+import HeroSection from "@/components/_shared/HeroSection";
 
 export async function getStaticPaths() {
   const paths = (await getAllGroups({ detailed: false })).map(
@@ -81,6 +82,8 @@ export default function OrgPage({
       title: "Activity Stream",
     },
   ];
+
+  console.log(group);
   return (
     <>
       <Head>
@@ -90,33 +93,14 @@ export default function OrgPage({
       </Head>
       {group && (
         <Layout>
-          <div className="grid grid-rows-datasetpage-hero">
-            <section className="row-start-1 row-end-3 col-span-full">
-              <div
-                className="bg-cover h-full bg-center bg-no-repeat bg-black flex flex-col"
-                style={{
-                  backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-                }}
-              >
-                <TopBar />
-                <GroupNavCrumbs
-                  group={{
-                    name: group?.name,
-                    title: group?.title,
-                  }}
-                />
-                <div
-                  className="grid mx-auto items-center grow custom-container grow"
-                  style={{ marginBlock: "8rem" }}
-                >
-                  <div className="col-span-1">
-                    <h1 className="text-6xl font-black text-white">
-                      {group.title}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </section>
+          <HeroSection title={group.title} cols="6" />
+          <GroupNavCrumbs
+            group={{
+              name: group?.name,
+              title: group?.title,
+            }}
+          />
+          <div className="grid grid-rows-datasetpage-hero mt-8">
             <section className="grid row-start-2 row-span-2 col-span-full">
               <div className="custom-container">
                 {group && (

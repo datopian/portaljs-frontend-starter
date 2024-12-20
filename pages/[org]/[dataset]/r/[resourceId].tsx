@@ -7,6 +7,9 @@ import { Resource } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import MultipleResourcesCard from "@/components/dataset/_shared/MultipleResourcesCard";
+import { useRouter } from "next/router";
+import { RiArrowLeftLine } from "react-icons/ri";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -65,28 +68,29 @@ export default function ResourcePage({
   resource: Resource;
 }): JSX.Element {
   const resourceFormat = resource.format.toLowerCase();
+  const router = useRouter();
+  const { org, dataset } = router.query;
+
   return (
     <>
       <Layout>
         <div className="grid grid-rows-datasetpage-hero">
-          <section className="row-start-1 row-end-3 col-span-full">
-            <div
-              className="bg-cover h-full bg-center bg-no-repeat bg-black flex flex-col"
-              style={{
-                backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-                marginBottom: "4rem",
-              }}
-            >
-              <TopBar />
-            </div>
-          </section>
           <section className="grid row-start-2 row-span-2 col-span-full pb-16">
-            <div className="custom-container bg-[#fcfcfc] lg:px-4 py-8 rounded">
-              <div className="flex items-center gap-x-4 custom-container">
-                <ResourceCard small resource={resource} />
-                <h1 className="text-4xl truncate max-w-xs sm:max-w-sm lg:max-w-lg">
-                  {resource.name}
-                </h1>
+            <div className="custom-container bg-[#fcfcfc] lg:px-4 py-8 rounded-[10px]">
+              <div className="flex flex-col  custom-container">
+                <Link
+                  href={`/@${org}/${dataset}`}
+                  className="flex items-center lg:ml-[-40px] mb-5 text-sm"
+                >
+                  <RiArrowLeftLine className="text-[32px]" />
+                </Link>
+                <div className="flex items-center gap-x-4">
+                  <MultipleResourcesCard resources={[resource]} />
+
+                  <h1 className="text-4xl truncate max-w-xs sm:max-w-sm lg:max-w-lg font-bold">
+                    {resource.name}
+                  </h1>
+                </div>
               </div>
               <div className="flex gap-x-2 items-center custom-container py-2">
                 <span className="font-medium text-gray-500 inline">

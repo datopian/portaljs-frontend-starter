@@ -13,9 +13,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: "#00BBC2",
-        lightaccent: "#00bbc24d",
-        darkaccent: "#00a8ae",
+        accent: "#517fb5d9",
+        lightaccent: "#80a9d9d9",
+        darkaccent: "#517fb5",
         darkbrown: "#A75001",
         darkerbrown: "#964800",
         background: {

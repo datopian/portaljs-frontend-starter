@@ -8,11 +8,12 @@ export default function ResourceCard({
   small?: boolean;
 }) {
   const resourceTextColors = {
-    PDF: "text-cyan-300",
-    CSV: "text-emerald-300",
-    JSON: "text-yellow-300",
-    XLS: "text-orange-300",
+    PDF: "text-[#C9EEEF]",
+    CSV: "text-[#E0DBDE]",
+    JSON: "text-[#DBC9EB]",
     ODS: "text-amber-400",
+    XLS: "text-[#C9DAEB]",
+    XLSX: "text-[#C9DAEB]",
     DOC: "text-red-300",
     SHP: "text-purple-400",
     HTML: "text-pink-300",
@@ -37,8 +38,8 @@ export default function ResourceCard({
   return (
     <div className="col-span-1 md:pt-1.5 place-content-center md:place-content-start">
       <div
-        className="bg-slate-900 rounded-lg max-w-[90px] min-w-[60px] mx-auto md:mx-0 flex place-content-center my-auto"
-        style={{ minHeight: small ? "60px" : "90px" }}
+        className="bg-[var(--dark)] rounded-lg max-w-[90px] min-w-[60px] mx-auto md:mx-0 flex place-content-center my-auto"
+        style={{ minHeight: small ? "60px" : "86px" }}
       >
         {(resource && resource.format && (
           <span

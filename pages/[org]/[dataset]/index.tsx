@@ -19,6 +19,7 @@ import {
   publicToPrivateDatasetName,
 } from "@/lib/queries/utils";
 import { getDataset } from "@/lib/queries/dataset";
+import HeroSection from "@/components/_shared/HeroSection";
 
 export async function getStaticPaths() {
   const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
@@ -47,6 +48,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const mainOrg = process.env.NEXT_PUBLIC_ORG;
     const datasetName = context.params?.dataset as string;
     const privateDatasetName = publicToPrivateDatasetName(datasetName, mainOrg);
+
     if (!datasetName) {
       return {
         notFound: true,
@@ -116,37 +118,18 @@ export default function DatasetPage({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="grid grid-rows-datasetpage-hero">
-          <section className="row-start-1 row-end-3 col-span-full">
-            <div
-              className="bg-cover h-full bg-center bg-no-repeat bg-black flex flex-col"
-              style={{
-                backgroundImage: "url('/images/backgrounds/SearchHero.avif')",
-              }}
-            >
-              <TopBar />
-              <DatasetNavCrumbs
-                org={{
-                  name: dataset.organization?.name,
-                  title: dataset.organization?.title,
-                }}
-                dataset={{
-                  name: dataset.name,
-                  title: dataset.title ? dataset.title : "This dataset",
-                }}
-              />
-              <div
-                className="grid mx-auto items-center grow custom-container grow"
-                style={{ marginBlock: "8rem" }}
-              >
-                <div className="col-span-1">
-                  <h1 className="text-6xl font-black text-white">
-                    {dataset.title}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </section>
+        <HeroSection title={dataset.title} cols="6" />
+        <DatasetNavCrumbs
+          org={{
+            name: dataset.organization?.name,
+            title: dataset.organization?.title,
+          }}
+          dataset={{
+            name: dataset.name,
+            title: dataset.title ? dataset.title : "This dataset",
+          }}
+        />
+        <div className="grid grid-rows-datasetpage-hero mt-8">
           <section className="grid row-start-2 row-span-2 col-span-full">
             <div className="custom-container">
               {dataset && (
