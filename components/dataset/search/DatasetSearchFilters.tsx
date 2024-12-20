@@ -28,7 +28,11 @@ export default function DatasetSearchFilters() {
       </a>
       <div className={` ${showFilters ? "block" : "hidden"} lg:block`}>
         <FacetCard
-          title="Refine by Organization"
+          title={
+            <>
+              Refine by <span className="text-accent">Organization</span>
+            </>
+          }
           showClear={options.orgs.length > 0}
           clearAction={() => {
             setOptions({
@@ -70,7 +74,11 @@ export default function DatasetSearchFilters() {
         </FacetCard>
         {searchFacets.groups?.items.length > 0 && (
           <FacetCard
-            title="Refine by Theme"
+            title={
+              <>
+                Refine by <span className="text-accent">Theme</span>
+              </>
+            }
             showClear={options.groups.length > 0}
             clearAction={() => {
               setOptions({
@@ -114,7 +122,11 @@ export default function DatasetSearchFilters() {
         )}
         {searchFacets.res_format?.items?.length > 0 && (
           <FacetCard
-            title="Refine by Format"
+            title={
+              <>
+                Refine by <span className="text-accent">Format</span>
+              </>
+            }
             showClear={options.resFormat.length > 0}
             clearAction={() => {
               setOptions({

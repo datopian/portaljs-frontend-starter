@@ -1,11 +1,16 @@
 const colors = require("tailwindcss/colors");
-
+const Color = require("color");
 const defaultTheme = require("tailwindcss/defaultTheme");
+
+const themeColor = process.env.NEXT_PUBLIC_THEME_COLOR || "#517fb5d9";
+
+console.log("color:" + themeColor);
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./themes/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
   ],
@@ -13,9 +18,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: "#517fb5d9",
-        lightaccent: "#80a9d9d9",
-        darkaccent: "#517fb5",
+        accent: {
+          100: Color(themeColor).lighten(0.9).hex(), // Lightest shade
+          200: Color(themeColor).lighten(0.7).hex(), // Lighter shade
+          300: Color(themeColor).lighten(0.5).hex(), // Medium shade
+          400: Color(themeColor).lighten(0.3).hex(), // Darker shade
+          500: themeColor, // Base color (neutral)
+          600: Color(themeColor).darken(0.3).hex(), // Darker
+          700: Color(themeColor).darken(0.5).hex(), // Even darker
+          800: Color(themeColor).darken(0.7).hex(), // Darkest shade
+        },
+        lightaccent: Color(themeColor).lighten(0.3).hex(), // Lighten by 20%
+        darkaccent: Color(themeColor).darken(0.3).hex(), // Darken by 20%
         darkbrown: "#A75001",
         darkerbrown: "#964800",
         background: {
@@ -30,6 +44,22 @@ module.exports = {
           DEFAULT: "",
           dark: "",
         },
+      },
+      textColor: {
+        accent: themeColor, // Default for text-accent will be accent-500 (base color)
+      },
+      backgroundColor: {
+        accent: themeColor, // Default for bg-accent will be accent-500 (base color)
+      },
+      borderColor: {
+        accent: themeColor, // Default for border-accent will be accent-500 (base color)
+      },
+      // Add other properties as needed
+      placeholderColor: {
+        accent: themeColor, // Default for placeholder-accent will be accent-500
+      },
+      ringColor: {
+        accent: themeColor, // Default for ring-accent will be accent-500
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],

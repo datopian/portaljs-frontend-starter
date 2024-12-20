@@ -6,7 +6,19 @@ import ActionCard from "../actions/actionCard";
 import Link from "next/link";
 
 import { Montserrat } from "next/font/google";
-import { ArrowLongRightIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowLongRightIcon,
+  ArrowRightIcon,
+  ArrowUpOnSquareStackIcon,
+  MagnifyingGlassIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/20/solid";
+import {
+  RiQuestionnaireLine,
+  RiSearch2Line,
+  RiSendPlane2Line,
+  RiUploadCloud2Line,
+} from "react-icons/ri";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -27,19 +39,19 @@ export default function MainSection({
             title: "Find Data",
             description: "Find, share, use and gain insights from data.",
             href: "/search",
-            icon: "/images/icons/search.svg",
+            icon: <RiSearch2Line width={48} />,
           },
           {
             title: "Add Data",
             description: "Make your dataset available on Portal.",
             href: "#",
-            icon: "/images/icons/upload.png",
+            icon: <RiUploadCloud2Line width={48} />,
           },
           {
             title: "Request Data",
             description: "Send us a request for the data you didn’t find.",
             href: "#",
-            icon: "/images/icons/request.svg",
+            icon: <RiQuestionnaireLine width={48} />,
           },
         ].map((item, i) => (
           <ActionCard {...item} key={i} />
@@ -52,7 +64,7 @@ export default function MainSection({
         <section className="relative">
           <Link
             href="/groups"
-            className={`${montserrat.className} flex items-center gap-1 uppercase hover:text-black ml-auto w-fit absolute right-0 top-[-30px]`}
+            className={`${montserrat.className} text-accent font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
           >
             View all categories
             <ArrowLongRightIcon width={16} />

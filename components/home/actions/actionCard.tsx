@@ -9,7 +9,10 @@ export default function ActionCard({ title, description, icon, href }) {
       href={href}
       className={`w-full bg-[var(--background-color)] ${theme.styles.shadowMd} flex flex-col items-center py-10 lg:py-16  px-5 lg:px-10 text-center rounded-[10px]`}
     >
-      <Image src={icon} alt="" width={48} height={55} className="mb-[34px]" />
+      {icon && (
+        <span className="mb-4 text-accent text-[52px] font-normal">{icon}</span>
+      )}
+
       <h3 className="font-bold text-black mb-[14px] text-[20px] lg:text-[25px] uppercase">
         {title}
       </h3>

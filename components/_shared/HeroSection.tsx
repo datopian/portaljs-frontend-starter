@@ -14,8 +14,7 @@ export default function HeroSection({
         >
           <div className="col-span-1">
             <h1 className="text-[55px] font-black lg:max-w-[80%]">
-              {title}{" "}
-              <span className="text-[var(--accent)]">{titleAccent}</span>
+              {title} <span className="text-accent">{titleAccent}</span>
             </h1>
           </div>
         </div>

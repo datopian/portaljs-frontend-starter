@@ -17,7 +17,7 @@ export default function PopularDatasets({
     >
       <div>
         <div
-          className={`inline-block align-middle w-12 h-0.5 border ${theme.styles.borderAccent}`}
+          className={`inline-block align-middle w-12 h-0.5 border border-accent`}
         />
         <span className="inline-block font-roboto text-sm text-center pl-2">
           &nbsp; MOST POPULAR DATASETS

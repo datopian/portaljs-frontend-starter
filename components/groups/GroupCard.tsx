@@ -21,7 +21,7 @@ export default function GroupCard({
   return (
     <Link
       href={`/groups/${name}`}
-      className={`bg-white  p-8 col-span-3 rounded-lg block h-full ${theme.styles.textAccent} ${theme.styles.shadowSm}`}
+      className={`bg-white  p-8 col-span-3 rounded-lg block h-full text-accent  ${theme.styles.shadowSm}`}
     >
       <Image
         src={

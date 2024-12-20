@@ -1,5 +1,5 @@
 export const resourceTextColors = {
-  PDF: "text-[#DBC9EB]", // Light lavender
+  PDF: "text-[#ff9393]", // Light lavender
   CSV: "text-[#C9EEEF]", // Light cyan
   JSON: "text-[#C9DAEB]", // Light periwinkle
   ODS: "text-[#E0DBDE]", // Soft light pink
@@ -27,7 +27,7 @@ export const resourceTextColors = {
 };
 
 export const resourceBgColors = {
-  PDF: "bg-[#F1ECFF]", // Light pastel lavender background for black text
+  PDF: "bg-[#d1222226]", // Light pastel lavender background for black text
   CSV: "bg-[#D8F6FB]", // Soft cyan background for black text
   JSON: "bg-[#E1E4F6]", // Very light periwinkle for black text
   ODS: "bg-[#F9E8E3]", // Soft light pink for black text

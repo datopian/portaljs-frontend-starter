@@ -10,7 +10,7 @@ export default function LighterThemeHeader() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
-
+  console.log(router);
   useEffect(() => {
     const handleRouteChange = () => {
       setMobileMenuOpen(false); // Close the menu
@@ -31,22 +31,37 @@ export default function LighterThemeHeader() {
         <div className="flex items-center gap-x-12">
           <span className="sr-only">Portal</span>
           <Link href="/">
-            <Image
-              src="/images/logos/logo.svg"
-              width={55}
-              height={55}
-              alt="Portal"
-            />
+            <div
+              className=" text-[16px] w-[50px] border-b-[4px] border-accent text-white bg-[var(--dark)] rounded flex items-center justify-center p-2  uppercase break-all"
+              style={{ height: 55 }}
+            >
+              Portal
+            </div>
           </Link>
           <div className="hidden lg:flex lg:gap-x-12">
             <div className="flex gap-x-8 align-center">
-              <Link href="/search" className="font-semibold my-auto">
+              <Link
+                href="/search"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/search" ? "text-accent" : ""
+                }`}
+              >
                 SEARCH
               </Link>
-              <Link href="/organizations" className="font-semibold my-auto">
+              <Link
+                href="/organizations"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/organizations" ? "text-accent" : ""
+                }`}
+              >
                 ORGANIZATIONS
               </Link>
-              <Link href="/groups" className="font-semibold my-auto">
+              <Link
+                href="/groups"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/groups" ? "text-accent" : ""
+                }`}
+              >
                 GROUPS
               </Link>
             </div>
