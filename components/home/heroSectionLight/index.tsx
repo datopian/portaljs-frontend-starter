@@ -49,7 +49,10 @@ export default function HeroSectionLight({ stats }) {
           <div
             className={`${poppins.className} lg:ml-auto lg:pr-[135px] flex lg:flex-col justify-start gap-[40px] flex flex-wrap `}
           >
-            <Link href={`/search`} className={`flex items-center gap-[20px] `}>
+            <Link
+              href={`/search`}
+              className={`flex items-center gap-[20px] hover:text-accent transition-all`}
+            >
               <span className="text-accent">
                 <RiFileCopy2Line className="text-[40px]" width={40} />
               </span>
@@ -62,7 +65,10 @@ export default function HeroSectionLight({ stats }) {
                 </span>
               </div>
             </Link>
-            <Link href="/groups" className="flex items-center gap-[20px]">
+            <Link
+              href="/groups"
+              className="flex items-center gap-[20px] hover:text-accent transition-all"
+            >
               <span className="text-accent">
                 <RiFunctionLine className="text-[40px]" width={40} />
               </span>
@@ -76,7 +82,10 @@ export default function HeroSectionLight({ stats }) {
                 </span>
               </div>
             </Link>
-            <Link href="/organization" className="flex items-center gap-[20px]">
+            <Link
+              href="/organization"
+              className="flex items-center gap-[20px] hover:text-accent transition-all"
+            >
               <span className="text-accent">
                 <RiTeamLine className="text-[40px]" width={40} />
               </span>

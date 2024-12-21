@@ -21,7 +21,7 @@ export default function GroupCard({
   return (
     <Link
       href={`/groups/${name}`}
-      className={`bg-white border-b-[4px] border-white hover:border-accent p-8 col-span-3 rounded-lg block h-full text-accent  ${theme.styles.shadowSm}`}
+      className={`bg-white group border-b-[4px] border-white hover:border-accent p-8 col-span-3 rounded-lg block h-full text-accent  ${theme.styles.shadowSm}`}
     >
       <Image
         src={
@@ -36,7 +36,7 @@ export default function GroupCard({
         height="54"
       ></Image>
       <div className={`text-black`}>
-        <h3 className="font-inter font-semibold text-lg mt-4 ">
+        <h3 className="font-inter font-semibold text-lg mt-4 group-hover:text-accent">
           {display_name}
         </h3>
         <p className="font-inter font-medium text-sm mt-1 mb-6 line-clamp-2">

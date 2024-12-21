@@ -4,8 +4,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 const themeColor = process.env.NEXT_PUBLIC_THEME_COLOR || "#517fb5d9";
 
-console.log("color:" + themeColor);
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
