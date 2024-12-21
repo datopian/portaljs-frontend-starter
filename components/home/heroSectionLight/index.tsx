@@ -13,7 +13,15 @@ import {
   ShareIcon,
   TagIcon,
 } from "@heroicons/react/20/solid";
-import { RiOrganizationChart } from "react-icons/ri";
+import {
+  RiDashboard2Fill,
+  RiDashboard3Line,
+  RiFileCopy2Line,
+  RiFolder3Line,
+  RiFunctionLine,
+  RiOrganizationChart,
+  RiTeamLine,
+} from "react-icons/ri";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -43,7 +51,7 @@ export default function HeroSectionLight({ stats }) {
           >
             <Link href={`/search`} className={`flex items-center gap-[20px] `}>
               <span className="text-accent">
-                <ClipboardDocumentIcon width={40} />
+                <RiFileCopy2Line className="text-[40px]" width={40} />
               </span>
               <div className="flex flex-col gap-0">
                 <span className="font-bold text-[32px] leading-[40px]">
@@ -56,7 +64,7 @@ export default function HeroSectionLight({ stats }) {
             </Link>
             <Link href="/groups" className="flex items-center gap-[20px]">
               <span className="text-accent">
-                <RectangleGroupIcon width={40} />
+                <RiFunctionLine className="text-[40px]" width={40} />
               </span>
 
               <div className="flex flex-col gap-0">
@@ -70,7 +78,7 @@ export default function HeroSectionLight({ stats }) {
             </Link>
             <Link href="/organization" className="flex items-center gap-[20px]">
               <span className="text-accent">
-                <RiOrganizationChart className="text-[40px]" width={40} />
+                <RiTeamLine className="text-[40px]" width={40} />
               </span>
               <div className="flex flex-col gap-0">
                 <span className="font-bold text-[32px] leading-[40px]">

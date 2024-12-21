@@ -47,7 +47,7 @@ export const MultiCheckbox = ({
         htmlFor={`${name}-${value}`}
         className={`h-5 w-5 min-w-[1.25rem] flex items-center justify-center rounded border-2 cursor-pointer ${
           active
-            ? "bg-black border-black text-white"
+            ? "bg-accent border-accent text-white"
             : "bg-white border-gray-300"
         } transition-colors`}
       >

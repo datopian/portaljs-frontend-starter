@@ -7,6 +7,7 @@ import { ClockIcon } from "@heroicons/react/20/solid";
 import { resourceBgColors } from "../_shared/FormatsColors";
 import ResourcesBadges from "../_shared/ResourcesBadges";
 import { RiMapPinTimeLine, RiOrganizationChart } from "react-icons/ri";
+import { getDatasetName } from "@/lib/utils";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
@@ -17,23 +18,9 @@ export default function DatasetItem({
   dataset: Dataset;
   showOrg?: boolean;
 }) {
-  const resourceBgColorsProxy = new Proxy(resourceBgColors, {
-    get: (obj, prop) => {
-      if (prop in obj) {
-        return obj[prop];
-      }
-      return "bg-lightaccent";
-    },
-  });
-
-  const datasetName =
-    dataset.name?.indexOf(`${mainOrg}--`) >= 0
-      ? dataset.name?.split(`${mainOrg}--`)[1]
-      : dataset.name;
-
   return (
     <Link
-      href={`/@${dataset.organization.name}/${datasetName}`}
+      href={`/@${dataset.organization.name}/${getDatasetName(dataset.name)}`}
       className="flex items-start gap-4"
     >
       <span className="min-w-[5px] min-h-[5px] bg-accent rounded-full mt-3"></span>
