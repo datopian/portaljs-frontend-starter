@@ -28,8 +28,6 @@ function ListItems() {
     }
   );
 
-  console.log(packageSearchResults);
-
   const [subsetOfPages, setSubsetOfPages] = useState(0);
 
   useEffect(() => {

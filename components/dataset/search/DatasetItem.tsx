@@ -8,6 +8,7 @@ import { resourceBgColors } from "../_shared/FormatsColors";
 import ResourcesBadges from "../_shared/ResourcesBadges";
 import { RiMapPinTimeLine, RiOrganizationChart } from "react-icons/ri";
 import { getDatasetName } from "@/lib/utils";
+import { useTheme } from "@/components/theme/theme-provider";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
@@ -18,12 +19,16 @@ export default function DatasetItem({
   dataset: Dataset;
   showOrg?: boolean;
 }) {
+  const {
+    theme: { styles },
+  } = useTheme();
+
   return (
     <Link
       href={`/@${dataset.organization.name}/${getDatasetName(dataset.name)}`}
-      className="flex items-start gap-4"
+      className={`flex items-start gap-4 hover:bg-white hover:shadow-lg transition-all p-4 rounded-[10px] ${styles.shadowMd}`}
     >
-      <span className="min-w-[5px] min-h-[5px] bg-accent rounded-full mt-3"></span>
+      <span className="min-w-[5px] min-h-[5px] bg-accent rounded-full mt-3 hidden"></span>
       <div className="w-full">
         <div className="text-lg font-semibold text-gray-900">
           {dataset.title}

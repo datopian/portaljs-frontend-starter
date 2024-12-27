@@ -11,7 +11,8 @@ export default function LighterThemeHeader() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
-  console.log(router);
+  const portalLogo = process?.env?.NEXT_PUBLIC_PORTAL_LOGO;
+
   useEffect(() => {
     const handleRouteChange = () => {
       setMobileMenuOpen(false); // Close the menu
@@ -31,7 +32,14 @@ export default function LighterThemeHeader() {
       >
         <div className="flex items-center gap-x-12">
           <span className="sr-only">Portal</span>
-          <PortalDefaultLogo />
+          {portalLogo ? (
+            <Link href="/">
+              <Image src={portalLogo} alt="logo" height={55} width={55} />
+            </Link>
+          ) : (
+            <PortalDefaultLogo />
+          )}
+
           <div className="hidden lg:flex lg:gap-x-12">
             <div className="flex gap-x-8 align-center">
               <Link

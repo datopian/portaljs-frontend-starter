@@ -10,6 +10,7 @@ import Link from "next/link";
 import MultipleResourcesCard from "@/components/dataset/_shared/MultipleResourcesCard";
 import { useRouter } from "next/router";
 import { RiArrowLeftLine } from "react-icons/ri";
+import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -85,11 +86,14 @@ export default function ResourcePage({
                   <RiArrowLeftLine className="text-[32px]" />
                 </Link>
                 <div className="flex items-center gap-x-4">
-                  <MultipleResourcesCard resources={[resource]} />
-
-                  <h1 className="text-4xl truncate max-w-xs sm:max-w-sm lg:max-w-lg font-bold">
-                    {resource.name}
-                  </h1>
+                  <div>
+                    <h1 className="text-4xl truncate max-w-xs sm:max-w-sm lg:max-w-lg font-bold">
+                      {resource.name}
+                    </h1>
+                    <div className="mt-4">
+                      <ResourcesBadges resources={[resource]} />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-x-2 items-center custom-container py-2">
@@ -150,7 +154,7 @@ export default function ResourcePage({
               <div className="custom-container py-4">
                 <Link
                   href={resource.url}
-                  className="bg-accent h-auto py-2 px-4 text-sm text-gray-800 rounded-xl font-roboto font-bold hover:bg-cyan-800 hover:text-white duration-150 flex items-center gap-1 w-fit"
+                  className="bg-accent h-auto py-2 px-4 text-sm text-white rounded-xl font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center gap-1 w-fit"
                 >
                   Download
                   <svg
