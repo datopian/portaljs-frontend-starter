@@ -1,3 +1,4 @@
+import PortalDefaultLogo from "@/components/_shared/PortalDefaultLogo";
 import { useTheme } from "@/components/theme/theme-provider";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
@@ -10,6 +11,7 @@ export default function LighterThemeHeader() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const portalLogo = process?.env?.NEXT_PUBLIC_PORTAL_LOGO;
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -30,23 +32,38 @@ export default function LighterThemeHeader() {
       >
         <div className="flex items-center gap-x-12">
           <span className="sr-only">Portal</span>
-          <Link href="/">
-            <Image
-              src="/images/logos/logo.svg"
-              width={55}
-              height={55}
-              alt="Portal"
-            />
-          </Link>
+          {portalLogo ? (
+            <Link href="/">
+              <Image src={portalLogo} alt="logo" height={55} width={55} />
+            </Link>
+          ) : (
+            <PortalDefaultLogo />
+          )}
+
           <div className="hidden lg:flex lg:gap-x-12">
             <div className="flex gap-x-8 align-center">
-              <Link href="/search" className="font-semibold my-auto">
+              <Link
+                href="/search"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/search" ? "text-accent" : ""
+                }`}
+              >
                 SEARCH
               </Link>
-              <Link href="/organizations" className="font-semibold my-auto">
+              <Link
+                href="/organizations"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/organizations" ? "text-accent" : ""
+                }`}
+              >
                 ORGANIZATIONS
               </Link>
-              <Link href="/groups" className="font-semibold my-auto">
+              <Link
+                href="/groups"
+                className={`font-semibold my-auto ${
+                  router.pathname === "/groups" ? "text-accent" : ""
+                }`}
+              >
                 GROUPS
               </Link>
             </div>

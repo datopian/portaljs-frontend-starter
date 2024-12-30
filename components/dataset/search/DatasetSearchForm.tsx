@@ -34,7 +34,7 @@ export default function DatasetSearchForm() {
         />
 
         <button
-          className={`font-bold text-white px-12 py-3 rounded-lg bg-accent hover:bg-cyan-500 duration-150 ${theme.styles.bgDark}`}
+          className={`font-bold border-b-[4px] border-accent text-white px-12 py-3 rounded-lg bg-accent hover:bg-cyan-500 duration-150 ${theme.styles.bgDark}`}
           type="submit"
         >
           SEARCH

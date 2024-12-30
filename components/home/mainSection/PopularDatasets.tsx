@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Dataset } from "@portaljs/ckan";
 import { useTheme } from "@/components/theme/theme-provider";
+import { getDatasetName } from "@/lib/utils";
 
 type DatasetLinkProps = Pick<Dataset, "title" | "metadata_modified">;
 
@@ -17,7 +18,7 @@ export default function PopularDatasets({
     >
       <div>
         <div
-          className={`inline-block align-middle w-12 h-0.5 border ${theme.styles.borderAccent}`}
+          className={`inline-block align-middle w-12 h-0.5 border border-accent`}
         />
         <span className="inline-block font-roboto text-sm text-center pl-2">
           &nbsp; MOST POPULAR DATASETS
@@ -27,8 +28,10 @@ export default function PopularDatasets({
           {datasets.map((dataset, index) => (
             <Link
               key={index}
-              href={`/${dataset.organization.name}/${dataset.name}`}
-              className="block mt-6"
+              href={`/${dataset.organization.name}/${getDatasetName(
+                dataset.name
+              )}`}
+              className="block mt-6 hover:text-accent transition-all"
             >
               <DatasetLink
                 key={dataset.id}

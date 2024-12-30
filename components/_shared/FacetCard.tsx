@@ -6,7 +6,7 @@ export default function FacetCard({
   showClear,
   clearAction,
 }: {
-  title?: string;
+  title?: React.ReactNode;
   children: React.ReactNode;
   showClear?: boolean;
   clearAction?: Function;

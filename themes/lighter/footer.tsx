@@ -1,3 +1,4 @@
+import PortalDefaultLogo from "@/components/_shared/PortalDefaultLogo";
 import { useTheme } from "@/components/theme/theme-provider";
 import Image from "next/image";
 
@@ -105,7 +106,7 @@ const LighterThemeFooter: React.FC = () => {
   };
 
   return (
-    <footer className="bg-white mt-[155px]">
+    <footer className="bg-accent-50  mt-[155px]">
       <div
         className={`custom-container flex flex-col flex-wrap py-10 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap`}
       >
@@ -117,7 +118,7 @@ const LighterThemeFooter: React.FC = () => {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="font-roboto font-normal hover:text-gray-400"
+                    className="font-roboto font-normal hover:text-accent transition-all"
                   >
                     {item.name}
                   </a>
@@ -133,7 +134,7 @@ const LighterThemeFooter: React.FC = () => {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="font-roboto font-normal hover:text-gray-400"
+                    className="font-roboto font-normal hover:text-accent transition-all"
                   >
                     {item.name}
                   </a>
@@ -149,7 +150,7 @@ const LighterThemeFooter: React.FC = () => {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="font-roboto font-normal hover:text-gray-400"
+                    className="font-roboto font-normal hover:text-accent transition-all"
                   >
                     {item.name}
                   </a>
@@ -164,7 +165,11 @@ const LighterThemeFooter: React.FC = () => {
           </h2>
           <div className="flex mt-5 space-x-5 justify-center md:justify-start">
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href}>
+              <a
+                key={item.name}
+                href={item.href}
+                className="transition-all hover:text-accent"
+              >
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="flex h-6 w-6" aria-hidden={true} />
               </a>
@@ -175,19 +180,7 @@ const LighterThemeFooter: React.FC = () => {
       <div
         className={`custom-container flex flex-col flex-wrap py-6 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap`}
       >
-        <a
-          href="https://portaljs.org"
-          target="_blank"
-          className="text-xl font-medium"
-          rel="noreferrer"
-        >
-          <Image
-            src="/images/logos/logo.svg"
-            width={55}
-            height={55}
-            alt="Portal"
-          />
-        </a>
+        <PortalDefaultLogo />
       </div>
     </footer>
   );

@@ -8,11 +8,8 @@ import { getAllOrganizations } from "@/lib/queries/orgs";
 import HeroSectionLight from "@/components/home/heroSectionLight";
 import dynamic from "next/dynamic";
 import { useTheme } from "@/components/theme/theme-provider";
-//import { LineChart } from "@portaljs/components";
 
-//const LineChart = dynamic(() => import('@portaljs/components'));
-
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const datasets = await searchDatasets({
     offset: 0,
     limit: 5,
@@ -34,7 +31,6 @@ export async function getStaticProps() {
       orgs,
       stats,
     },
-    revalidate: 1800,
   };
 }
 
@@ -43,7 +39,7 @@ export default function Home({
   groups,
   orgs,
   stats,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   const LineChart = dynamic(
     () => import("@portaljs/components").then((mod) => mod.LineChart),
     { ssr: false }
@@ -64,7 +60,7 @@ export default function Home({
         <div className={`${theme.styles.shadowSm} p-4`}>
           <h4>
             <div
-              className={`inline-block align-middle w-12 h-0.5 border ${theme.styles.borderAccent}`}
+              className={`inline-block align-middle w-12 h-0.5 border border-accent`}
             />
             <span className="inline-block font-roboto text-sm text-center pl-2">
               &nbsp; MOST DOWNLOADED

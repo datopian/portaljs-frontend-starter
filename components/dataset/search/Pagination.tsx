@@ -43,7 +43,7 @@ export default function Pagination({
           key={x}
           className={`${
             x == options.offset / max
-              ? "bg-gray-900 !h-9 !w-9 rounded-[10px] text-white"
+              ? "bg-accent !h-9 !w-9 rounded-[10px] text-white"
               : ""
           } px-2 font-semibold`}
           onClick={() => {
