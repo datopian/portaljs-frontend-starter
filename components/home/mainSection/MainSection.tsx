@@ -64,7 +64,7 @@ export default function MainSection({
         <section className="relative">
           <Link
             href="/groups"
-            className={`${montserrat.className} text-accent font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
+            className={`${montserrat.className}  font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
           >
             View all categories
             <ArrowLongRightIcon width={16} />

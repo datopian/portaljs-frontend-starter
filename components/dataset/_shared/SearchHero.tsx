@@ -41,6 +41,7 @@ export default function SearchHero({
                   onChange(e.target.value);
                 }}
                 value={searchValue}
+                aria-label={`Search ${title}`}
               />
             </form>
           </div>

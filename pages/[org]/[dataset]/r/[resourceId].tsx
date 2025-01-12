@@ -11,6 +11,7 @@ import MultipleResourcesCard from "@/components/dataset/_shared/MultipleResource
 import { useRouter } from "next/router";
 import { RiArrowLeftLine } from "react-icons/ri";
 import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
+import Head from "next/head";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -74,6 +75,9 @@ export default function ResourcePage({
 
   return (
     <>
+      <Head>
+        <title>{`${resource.name}`}</title>
+      </Head>
       <Layout>
         <div className="grid grid-rows-datasetpage-hero">
           <section className="grid row-start-2 row-span-2 col-span-full pb-16">
@@ -84,6 +88,7 @@ export default function ResourcePage({
                   className="flex items-center lg:ml-[-40px] mb-5 text-sm"
                 >
                   <RiArrowLeftLine className="text-[32px]" />
+                  <span className="sr-only">Go back</span>
                 </Link>
                 <div className="flex items-center gap-x-4">
                   <div>

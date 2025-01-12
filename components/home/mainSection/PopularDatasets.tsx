@@ -49,7 +49,7 @@ export default function PopularDatasets({
 function DatasetLink({ title, metadata_modified }: DatasetLinkProps) {
   return (
     <div>
-      <h3 className="font-inter font-semibold text-xl">{title}</h3>
+      <h2 className="font-inter font-semibold text-xl">{title}</h2>
       <span className="font-roboto font-light text-[12px] flex items-center gap-1 text-[#1F2633] font-light">
         <svg
           xmlns="http://www.w3.org/2000/svg"

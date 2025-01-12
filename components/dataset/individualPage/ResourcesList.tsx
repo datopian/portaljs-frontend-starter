@@ -46,6 +46,7 @@ export default function ResourcesList({
                 className="bg-accent-100 h-fit p-1 text-[18px] h-[30px] w-[30px] text-center text-dark rounded font-roboto font-bold hover:bg-accent-200 duration-150 flex items-center justify-center gap-1"
               >
                 <RiEyeLine />
+                <span className="sr-only">Preview</span>
               </Link>
             )}
             {resource.url && (
@@ -54,6 +55,7 @@ export default function ResourcesList({
                 className="bg-accent h-fit p-1 text-[18px] h-[30px] w-[30px] text-center text-white rounded font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center justify-center gap-1"
               >
                 <RiDownload2Fill />
+                <span className="sr-only">Download</span>
               </Link>
             )}
           </div>

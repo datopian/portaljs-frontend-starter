@@ -52,6 +52,7 @@ export const MultiCheckbox = ({
         } transition-colors`}
       >
         {active && <CheckIcon width={16} />}
+        <span className="sr-only">{label}</span>
       </label>
       <span
         onClick={select}
