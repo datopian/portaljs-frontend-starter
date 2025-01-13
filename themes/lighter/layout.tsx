@@ -112,11 +112,19 @@ const LigtherTheme = ({
           },
         }}
       />
+      <a
+        href="#main-content"
+        className="absolute left-0 top-0 bg-accent text-white py-2 px-4 z-50 transform -translate-y-full focus:translate-y-0 transition"
+      >
+        Skip to main content
+      </a>
       <div className={` ${styles.LightTheme} ${inter.className} relative`}>
         {Header && <Header />}
         <div className="content-wrapper">
           {Sidebar && <Sidebar />}
-          <main className="main-content">{children}</main>
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
         </div>
         {Footer && <Footer />}
       </div>
