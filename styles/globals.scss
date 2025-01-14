@@ -79,22 +79,3 @@ snap-tabs {
 .css-7eceai-Grid-1 {
   display: none !important;
 }
-
-
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #005fcc; /* Accessible background color */
-  color: #ffffff; /* Accessible text color */
-  padding: 8px 16px;
-  font-size: 16px;
-  text-decoration: none;
-  z-index: 1000;
-  transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-  top: 10px; /* Bring into view when focused */
-  outline: 2px solid #fff; /* Optional: Add a focus outline */
-}
