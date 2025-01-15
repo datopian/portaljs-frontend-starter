@@ -13,6 +13,8 @@ import { RiArrowLeftLine } from "react-icons/ri";
 import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
 import Head from "next/head";
 
+import CsvDataGridPreview from "@/components/_shared/CSVPreview";
+
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
   { ssr: false }
@@ -183,9 +185,7 @@ export default function ResourcePage({
               </div>
               <div className="lg:px-8">
                 {resourceFormat == "csv" ? (
-                  <div>
-                    <RawCsvViewer url={resource.url} />
-                  </div>
+                  <CsvDataGridPreview url={resource.url} />
                 ) : null}
                 {resourceFormat == "pdf" && (
                   <PdfViewer
