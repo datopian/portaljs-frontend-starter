@@ -13,7 +13,11 @@ import { RiArrowLeftLine } from "react-icons/ri";
 import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
 import Head from "next/head";
 
+import { PrimeReactProvider } from "primereact/api";
+
 import CsvDataGridPreview from "@/components/_shared/CSVPreview";
+import HeroSection from "@/components/_shared/HeroSection";
+import ResponsiveGridData from "@/components/ResponsiveGrid";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -76,34 +80,39 @@ export default function ResourcePage({
   const { org, dataset } = router.query;
 
   return (
-    <>
+    <PrimeReactProvider>
       <Head>
         <title>{`${resource.name}`}</title>
       </Head>
       <Layout>
-        <div className="grid grid-rows-datasetpage-hero">
-          <section className="grid row-start-2 row-span-2 col-span-full pb-16">
-            <div className="custom-container bg-[#fcfcfc] lg:px-4 py-8 rounded-[10px]">
-              <div className="flex flex-col  custom-container">
-                <Link
-                  href={`/@${org}/${dataset}`}
-                  className="flex items-center lg:ml-[-40px] mb-5 text-sm"
-                >
-                  <RiArrowLeftLine className="text-[32px]" />
-                  <span className="sr-only">Go back</span>
-                </Link>
-                <div className="flex items-center gap-x-4">
-                  <div>
-                    <h1 className="text-4xl truncate max-w-xs sm:max-w-sm lg:max-w-lg font-bold">
-                      {resource.name}
-                    </h1>
-                    <div className="mt-4">
-                      <ResourcesBadges resources={[resource]} />
-                    </div>
-                  </div>
-                </div>
+        <div className="custom-container pt-[30px]">
+          <Link
+            href={`/@${org}/${dataset}`}
+            className="flex items-center  text-sm"
+          >
+            <RiArrowLeftLine className="text-[32px]" />
+            <span className="sr-only">Go back</span>
+          </Link>
+          <div
+            className="bg-cover bg-center bg-no-repeat flex flex-col"
+            style={{}}
+          >
+            <div className={` bg-white`}>
+              <div className="col-span-1">
+                <h1 className="text-[24px] md:text-[50px] font-black lg:max-w-[80%]">
+                  {resource.name}
+                </h1>
               </div>
-              <div className="flex gap-x-2 items-center custom-container py-2">
+            </div>
+          </div>
+          <div className="mt-4">
+            <ResourcesBadges resources={[resource]} />
+          </div>
+        </div>
+        <div className="">
+          <section className=" pb-16">
+            <div className="py-2 custom-container ">
+              <div className="flex flex-col  md:flex-row gap-4 md:items-center py-2">
                 <span className="font-medium text-gray-500 inline">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +167,7 @@ export default function ResourcePage({
                   Size: {resource.size || "N/A"}
                 </span>
               </div>
-              <div className="custom-container py-4">
+              <div className=" py-4">
                 <Link
                   href={resource.url}
                   className="bg-accent h-auto py-2 px-4 text-sm text-white rounded-xl font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center gap-1 w-fit"
@@ -183,9 +192,52 @@ export default function ResourcePage({
               <div className="custom-container py-4">
                 <p className="text-stone-500">{resource.description}</p>
               </div>
-              <div className="lg:px-8">
+              <div className="">
                 {resourceFormat == "csv" ? (
-                  <CsvDataGridPreview url={resource.url} />
+                  <>
+                    <ResponsiveGridData
+                      dataUrl={resource.url}
+                      /* data={[
+                        {
+                          id: 1,
+                          date: "01/02/2025",
+                          text: "Elit",
+                          number: 684,
+                          city: "Toronto",
+                          country: "India",
+                          language: "Hindi/English",
+                          status: "Active",
+                          value: 840.68,
+                          code: "CODE-6363",
+                        },
+                        {
+                          id: 2,
+                          date: "01/02/2025",
+                          text: "Amet sunt cillum sunt sit nostrud consequat deserunt est ut culpa. Dolore ad culpa et est tempor exercitation eiusmod adipisicing laboris amet elit commodo ad laborum.",
+                          number: 513,
+                          city: "Paris",
+                          country: "Italy",
+                          language: "Italian",
+                          status: "Inactive",
+                          value: 812.14,
+                          code: "CODE-6340",
+                        },
+                        {
+                          id: 3,
+                          date: "01/02/2025",
+                          text: "Lorem",
+                          number: 687,
+                          city: "Rome",
+                          country: "England",
+                          language: "English",
+                          status: "Inactive",
+                          value: 107.62,
+                          code: "CODE-1206",
+                        },
+                      ]}*/
+                    />
+                    {/*<CsvDataGridPreview url={resource.url} />*/}
+                  </>
                 ) : null}
                 {resourceFormat == "pdf" && (
                   <PdfViewer
@@ -208,6 +260,6 @@ export default function ResourcePage({
           </section>
         </div>
       </Layout>
-    </>
+    </PrimeReactProvider>
   );
 }

@@ -10,6 +10,7 @@ module.exports = {
     "./themes/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
   safelist: ["bg-red-500", "text-3xl", "lg:text-4xl"],
   theme: {

@@ -56,6 +56,7 @@ export function convertFieldSchema(
 
 export function getDatasetName(name:string){
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
+  console.log(name)
   const datasetName =
     name?.indexOf(`${mainOrg}--`) >= 0
       ? name?.split(`${mainOrg}--`)[1]

@@ -15,12 +15,7 @@ import { ClientSideRowModelApiModule } from "ag-grid-community";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
-function isDate(value: any) {
-  return (
-    Object.prototype.toString.call(value) === "[object Date]" &&
-    !isNaN(value.getTime())
-  );
-}
+import "primereact/resources/themes/nano/theme.css";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -44,7 +39,7 @@ const CsvDataGridPreview: React.FC<CsvDataGridPreviewProps> = ({ url }) => {
         }
         const csvText = await response.text();
         console.log(csvText);
-        /* const parsed = Papa.parse(csvText, {
+        const parsed = Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true,
           dynamicTyping: true,
@@ -53,22 +48,11 @@ const CsvDataGridPreview: React.FC<CsvDataGridPreviewProps> = ({ url }) => {
               console.error("CSV Parsing Errors:", result.errors);
             }
             if (result.data.length > 0) {
-              const columns = Object.keys(result.data[0]).map((key) => {
-                const value = result.data[0][key];
-                const filterType = typeof value;
-                const _isDate = isDate(value);
-
-                return {
-                  field: key,
-                  filter:
-                    filterType === "number"
-                      ? "agNumberColumnFilter"
-                      : _isDate
-                      ? "agDateColumnFilter"
-                      : true,
-                  sortable: true,
-                };
-              });
+              const columns = Object.keys(result.data[0]).map((key) => ({
+                field: key,
+                filter: true,
+                sortable: true,
+              }));
               setColumnDefs(columns);
               setRowData(result.data);
             }
@@ -77,48 +61,7 @@ const CsvDataGridPreview: React.FC<CsvDataGridPreviewProps> = ({ url }) => {
         if (parsed.errors.length > 0) {
           console.error("CSV Parsing Errors:", parsed.errors);
           return;
-        }*/
-
-        const parsed = {
-          data: [
-            {
-              id: 1,
-              date: "2022-12-21",
-              text: "Elit",
-              number: 684,
-              city: "Toronto",
-              country: "India",
-              language: "Hindi/English",
-              status: "Active",
-              value: 840.68,
-              code: "CODE-6363",
-            },
-            {
-              id: 2,
-              date: "2022-03-21",
-              text: "Lorem",
-              number: 513,
-              city: "Paris",
-              country: "Italy",
-              language: "Italian",
-              status: "Inactive",
-              value: 812.14,
-              code: "CODE-6340",
-            },
-            {
-              id: 3,
-              date: "2021-05-25",
-              text: "Lorem",
-              number: 687,
-              city: "Rome",
-              country: "England",
-              language: "English",
-              status: "Inactive",
-              value: 107.62,
-              code: "CODE-1206",
-            },
-          ],
-        };
+        }
 
         if (parsed.data.length > 0) {
           const columns = Object.keys(parsed.data[0]).map((key) => ({
@@ -212,4 +155,4 @@ const OOO = () => {
   );
 };
 
-export default CsvDataGridPreview;
+export default OOO;

@@ -46,6 +46,9 @@ export default function Home({
   );
 
   const { theme } = useTheme();
+
+  console.log(datasets);
+  console.log(stats);
   return (
     <>
       <Head>
