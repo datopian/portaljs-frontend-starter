@@ -3,6 +3,7 @@ import { useResourceData } from "./data-provider";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import PinBoardIcon from "@/components/icons/pinboard.svg";
 import { RiSettings2Fill, RiSettings2Line } from "react-icons/ri";
+import { PinButton } from "./table-head-cell";
 
 export function SettingsDisplayButton() {
   const { toggleSettingsDropdown, isSettingsDropdownOpen } = useResourceData();
@@ -59,7 +60,7 @@ export function SettingsDisplayPanel() {
         <div>
           <div className="px-4 mb-4">
             <span className="text-gray-600 uppercase text-xs mb-2 block font-bold">
-              Columns
+              Columns ({columns.length})
             </span>
             <input
               className="p-2 rounded w-full shadow-sm border border-gray-200"
@@ -110,46 +111,49 @@ export function SettingsDisplayPanel() {
               const pinned = pinnedColumns.includes(column);
               return (
                 <div
-                  className={`flex items-center  px-4 py-2 ${
-                    pinned ? "bg-accent-50" : ""
+                  className={`flex items-center group px-4 py-2 hover:bg-accent-100 ${
+                    pinned ? "bg-accent-100 font-medium" : ""
                   }`}
                   key={column}
                 >
-                  <input
-                    id={`resource-preview-column-${column}-${x}`}
-                    type="checkbox"
-                    checked={active}
-                    onChange={() => toggleColumnVisibility(column)}
-                    onKeyDown={(e) => {
-                      if (e.key === " " || e.key === "Enter") {
-                        toggleColumnVisibility(column);
-                      }
-                    }}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor={`resource-preview-column-${column}-${x}`}
-                    tabIndex={0}
-                    className={`h-5 w-5 min-w-[1.25rem] flex items-center justify-center rounded border-2 cursor-pointer ${
-                      active
-                        ? "bg-accent border-accent text-white"
-                        : "bg-white border-gray-200"
-                    } transition-colors`}
-                    onKeyDown={(e) => {
-                      if (e.key === " " || e.key === "Enter") {
-                        toggleColumnVisibility(column);
-                      }
-                    }}
-                  >
-                    {active && <CheckIcon width={16} />}
-                    <span className="sr-only">{column}</span>
-                  </label>
-                  <span
-                    onClick={() => toggleColumnVisibility(column)}
-                    className="ml-3 text-[#5F5F5F] cursor-pointer flex gap-1 w-full"
-                  >
-                    {column}
-                  </span>
+                  <div className="flex gap-2 justify-between w-full">
+                    <input
+                      id={`resource-preview-column-${column}-${x}`}
+                      type="checkbox"
+                      checked={active}
+                      onChange={() => toggleColumnVisibility(column)}
+                      onKeyDown={(e) => {
+                        if (e.key === " " || e.key === "Enter") {
+                          toggleColumnVisibility(column);
+                        }
+                      }}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor={`resource-preview-column-${column}-${x}`}
+                      tabIndex={0}
+                      className={`h-5 w-5 min-w-[1.25rem] flex items-center justify-center rounded border-2 cursor-pointer ${
+                        active
+                          ? "bg-accent border-accent text-white"
+                          : "bg-white border-gray-200"
+                      } transition-colors`}
+                      onKeyDown={(e) => {
+                        if (e.key === " " || e.key === "Enter") {
+                          toggleColumnVisibility(column);
+                        }
+                      }}
+                    >
+                      {active && <CheckIcon width={16} />}
+                      <span className="sr-only">{column}</span>
+                    </label>
+                    <span
+                      onClick={() => toggleColumnVisibility(column)}
+                      className="ml-3 text-[#5F5F5F] cursor-pointer flex gap-1 w-full"
+                    >
+                      {column}
+                    </span>
+                  </div>
+                  <PinButton col={column} />
                 </div>
               );
             })}

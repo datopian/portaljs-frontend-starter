@@ -104,7 +104,7 @@ export const PinButton = ({ col }: { col: string }) => {
   return (
     <button
       onClick={() => togglePinColumn(col)}
-      className={` text-left w-fit p-1 bg-white rounded shadow group-hover:opacity-[1] transition-all ${
+      className={` text-left w-fit p-1 bg-white rounded shadow group-hover:opacity-[1] transition-all relative ${
         !pinnedColumns.includes(col) ? "opacity-0" : ""
       }`}
       title={"Pin this column"}

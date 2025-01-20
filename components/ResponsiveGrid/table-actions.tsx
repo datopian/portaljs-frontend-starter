@@ -1,14 +1,39 @@
 import { RiDownload2Line, RiDownloadLine } from "react-icons/ri";
+import { useResourceData } from "./data-provider";
 
 export default function TableActions() {
+  const { dataUrl, data } = useResourceData();
+  const handleDownload = () => {
+    // Convert JSON object to a string
+    const jsonString = JSON.stringify(data, null, 2); // Pretty print with 2 spaces
+
+    // Create a blob with the JSON data and specify the MIME type
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary anchor element
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "data.json"; // Specify the file name
+
+    // Trigger a click on the anchor element
+    a.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+  };
   return (
     <div className="flex  gap-1">
       <div className="flex gap-1">
         <div className="relative inline-block">
-          <button className="bg-accent hover:bg-accent-600 text-white transition-all inline-flex w-full justify-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-accent ">
-            <RiDownloadLine className="text-[20px]" />
+          <a
+            onClick={handleDownload}
+            className="cursor-pointer bg-accent hover:bg-accent-600 text-white transition-all inline-flex w-full justify-center gap-x-1.5 rounded-md px-4 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-accent "
+          >
             Export
-          </button>
+          </a>
         </div>
       </div>
     </div>

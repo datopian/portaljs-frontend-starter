@@ -23,11 +23,10 @@ const ResponsiveGrid: React.FC<TableProps> = ({}) => {
     <div>
       <div className="flex gap-4">
         <SearchDataForm />
-
         <SettingsDisplayButton />
         <TableActions />
       </div>
-      <div className="flex w-full gap-[2px] bg-white">
+      <div className="flex w-full gap-[16px] bg-white">
         {isSettingsDropdownOpen && (
           <div className="order-2 py-4 bg-accent-50 border-l border-accent-100 ml-auto min-w-[250px] max-w-[250px]">
             <SettingsDisplayPanel />

@@ -17,6 +17,7 @@ export type sortConfigProps = {
 } | null;
 
 interface DataStateContextProps {
+  dataUrl: string;
   data: any[];
   filteredData: any[];
   filters: Record<string, any>;
@@ -213,6 +214,7 @@ export const DataStateProvider = ({
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   const value: DataStateContextProps = {
+    dataUrl,
     data,
     filteredData,
     filters,
