@@ -4,24 +4,13 @@ import { useResourceData } from "./data-provider";
 export default function TableActions() {
   const { dataUrl, data } = useResourceData();
   const handleDownload = () => {
-    // Convert JSON object to a string
-    const jsonString = JSON.stringify(data, null, 2); // Pretty print with 2 spaces
-
-    // Create a blob with the JSON data and specify the MIME type
+    const jsonString = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
-
-    // Create a URL for the blob
     const url = URL.createObjectURL(blob);
-
-    // Create a temporary anchor element
     const a = document.createElement("a");
     a.href = url;
-    a.download = "data.json"; // Specify the file name
-
-    // Trigger a click on the anchor element
+    a.download = "data.json";
     a.click();
-
-    // Clean up the URL object
     URL.revokeObjectURL(url);
   };
   return (

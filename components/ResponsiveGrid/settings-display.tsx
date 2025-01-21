@@ -148,7 +148,7 @@ export function SettingsDisplayPanel() {
                     </label>
                     <span
                       onClick={() => toggleColumnVisibility(column)}
-                      className="ml-3 text-[#5F5F5F] cursor-pointer flex gap-1 w-full"
+                      className="ml-3 text-[#5F5F5F] cursor-pointer flex gap-1 w-full break-all"
                     >
                       {column}
                     </span>
