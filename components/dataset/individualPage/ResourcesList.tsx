@@ -21,10 +21,13 @@ export default function ResourcesList({
   datasetName,
 }: ResourcesListProps) {
   return (
-    <div className="py-8 w-full max-h-[600px] flex flex-col gap-8">
+    <div className="py-8 w-full max-h-[600px] flex flex-col gap-8 ">
       {resources.map((resource: Resource) => (
-        <div key={resource.id} className="flex justify-between w-full gap-4 ">
-          <article className="grid grid-cols-1 sm:grid-cols-6 gap-x-2 grow">
+        <div
+          key={resource.id}
+          className="flex flex-col md:flex-row  md:justify-between w-full gap-4  py-3 md:items-center px-2"
+        >
+          <article className="grid grid-cols-1 sm:grid-cols-6 gap-x-2 grow ">
             <div className="col-span-5 place-content-start flex flex-col gap-0">
               <h4 className=" md:m-0 font-semibold text-lg text-zinc-900 leading-tight line-clamp-3 pr-5">
                 {resource.name || "No title"}
@@ -38,24 +41,24 @@ export default function ResourcesList({
             </div>
           </article>
           <div className="flex  gap-2 justify-start pt-2 sm:pt-0">
-            {["csv", "pdf", "xlsx", "xls"].includes(
+            {["csv", "pdf", "xlsx", "xls", "geojson"].includes(
               resource.format.toLowerCase()
             ) && (
               <Link
                 href={`/${orgName}/${datasetName}/r/${resource.id}`}
-                className="bg-accent-100 h-fit p-1 text-[18px] h-[30px] w-[30px] text-center text-dark rounded font-roboto font-bold hover:bg-accent-200 duration-150 flex items-center justify-center gap-1"
+                className="px-2 py-1 border  h-fit shadow hover:shadow-lg transition-all text-sm  text-center text-dark rounded font-roboto font-bold border-accent-50 hover:border-accent-100 hover:bg-accent-100  duration-150 flex items-center justify-center gap-1"
               >
                 <RiEyeLine />
-                <span className="sr-only">Preview</span>
+                <span>Preview</span>
               </Link>
             )}
             {resource.url && (
               <Link
                 href={resource.url}
-                className="bg-accent h-fit p-1 text-[18px] h-[30px] w-[30px] text-center text-white rounded font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center justify-center gap-1"
+                className="bg-accent px-2 py-1 h-fit shadow hover:shadow-lg transition-all text-sm  text-center text-white rounded font-roboto font-bold hover:bg-darkaccent hover:text-white duration-150 flex items-center justify-center gap-1"
               >
                 <RiDownload2Fill />
-                <span className="sr-only">Download</span>
+                <span>Download</span>
               </Link>
             )}
           </div>

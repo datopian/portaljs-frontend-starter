@@ -2,7 +2,9 @@ import Slider from "rc-slider";
 import { sortConfigProps, useResourceData } from "./data-provider";
 import { isValidDate } from "./utils";
 import DateRange from "./date-range";
-import { PinBoard, PinIcon } from "../icons";
+
+import { PinIcon } from "../icons";
+import { useState } from "react";
 
 export default function TableHeadCell({ col: key }) {
   const {
@@ -11,13 +13,18 @@ export default function TableHeadCell({ col: key }) {
     sortConfig,
     visibleColumns,
     pinnedColumns,
-    togglePinColumn,
     setSortConfig,
     updateFilter,
   } = useResourceData();
+
+  const min = Math.min(...data.map((row) => row[key]));
+  const max = Math.max(...data.map((row) => row[key]));
+
+  const [value, setValue] = useState<number[]>([min, max]);
+
   return (
     <th
-      className={`py-2  border-0 text-left bg-accent-50  whitespace-nowrap group ${
+      className={`py-2 min-w-[140px] border-0 text-left bg-accent-50 whitespace-nowrap group  ${
         !visibleColumns.includes(key) ? "hidden" : ""
       } ${
         pinnedColumns.includes(key) ? "sticky left-0 z-10 bg-accent-50 " : ""
@@ -51,25 +58,25 @@ export default function TableHeadCell({ col: key }) {
 
       <div className="border-t border-accent-100 px-3 pt-2">
         {/* Filters */}
-        {typeof data[0][key] === "number" ? (
-          <div className=" h-[34px] flex items-center w-full">
+        {typeof data[0]?.[key] === "number" ? (
+          <div className=" h-[34px] flex items-center w-full group">
             <div className="w-full">
-              <div className="mx-2">
+              <div className="mx-2 relative">
                 <Slider
                   range
+                  value={value}
                   min={Math.min(...data.map((row) => row[key]))}
                   max={Math.max(...data.map((row) => row[key]))}
-                  defaultValue={[
-                    Math.min(...data.map((row) => row[key])),
-                    Math.max(...data.map((row) => row[key])),
-                  ]}
-                  onChange={(value) => updateFilter(key, value)}
+                  onChange={(v: number[]) => {
+                    setValue(v);
+                    updateFilter(key, v);
+                  }}
                   aria-label={`Range filter for ${key}`}
                 />
               </div>
             </div>
           </div>
-        ) : isValidDate(data[0][key]) ? (
+        ) : isValidDate(data[0]?.[key]) ? (
           <DateRange
             onSelect={(v: any) => {
               if (v[0] && v[1]) {

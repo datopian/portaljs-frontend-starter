@@ -39,6 +39,7 @@ interface DataStateContextProps {
   updateFilter: Function;
   toggleColumnVisibility: Function;
   togglePinColumn: Function;
+  setTableData: Function;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   setSortConfig: Dispatch<SetStateAction<sortConfigProps>>;
   setVisibleColumns: Dispatch<SetStateAction<string[]>>;
@@ -72,10 +73,16 @@ export const DataStateProvider = ({
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleGlobalFilterChange = (e) => {
-    const value = e.target.value;
+  const setTableData = (stringData) => {
+    const result: any = parseData(stringData);
+    setData(result.data);
+  };
+
+  const handleGlobalFilterChange = (value) => {
+    // const value = e.target.value;
     if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
     debounceTimeoutRef.current = setTimeout(() => {
+      console.log(value);
       setGlobalFilter(value);
     }, 1000);
   };
@@ -108,35 +115,32 @@ export const DataStateProvider = ({
     );
   };
 
-  const fetchAndParseCsv = async () => {
+  const parseData: any = (stringData) => {
+    return Papa.parse(stringData, {
+      header: true, // If the CSV contains headers
+      skipEmptyLines: true, // Skip empty lines in the CSV
+      dynamicTyping: true,
+    });
+  };
+  const fetchData = async () => {
     try {
       const response = await fetch(dataUrl);
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const csvText = await response.text();
-
-      Papa.parse(csvText, {
-        complete: (results) => {
-          setData(results.data); // Store parsed data in the state
-          setVisibleColumns(Object.keys(results.data[0] || {}));
-          //setLoading(false);
-        },
-        header: true, // If the CSV contains headers
-        skipEmptyLines: true, // Skip empty lines in the CSV
-
-        dynamicTyping: true,
-      });
+      const parsedData = parseData(csvText);
+      setData(parsedData.data);
+      setVisibleColumns(Object.keys(parsedData.data[0] || {}));
     } catch (err) {
+      throw new Error(err.message);
       //setError(err.message); // Handle errors (e.g., network issues)
       // setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAndParseCsv();
+    fetchData();
   }, [dataUrl]);
 
   // Apply sorting
@@ -237,6 +241,7 @@ export const DataStateProvider = ({
     setCurrentPage,
     setSortConfig,
     setVisibleColumns,
+    setTableData,
   };
 
   return (

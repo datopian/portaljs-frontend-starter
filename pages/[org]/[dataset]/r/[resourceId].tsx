@@ -249,7 +249,7 @@ export default function ResourcePage({
                 {["xlsx", "xls"].includes(resourceFormat) && (
                   <ExcelViewer url={resource.url} />
                 )}
-                {resourceFormat == "geojson" && (
+                {resourceFormat?.toLocaleLowerCase() == "geojson" && (
                   <MapViewer
                     layers={[{ data: resource.url, name: "Geojson" }]}
                     title={resource.name}
