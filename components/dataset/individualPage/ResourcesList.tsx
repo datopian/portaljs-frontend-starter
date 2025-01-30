@@ -21,7 +21,7 @@ export default function ResourcesList({
   datasetName,
 }: ResourcesListProps) {
   return (
-    <div className="py-8 w-full max-h-[600px] flex flex-col gap-8 ">
+    <div className="py-8 w-full max-h-[600px] flex flex-col gap-4 ">
       {resources.map((resource: Resource) => (
         <div
           key={resource.id}
