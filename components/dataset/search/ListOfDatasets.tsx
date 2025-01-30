@@ -47,6 +47,7 @@ function ListItems() {
           <div className="font-normal text-[14px]">
             Sort by:{" "}
             <select
+              aria-label="Sort datasets by"
               value={options.sort ?? "score desc"}
               onChange={(e) => {
                 const value = e.target.value;
