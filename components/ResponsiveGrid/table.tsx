@@ -1,6 +1,6 @@
-import { useResourceData } from "./data-provider";
-import TableColumnValue from "./table-col-value";
-import TableHead from "./table-head";
+import { useResourceData } from "./dataProvider";
+import TableColumnValue from "./tableColValue";
+import TableHead from "./tableHead";
 
 export default function TableData() {
   const { paginatedData, columns } = useResourceData();

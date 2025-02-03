@@ -1,10 +1,9 @@
 import Slider from "rc-slider";
-import { sortConfigProps, useResourceData } from "./data-provider";
+import { sortConfigProps, useResourceData } from "./dataProvider";
 import { isValidDate } from "./utils";
-import DateRange from "./date-range";
-
-import { PinIcon } from "../icons";
+import DateRange from "./dateRange";
 import { useState } from "react";
+import { RiPushpin2Line } from "react-icons/ri";
 
 export default function TableHeadCell({ col: key }) {
   const {
@@ -117,7 +116,7 @@ export const PinButton = ({ col }: { col: string }) => {
       title={"Pin this column"}
       aria-label={`Pin the column ${col}`}
     >
-      <PinIcon />
+      <RiPushpin2Line width={16} />
     </button>
   );
 };

@@ -1,4 +1,4 @@
-import { useResourceData } from "./data-provider";
+import { useResourceData } from "./dataProvider";
 
 export default function TableColumnValue({ column, value }) {
   const { visibleColumns, pinnedColumns } = useResourceData();

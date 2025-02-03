@@ -82,7 +82,6 @@ export const DataStateProvider = ({
     // const value = e.target.value;
     if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
     debounceTimeoutRef.current = setTimeout(() => {
-      console.log(value);
       setGlobalFilter(value);
     }, 1000);
   };

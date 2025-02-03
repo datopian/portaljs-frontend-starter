@@ -1,13 +1,6 @@
 import { Resource } from "@portaljs/ckan";
-import ResourceCard from "../_shared/ResourceCard";
 import Link from "next/link";
-import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
-import {
-  RiDownload2Fill,
-  RiEye2Fill,
-  RiEye2Line,
-  RiEyeLine,
-} from "react-icons/ri";
+import { RiDownload2Fill, RiEyeLine } from "react-icons/ri";
 import ResourcesBadges from "../_shared/ResourcesBadges";
 
 interface ResourcesListProps {

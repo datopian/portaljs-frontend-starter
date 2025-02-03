@@ -1,4 +1,4 @@
-import { useResourceData } from "./data-provider";
+import { useResourceData } from "./dataProvider";
 
 export default function TablePagination() {
   const { currentPage, totalPages, setCurrentPage } = useResourceData();

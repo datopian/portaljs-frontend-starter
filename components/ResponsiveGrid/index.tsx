@@ -2,15 +2,12 @@ import React from "react";
 
 import "rc-slider/assets/index.css";
 
-import { DataStateProvider, useResourceData } from "./data-provider";
-import SearchDataForm from "./search-data-form";
-import {
-  SettingsDisplayButton,
-  SettingsDisplayPanel,
-} from "./settings-display";
+import { DataStateProvider, useResourceData } from "./dataProvider";
+import SearchDataForm from "./searchDataForm";
+import { SettingsDisplayButton, SettingsDisplayPanel } from "./settingsDisplay";
 import TablePagination from "./pagination";
 import TableData from "./table";
-import TableActions from "./table-actions";
+import TableActions from "./tableActions";
 
 interface TableProps {
   data?: Array<Record<string, any>>;

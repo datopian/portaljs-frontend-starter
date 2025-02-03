@@ -1,4 +1,4 @@
-import { useResourceData } from "./data-provider";
+import { useResourceData } from "./dataProvider";
 import { useCallback, useRef } from "react";
 import Papa from "papaparse";
 

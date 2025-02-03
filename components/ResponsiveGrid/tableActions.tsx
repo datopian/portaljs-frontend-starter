@@ -1,5 +1,5 @@
 import { RiDownload2Line, RiDownloadLine } from "react-icons/ri";
-import { useResourceData } from "./data-provider";
+import { useResourceData } from "./dataProvider";
 
 export default function TableActions() {
   const { dataUrl, data } = useResourceData();

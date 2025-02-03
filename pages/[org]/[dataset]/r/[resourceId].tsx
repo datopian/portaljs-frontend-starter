@@ -1,22 +1,15 @@
 import { GetStaticProps } from "next";
 import { format } from "timeago.js";
-import ResourceCard from "@/components/dataset/_shared/ResourceCard";
 import Layout from "@/components/_shared/Layout";
-import TopBar from "@/components/_shared/TopBar";
 import { Resource } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import MultipleResourcesCard from "@/components/dataset/_shared/MultipleResourcesCard";
 import { useRouter } from "next/router";
 import { RiArrowLeftLine } from "react-icons/ri";
 import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
 import Head from "next/head";
-
 import { PrimeReactProvider } from "primereact/api";
-
-import CsvDataGridPreview from "@/components/_shared/CSVPreview";
-import HeroSection from "@/components/_shared/HeroSection";
 import ResponsiveGridData from "@/components/ResponsiveGrid";
 
 const PdfViewer = dynamic(
@@ -194,50 +187,7 @@ export default function ResourcePage({
               </div>
               <div className="">
                 {resourceFormat == "csv" ? (
-                  <>
-                    <ResponsiveGridData
-                      dataUrl={resource.url}
-                      /* data={[
-                        {
-                          id: 1,
-                          date: "01/02/2025",
-                          text: "Elit",
-                          number: 684,
-                          city: "Toronto",
-                          country: "India",
-                          language: "Hindi/English",
-                          status: "Active",
-                          value: 840.68,
-                          code: "CODE-6363",
-                        },
-                        {
-                          id: 2,
-                          date: "01/02/2025",
-                          text: "Amet sunt cillum sunt sit nostrud consequat deserunt est ut culpa. Dolore ad culpa et est tempor exercitation eiusmod adipisicing laboris amet elit commodo ad laborum.",
-                          number: 513,
-                          city: "Paris",
-                          country: "Italy",
-                          language: "Italian",
-                          status: "Inactive",
-                          value: 812.14,
-                          code: "CODE-6340",
-                        },
-                        {
-                          id: 3,
-                          date: "01/02/2025",
-                          text: "Lorem",
-                          number: 687,
-                          city: "Rome",
-                          country: "England",
-                          language: "English",
-                          status: "Inactive",
-                          value: 107.62,
-                          code: "CODE-1206",
-                        },
-                      ]}*/
-                    />
-                    {/*<CsvDataGridPreview url={resource.url} />*/}
-                  </>
+                  <ResponsiveGridData dataUrl={resource.url} />
                 ) : null}
                 {resourceFormat == "pdf" && (
                   <PdfViewer
