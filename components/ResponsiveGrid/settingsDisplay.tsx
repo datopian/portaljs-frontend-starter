@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useResourceData } from "./dataProvider";
+import { useResourceData } from "./DataProvider";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import PinBoardIcon from "@/components/icons/pinboard.svg";
-import { RiSettings2Fill, RiSettings2Line } from "react-icons/ri";
-import { PinButton } from "./tableHeadCell";
+import { RiSettings2Line } from "react-icons/ri";
+import { PinButton } from "./TableHeadCell";
 
 export function SettingsDisplayButton() {
   const { toggleSettingsDropdown, isSettingsDropdownOpen } = useResourceData();

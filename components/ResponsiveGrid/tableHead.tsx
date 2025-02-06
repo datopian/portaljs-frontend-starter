@@ -1,5 +1,5 @@
-import { useResourceData } from "./dataProvider";
-import TableHeadCell from "./tableHeadCell";
+import { useResourceData } from "./DataProvider";
+import TableHeadCell from "./TableHeadCell";
 
 export default function TableHead({ className = "" }: { className?: string }) {
   const { columns } = useResourceData();

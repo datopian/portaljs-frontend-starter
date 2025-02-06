@@ -11,7 +11,7 @@ export default function DatasetNavCrumbs({
   return (
     <nav>
       <ul className="flex gap-x-8 mx-auto custom-container">
-        <li className="flex gap-x-2 items-start py-2 flex-nowrap overflow-x-auto whitespace-nowrap">
+        <li className="flex gap-x-2 items-center py-2 flex-nowrap overflow-x-auto whitespace-nowrap">
           <Link
             href="/"
             className="font-semibold flex items-center  text-[18px] "

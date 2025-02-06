@@ -1,9 +1,10 @@
 import Slider from "rc-slider";
-import { sortConfigProps, useResourceData } from "./dataProvider";
+import { sortConfigProps, useResourceData } from "./DataProvider";
 import { isValidDate } from "./utils";
-import DateRange from "./dateRange";
+
 import { useState } from "react";
 import { RiPushpin2Line } from "react-icons/ri";
+import DateRange from "./DateRange";
 
 export default function TableHeadCell({ col: key }) {
   const {
