@@ -57,7 +57,7 @@ export default function Home({
       <HeroSectionLight stats={stats} />
       <MainSection groups={groups} datasets={datasets} />
 
-      <div className="mt-5 custom-container bg-white">
+      <div className="mt-5 custom-container bg-white hidden">
         <div className={`${theme.styles.shadowSm} p-4`}>
           <h4>
             <div

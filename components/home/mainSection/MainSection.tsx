@@ -58,17 +58,21 @@ export default function MainSection({
         ))}
       </div>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-y-10">
-        <section className="col-span-1 md:pr-2 mb-8 lg:mb-0">
-          <PopularDatasets datasets={datasets} />
-        </section>
+        {datasets.length > 1 && (
+          <section className="col-span-1 md:pr-2 mb-8 lg:mb-0">
+            <PopularDatasets datasets={datasets} />
+          </section>
+        )}
         <section className="relative">
-          <Link
-            href="/groups"
-            className={`${montserrat.className}  font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
-          >
-            View all categories
-            <ArrowLongRightIcon width={16} />
-          </Link>
+          {groups.length > 4 && (
+            <Link
+              href="/groups"
+              className={`${montserrat.className}  font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
+            >
+              View all categories
+              <ArrowLongRightIcon width={16} />
+            </Link>
+          )}
           <div className="col-span-1 grid sm:grid-cols-2 gap-4 md:pl-2">
             {groups.slice(0, 4).map((group) => (
               <article key={group.id} className="col-span-1 h-fit">
