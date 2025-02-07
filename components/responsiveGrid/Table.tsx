@@ -1,5 +1,5 @@
 import { useResourceData } from "./DataProvider";
-import TableColumnValue from "./tableColValue";
+import TableColumnValue from "./TableColValue";
 import TableHead from "./TableHead";
 
 export default function TableData() {
