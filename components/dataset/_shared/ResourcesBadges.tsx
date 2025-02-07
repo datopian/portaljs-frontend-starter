@@ -17,7 +17,6 @@ export default function ResourcesBadges({
     new Map(resources.map((item) => [item.format, item])).values()
   );
 
-  console.log(_unique_resources);
   const visibleResources = _unique_resources.slice(0, 3);
 
   return (

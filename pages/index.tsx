@@ -46,6 +46,7 @@ export default function Home({
   );
 
   const { theme } = useTheme();
+
   return (
     <>
       <Head>

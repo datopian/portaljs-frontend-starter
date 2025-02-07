@@ -83,7 +83,7 @@ export default function HeroSectionLight({ stats }) {
               </div>
             </Link>
             <Link
-              href="/organization"
+              href="/organizations"
               className="flex items-center gap-[20px] hover:text-accent transition-all"
             >
               <span className="text-accent">

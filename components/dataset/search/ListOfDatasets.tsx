@@ -37,7 +37,7 @@ function ListItems() {
 
   return (
     <>
-      <div className="flex justify-between items-center flex-wrap gap-3">
+      <div className="flex justify-between flex-col md:flex-row md:items-center flex-wrap gap-3">
         <div className="flex gap-2">
           <h2 className="text-[23px] leading-[28px] capitalize font-bold  ">
             {packageSearchResults?.count} Datasets
@@ -47,6 +47,7 @@ function ListItems() {
           <div className="font-normal text-[14px]">
             Sort by:{" "}
             <select
+              aria-label="Sort datasets by"
               value={options.sort ?? "score desc"}
               onChange={(e) => {
                 const value = e.target.value;

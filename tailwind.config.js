@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 const Color = require("color");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-const themeColor = process.env.NEXT_PUBLIC_THEME_COLOR || "#517fb5d9";
+const themeColor = process.env.NEXT_PUBLIC_THEME_COLOR || "#4977AB";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,6 +10,7 @@ module.exports = {
     "./themes/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}",
   ],
   safelist: ["bg-red-500", "text-3xl", "lg:text-4xl"],
   theme: {

@@ -31,6 +31,7 @@ export default function DatasetSearchForm() {
           name="query"
           value={q}
           onChange={(e) => setQ(e.target.value)}
+          aria-label="Search datasets"
         />
 
         <button

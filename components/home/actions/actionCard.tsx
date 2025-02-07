@@ -13,9 +13,9 @@ export default function ActionCard({ title, description, icon, href }) {
         <span className="mb-4 text-accent text-[52px] font-normal">{icon}</span>
       )}
 
-      <h3 className="font-bold text-black mb-[14px] text-[20px] lg:text-[25px] uppercase group-hover:text-accent">
+      <h2 className="font-bold text-black mb-[14px] text-[20px] lg:text-[25px] uppercase group-hover:text-accent">
         {title}
-      </h3>
+      </h2>
       <div className="tracking-[0.05em] text-[var(--gray-dark)] text-[16px] leading-[19px]">
         {description}
       </div>

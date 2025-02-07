@@ -29,7 +29,7 @@ export async function getStaticPaths() {
     await ckan.getDatasetsListWithDetails({ offset: 0, limit: 1000 })
   )
     //Only create routes for datasets whose owner_orgs is in the availableOrgs list
-    .filter((dataset) => availableOrgs.includes(dataset.organization.name))
+    .filter((dataset) => availableOrgs.includes(dataset.organization?.name))
     .map((dataset: DatasetType) => ({
       params: {
         dataset: privateToPublicDatasetName(dataset.name, mainOrg),

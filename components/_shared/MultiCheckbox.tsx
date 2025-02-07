@@ -1,7 +1,7 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { useField } from "formik";
 import { useSearchState } from "../dataset/search/SearchContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type MultiCheckboxProps = {
   name: string;
@@ -16,6 +16,7 @@ export const MultiCheckbox = ({
   label,
   count,
 }: MultiCheckboxProps) => {
+  const inputRef = useRef();
   const { setOptions, options: searchOptions } = useSearchState();
 
   const searchOptionsField = searchOptions[name] as Array<string>;
@@ -42,16 +43,24 @@ export const MultiCheckbox = ({
         checked={active}
         onChange={select}
         className="hidden"
+        ref={inputRef}
       />
       <label
         htmlFor={`${name}-${value}`}
+        tabIndex={0}
         className={`h-5 w-5 min-w-[1.25rem] flex items-center justify-center rounded border-2 cursor-pointer ${
           active
             ? "bg-accent border-accent text-white"
             : "bg-white border-gray-300"
         } transition-colors`}
+        onKeyDown={(e) => {
+          if (e.key === " " || e.key === "Enter") {
+            select();
+          }
+        }}
       >
         {active && <CheckIcon width={16} />}
+        <span className="sr-only">{label}</span>
       </label>
       <span
         onClick={select}

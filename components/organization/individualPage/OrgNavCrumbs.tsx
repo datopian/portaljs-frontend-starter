@@ -16,6 +16,7 @@ export default function OrgNavCrumbs({
             style={{ minWidth: "fit-content" }}
           >
             <RiHome3Line />
+            <span className="sr-only">Home</span>
           </Link>
           <Link
             href="/organizations"
