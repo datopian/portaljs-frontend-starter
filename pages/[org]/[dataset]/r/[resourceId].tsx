@@ -76,6 +76,7 @@ export default function ResourcePage({
     <PrimeReactProvider>
       <Head>
         <title>{`${resource.name}`}</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
         <div className="custom-container pt-[30px]">

@@ -48,20 +48,26 @@ function Main({
 }) {
   const [searchString, setSearchString] = useState("");
   return (
-    <Layout>
-      <SearchHero
-        title="Organizations"
-        searchValue={searchString}
-        onChange={setSearchString}
-      />
-
-      <main className="custom-container py-8">
-        <ListOfOrgs
-          orgs={orgs}
-          searchString={searchString}
-          miniSearch={miniSearch}
+    <>
+      <Head>
+        <title>Organizations</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Layout>
+        <SearchHero
+          title="Organizations"
+          searchValue={searchString}
+          onChange={setSearchString}
         />
-      </main>
-    </Layout>
+
+        <main className="custom-container py-8">
+          <ListOfOrgs
+            orgs={orgs}
+            searchString={searchString}
+            miniSearch={miniSearch}
+          />
+        </main>
+      </Layout>
+    </>
   );
 }
