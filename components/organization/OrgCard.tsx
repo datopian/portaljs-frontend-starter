@@ -18,8 +18,11 @@ export default function GroupCard({
 }: OrgCardProps) {
   const url = image_display_url ? new URL(image_display_url) : undefined;
   return (
-    <Link href={`/@${name}`}>
-      <div className="bg-white p-8 col-span-3 rounded-lg h-full shadow-lg flex flex-col">
+    <Link
+      href={`/@${name}`}
+      className="border-b-[4px] p-8 border-white  bg-white hover:bg-accent-50 group block border-b-[4px] hover:border-accent rounded-lg shadow-lg"
+    >
+      <div className=" col-span-3  h-full  flex flex-col ">
         <Image
           src={
             image_display_url &&
@@ -34,7 +37,7 @@ export default function GroupCard({
           width="43"
           height="43"
         ></Image>
-        <h3 className="font-inter font-semibold text-lg mt-4">
+        <h3 className="font-inter font-semibold text-lg mt-4 group-hover:text-accent">
           {display_name}
         </h3>
         <p className="font-inter font-medium text-sm mt-1 mb-6 line-clamp-2">
