@@ -12,20 +12,19 @@ import SearchHero from "../../components/dataset/_shared/SearchHero";
 import { Group } from "@portaljs/ckan";
 import { getAllGroups } from "@/lib/queries/groups";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const groups = await getAllGroups({ detailed: true });
 
   return {
     props: {
       groups,
     },
-    revalidate: 1800,
   };
 }
 
 export default function GroupsPage({
   groups,
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetStaticPropsType<typeof getServerSideProps>): JSX.Element {
   const miniSearch = new MiniSearch({
     fields: ["description", "display_name"], // fields to index for full-text search
     storeFields: ["description", "display_name", "image_display_url", "name"], // fields to return with search results
