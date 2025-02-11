@@ -1,27 +1,22 @@
-import type { InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import MiniSearch from "minisearch";
 import { useState } from "react";
 import SearchHero from "../components/dataset/_shared/SearchHero";
 import ListOfOrgs from "../components/organization/ListOfOrganizations";
 import Layout from "../components/_shared/Layout";
-import TopBar from "../components/_shared/TopBar";
 import { Organization } from "@portaljs/ckan";
 import { getAllOrganizations } from "@/lib/queries/orgs";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const orgs = await getAllOrganizations({ detailed: true });
   return {
     props: {
       orgs,
     },
-    revalidate: 1800,
   };
 }
 
-export default function OrgsPage({
-  orgs,
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+export default function OrgsPage({ orgs }): JSX.Element {
   const miniSearch = new MiniSearch({
     fields: ["description", "display_name"], // fields to index for full-text search
     storeFields: ["description", "display_name", "image_display_url", "name"], // fields to return with search results

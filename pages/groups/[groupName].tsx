@@ -1,31 +1,18 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import DatasetList from "../../components/_shared/DatasetList";
 import ActivityStream from "../../components/_shared/ActivityStream";
 import Layout from "../../components/_shared/Layout";
 import Tabs from "../../components/_shared/Tabs";
-import TopBar from "../../components/_shared/TopBar";
-import { CKAN, Group } from "@portaljs/ckan";
+import { CKAN } from "@portaljs/ckan";
 import styles from "@/styles/DatasetInfo.module.scss";
 import GroupNavCrumbs from "../../components/groups/individualPage/GroupNavCrumbs";
 import GroupInfo from "../../components/groups/individualPage/GroupInfo";
-import { getAllGroups, getGroup } from "@/lib/queries/groups";
+import { getGroup } from "@/lib/queries/groups";
 import { getDataset } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
 
-export async function getStaticPaths() {
-  const paths = (await getAllGroups({ detailed: false })).map(
-    (group: Group) => ({
-      params: { groupName: group.name },
-    })
-  );
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   const groupName = context.params?.groupName;
@@ -55,13 +42,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       group,
     },
-    revalidate: 1800,
   };
 };
 
-export default function OrgPage({
-  group,
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+export default function OrgPage({ group }): JSX.Element {
   const tabs = [
     {
       id: "datasets",

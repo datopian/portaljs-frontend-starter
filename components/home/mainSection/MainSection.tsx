@@ -58,7 +58,7 @@ export default function MainSection({
         ))}
       </div>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-y-10">
-        {datasets.length > 1 && (
+        {datasets.length > 0 && (
           <section className="col-span-1 md:pr-2 mb-8 lg:mb-0">
             <PopularDatasets datasets={datasets} />
           </section>

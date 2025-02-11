@@ -1,6 +1,5 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
-import getConfig from "next/config";
 import DatasetInfo from "@/components/dataset/individualPage/DatasetInfo";
 import DatasetOverview from "@/components/dataset/individualPage/DatasetOverview";
 import DatasetNavCrumbs from "@/components/dataset/individualPage/NavCrumbs";
@@ -8,41 +7,13 @@ import ResourcesList from "@/components/dataset/individualPage/ResourcesList";
 import ActivityStream from "@/components/_shared/ActivityStream";
 import Layout from "@/components/_shared/Layout";
 import Tabs from "@/components/_shared/Tabs";
-import TopBar from "@/components/_shared/TopBar";
-import { Dataset as DatasetType } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
 import styles from "styles/DatasetInfo.module.scss";
-import {
-  getAvailableOrgs,
-  privateToPublicDatasetName,
-  privateToPublicOrgName,
-  publicToPrivateDatasetName,
-} from "@/lib/queries/utils";
+import { publicToPrivateDatasetName } from "@/lib/queries/utils";
 import { getDataset } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
 
-export async function getStaticPaths() {
-  const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const availableOrgs = await getAvailableOrgs(mainOrg);
-  const paths = (
-    await ckan.getDatasetsListWithDetails({ offset: 0, limit: 1000 })
-  )
-    //Only create routes for datasets whose owner_orgs is in the availableOrgs list
-    .filter((dataset) => availableOrgs.includes(dataset.organization?.name))
-    .map((dataset: DatasetType) => ({
-      params: {
-        dataset: privateToPublicDatasetName(dataset.name, mainOrg),
-        org: privateToPublicOrgName(dataset.organization?.name, mainOrg),
-      },
-    }));
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
     const mainOrg = process.env.NEXT_PUBLIC_ORG;
@@ -71,7 +42,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         dataset,
       },
-      revalidate: 1800,
     };
   } catch {
     return {
@@ -80,9 +50,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 };
 
-export default function DatasetPage({
-  dataset,
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+export default function DatasetPage({ dataset }): JSX.Element {
   const tabs = [
     {
       id: "resources",

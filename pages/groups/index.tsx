@@ -1,7 +1,3 @@
-import type {
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-} from "next";
 import Head from "next/head";
 import MiniSearch from "minisearch";
 import ListOfGroups from "../../components/groups/ListOfGroups";
@@ -14,7 +10,6 @@ import { getAllGroups } from "@/lib/queries/groups";
 
 export async function getServerSideProps() {
   const groups = await getAllGroups({ detailed: true });
-
   return {
     props: {
       groups,
@@ -22,9 +17,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function GroupsPage({
-  groups,
-}: InferGetStaticPropsType<typeof getServerSideProps>): JSX.Element {
+export default function GroupsPage({ groups }): JSX.Element {
   const miniSearch = new MiniSearch({
     fields: ["description", "display_name"], // fields to index for full-text search
     storeFields: ["description", "display_name", "image_display_url", "name"], // fields to return with search results

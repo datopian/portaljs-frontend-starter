@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import OrgNavCrumbs from "@/components/organization/individualPage/OrgNavCrumbs";
 import OrgInfo from "@/components/organization/individualPage/OrgInfo";
@@ -14,19 +14,7 @@ import { getDataset } from "@/lib/queries/dataset";
 
 import HeroSection from "@/components/_shared/HeroSection";
 
-export async function getStaticPaths() {
-  const paths = (await getAllOrganizations({ detailed: false })).map(
-    (org: Organization) => ({
-      params: { org: org.name },
-    })
-  );
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   let orgName = context.params?.org as string;
@@ -59,13 +47,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       org,
     },
-    revalidate: 1800,
   };
 };
 
-export default function OrgPage({
-  org,
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+export default function OrgPage({ org }): JSX.Element {
   const tabs = [
     {
       id: "datasets",

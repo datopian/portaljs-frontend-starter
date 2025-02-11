@@ -2,7 +2,7 @@ import { Dataset } from "@portaljs/ckan";
 
 export default function DatasetOverview({ dataset }: { dataset: Dataset }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-10">
       <div className=" pb-5">
         <h4 className="pb-2 text-xs label-txt tracking-wider">AUTHOR</h4>
         <p className="font-semibold">
@@ -16,9 +16,7 @@ export default function DatasetOverview({ dataset }: { dataset: Dataset }) {
       <div className="  pb-5">
         <h4 className="pb-1 text-xs label-txt tracking-wider">AUTHOR EMAIL</h4>
         <p className="font-semibold">
-          {dataset.author_email
-            ? dataset.author_email
-            : ""}
+          {dataset.author_email ? dataset.author_email : ""}
         </p>
       </div>
       <div className="  pb-5">

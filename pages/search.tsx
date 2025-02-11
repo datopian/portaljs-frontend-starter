@@ -11,7 +11,7 @@ import { useTheme } from "@/components/theme/theme-provider";
 import { SearchStateProvider } from "@/components/dataset/search/SearchContext";
 import { PackageSearchOptions } from "@portaljs/ckan";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const initialRequestOption: PackageSearchOptions = {
     offset: 0,
     limit: 10,
@@ -33,14 +33,13 @@ export async function getStaticProps() {
         ...search_result.search_facets,
       },
     },
-    revalidate: 60,
   };
 }
 
 export default function DatasetSearch({
   fallback,
   searchFacets,
-}: InferGetServerSidePropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   const {
     theme: { styles },
   } = useTheme();

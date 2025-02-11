@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { format } from "timeago.js";
 import Layout from "@/components/_shared/Layout";
 import { Resource } from "@portaljs/ckan";
@@ -32,7 +32,7 @@ const MapViewer = dynamic(
   { ssr: false }
 );
 
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   try {
