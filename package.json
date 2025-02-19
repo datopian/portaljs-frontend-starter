@@ -23,6 +23,7 @@
     "@tsparticles/react": "^3.0.0",
     "ag-grid-community": "^33.0.3",
     "ag-grid-react": "^33.0.3",
+    "better-sqlite3": "^11.8.1",
     "formik": "^2.2.9",
     "gray-matter": "^4.0.3",
     "hastscript": "^7.0.2",
