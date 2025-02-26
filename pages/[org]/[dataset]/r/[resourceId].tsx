@@ -183,7 +183,7 @@ export default function ResourcePage({
                   </svg>
                 </Link>
               </div>
-              <div className="custom-container py-4">
+              <div className="py-4">
                 <p className="text-stone-500">{resource.description}</p>
               </div>
               <div className="">
