@@ -5,7 +5,7 @@ import TableHead from "./TableHead";
 export default function TableData() {
   const { paginatedData, columns } = useResourceData();
   return (
-    <div className="overflow-auto max-h-[750px] relative border-y min-h-[500px]">
+    <div className="overflow-auto max-h-[750px] relative border-y min-h-[500px] w-full">
       {/* Table */}
       <table
         className="min-w-full table-auto border-collapse border-0 static"
