@@ -20,6 +20,8 @@ const DateRange = ({ onSelect }) => {
       asSingle={false} // Ensure the date picker is in range mode
       showShortcuts={false} // Optional: Show predefined date range shortcuts
       showFooter={false} // Optional: Show footer in the date picker
+      containerClassName="relative"
+      popoverDirection="down"
     />
   );
 };
