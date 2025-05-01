@@ -14,11 +14,10 @@ export const getAllGroups = async ({
   detailed: boolean;
 }) => {
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
+  const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainGroup = `${mainOrg}-group`;
   const groupsTree: CkanResponse<Group & { children: Group[] }> = await ky
-    .get(
-      `https://demo.dev.datopian.com/api/3/action/group_tree_section?type=group&id=${mainGroup}`
-    )
+    .get(`${DMS}/api/3/action/group_tree_section?type=group&id=${mainGroup}`)
     .json();
 
   let children = groupsTree.result.children;
@@ -27,9 +26,7 @@ export const getAllGroups = async ({
     children = await Promise.all(
       children.map(async (g) => {
         const groupDetails: CkanResponse<Group> = await ky
-          .get(
-            `https://demo.dev.datopian.com/api/3/action/group_show?id=${g.id}`
-          )
+          .get(`${DMS}/api/3/action/group_show?id=${g.id}`)
           .json();
 
         return groupDetails.result;
@@ -53,12 +50,13 @@ export const getGroup = async ({
   include_datasets?: boolean;
 }) => {
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
+  const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainGroup = `${mainOrg}-group`;
   const privateName = publicToPrivateGroupName(name, mainGroup);
 
   const group: CkanResponse<Group> = await ky
     .get(
-      `https://demo.dev.datopian.com/api/3/action/group_show?id=${privateName}&include_datasets=${include_datasets}`
+      `${DMS}/api/3/action/group_show?id=${privateName}&include_datasets=${include_datasets}`
     )
     .json();
 
