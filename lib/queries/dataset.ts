@@ -10,10 +10,11 @@ import ky from "ky";
 import { PackageSearchOptions } from "@/schemas/dataset.interface";
 
 export async function searchDatasets_OLD(input: PackageSearchOptions) {
-  const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
+  const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const mainGroup = `${mainOrg}-group`;
+  const ckan = new CKAN(DMS);
 
+  const mainGroup = `${mainOrg}-group`;
 
   //  Add the main group prefix before querying
   if (input.groups) {
@@ -30,7 +31,7 @@ export async function searchDatasets_OLD(input: PackageSearchOptions) {
       return `${mainOrgPrefix}${g}`;
     });
   } else {
-    orgs = await getAvailableOrgs(mainOrg);
+    orgs = await getAvailableOrgs(mainOrg, DMS);
   }
 
   const datasets = await ckan.packageSearch({
@@ -69,7 +70,7 @@ export async function searchDatasets(options: PackageSearchOptions) {
   const facetFields = [
     "groups",
     "organization",
-    "res_format"
+    "res_format",
     //"tags",
   ]
     .map((f) => `"${f}"`)
@@ -78,54 +79,52 @@ export async function searchDatasets(options: PackageSearchOptions) {
   let queryParams: string[] = [];
 
   if (options?.query) {
-      queryParams.push(`q=${options.query}`);
+    queryParams.push(`q=${options.query}`);
   }
 
   if (options?.offset) {
-      queryParams.push(`start=${options.offset}`);
+    queryParams.push(`start=${options.offset}`);
   }
 
   if (options?.limit || options?.limit == 0) {
-      queryParams.push(`rows=${options.limit}`);
+    queryParams.push(`rows=${options.limit}`);
   }
 
   if (options?.sort) {
-      queryParams.push(`sort=${options?.sort}`);
+    queryParams.push(`sort=${options?.sort}`);
   }
 
-  
-  let fqList: string[] = [
-    `main_org:${mainOrg}`
-  ];
-  
+  let fqList: string[] = [`main_org:${mainOrg}`];
+
   if (options?.fq) {
-      fqList.push(options.fq);
+    fqList.push(options.fq);
   }
-
 
   let fqListGroups: string[] = [];
   if (options?.orgs?.length) {
-      fqListGroups.push(`organization:(${joinTermsWithOr(options?.orgs)})`);
+    fqListGroups.push(`organization:(${joinTermsWithOr(options?.orgs)})`);
   }
 
   if (options?.groups?.length) {
-      fqListGroups.push(`groups:(${joinTermsWithOr(options?.groups)})`);
+    fqListGroups.push(`groups:(${joinTermsWithOr(options?.groups)})`);
   }
-  
+
   if (options?.resFormat?.length) {
-    fqListGroups.push( `res_format:(${joinTermsWithOr( options.resFormat )})`);
+    fqListGroups.push(`res_format:(${joinTermsWithOr(options.resFormat)})`);
   }
 
   if (fqListGroups?.length) {
-      fqList.push(`+(${fqListGroups.join(" AND ")})`);
+    fqList.push(`+(${fqListGroups.join(" AND ")})`);
   }
 
   if (fqList?.length) {
-      queryParams.push(`fq=${fqList.join(" ")}`);
+    queryParams.push(`fq=${fqList.join(" ")}`);
   }
 
-  const action = `${baseAction}?${queryParams.join("&")}&facet.field=[${facetFields}]&facet.limit=9999`;
-  
+  const action = `${baseAction}?${queryParams.join(
+    "&"
+  )}&facet.field=[${facetFields}]&facet.limit=9999`;
+
   const res = await CkanRequest.get(action);
 
   return { ...res.result, datasets: res.result.results };
@@ -134,7 +133,6 @@ export async function searchDatasets(options: PackageSearchOptions) {
 const joinTermsWithOr = (tems) => {
   return tems.map((t) => `"${t}"`).join(" OR ");
 };
-
 
 export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
@@ -155,7 +153,7 @@ export const getDataset = async ({ name }: { name: string }) => {
 };
 
 export const CkanRequest = {
-  get : async (endpoint:string)=>{
+  get: async (endpoint: string) => {
     const DMS = process.env.NEXT_PUBLIC_DMS;
     try {
       const response = await fetch(`${DMS}/api/3/action/${endpoint}`);
@@ -167,5 +165,5 @@ export const CkanRequest = {
     } catch (error) {
       console.error("Failed to fetch Data Dictionary:", error);
     }
-  }
-}
+  },
+};
