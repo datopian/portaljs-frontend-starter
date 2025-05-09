@@ -206,6 +206,12 @@ export default function ResourcePage({
                     title={resource.name}
                   />
                 )}
+                {resource?.iframe && (
+                  <iframe
+                    src={resource.url}
+                    style={{ width: `100%`, height: `600px` }}
+                  ></iframe>
+                )}
               </div>
             </div>
           </section>
