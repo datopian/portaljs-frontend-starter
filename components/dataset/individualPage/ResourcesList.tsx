@@ -1,4 +1,4 @@
-import { Resource } from "@portaljs/ckan";
+import { Resource } from "@/schemas/resource.interface";
 import Link from "next/link";
 import { RiDownload2Fill, RiEyeLine } from "react-icons/ri";
 import ResourcesBadges from "../_shared/ResourcesBadges";
@@ -34,9 +34,10 @@ export default function ResourcesList({
             </div>
           </article>
           <div className="flex  gap-2 justify-start pt-2 sm:pt-0">
-            {["csv", "pdf", "xlsx", "xls", "geojson"].includes(
+            {(["csv", "pdf", "xlsx", "xls", "geojson"].includes(
               resource.format.toLowerCase()
-            ) && (
+            ) ||
+              resource?.iframe) && (
               <Link
                 href={`/${orgName}/${datasetName}/r/${resource.id}`}
                 className="px-2 py-1 border  h-fit shadow hover:shadow-lg transition-all text-sm  text-center text-dark rounded font-roboto font-bold border-accent-50 hover:border-accent-100 hover:bg-accent-100  duration-150 flex items-center justify-center gap-1"
