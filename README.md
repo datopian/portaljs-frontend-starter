@@ -10,22 +10,22 @@ This is a template for the creation of PortalJS CKAN decoupled frontends, powere
 
 PortalJS Cloud uses this template for creating new portals.
 
-If you want to get started in minutes, navigate to https://cloud.portaljs.com and create an account - you can get started in a few minutes for free!
+If you want to quickly get started for free, navigate to https://cloud.portaljs.com and create an account!
 
 PortalJS Cloud will automatically setup a GitHub repository for your portal, based on this template, and deploy it.
 
 Your portal's GitHub repository can be found on your PortalJS Cloud dashboard, and you can raise PRs against it to customize your portal, or let us handle the customization for you by reaching out to us at portaljs@datopian.com.
 
+Learn more at https://portaljs.com/
+
 ### Standalone
-
-In order to use this repo in standalone mode (i.e. without PortalJS Cloud), click on the "Use this template" button on the top right corner to replicate this code to a new repo.
-
-Then, you can start customizing it locally by following the development instructions bellow, and/or deploy it somewhere such as on Vercel.
-
-Instructions regarding environemnt variables can be found in the section below.
 
 > [!note]
 > In standalone mode, you are going to need your own dedicated CKAN instance.
+
+In order to use this repository in standalone mode (i.e. without PortalJS Cloud), click on the "Use this template" button on the top right corner to replicate this code to a new repo.
+
+Then, you can start customizing it locally by following the development instructions bellow, and/or deploy it somewhere such as on Vercel.
 
 ## Development
 
