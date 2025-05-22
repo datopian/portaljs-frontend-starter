@@ -9,8 +9,6 @@ const SearchForm: React.FC = () => {
   const { theme } = useTheme();
   const { styles } = theme;
 
-  console.log(styles.shadowMd);
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (e) {
       e.preventDefault();

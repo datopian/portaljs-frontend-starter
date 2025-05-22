@@ -5,7 +5,7 @@ import {
   privateToPublicOrgName,
   publicToPrivateOrgName,
 } from "./utils";
-import ky from "ky";
+import CkanRequest from "@portaljs/ckan-api-client-js";
 
 const DMS = process.env.NEXT_PUBLIC_DMS;
 
@@ -19,11 +19,10 @@ export const getOrganization = async ({
   const mainOrg = process.env.NEXT_PUBLIC_ORG;
   const privateName = publicToPrivateOrgName(name, mainOrg);
 
-  const organization: CkanResponse<Organization> = await ky
-    .get(
-      `${DMS}/api/3/action/organization_show?id=${privateName}&include_datasets=${include_datasets}`
-    )
-    .json();
+  const organization = await CkanRequest.get<CkanResponse<Organization>>(
+    `organization_show?id=${privateName}&include_datasets=${include_datasets}`,
+    { ckanUrl: DMS }
+  );
 
   if (include_datasets) {
     organization.result.packages.forEach((dataset: Dataset) => {
@@ -51,13 +50,12 @@ export const getAllOrganizations = async ({
    * Get hierarchy from root org
    *
    */
-  const organizationsTree: CkanResponse<
-    Organization & { children: Organization[]; _name: string }
-  > = await ky
-    .get(
-      `${DMS}/api/3/action/group_tree_section?type=organization&id=${mainOrg}`
-    )
-    .json();
+
+  const organizationsTree = await CkanRequest.get<
+    CkanResponse<Organization & { children: Organization[]; _name: string }>
+  >(`group_tree_section?type=organization&id=${mainOrg}`, {
+    ckanUrl: DMS,
+  });
 
   /*
    * Flatten orgs hierarchy, fix name and preserve

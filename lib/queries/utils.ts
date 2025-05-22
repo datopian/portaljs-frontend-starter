@@ -1,6 +1,3 @@
-import { Organization } from "@portaljs/ckan";
-import ky from "ky";
-
 export interface CkanResponse<T> {
   help: string;
   success: boolean;
@@ -80,19 +77,4 @@ export const privateToPublicOrgName = (
     publicName = publicName.slice(mainOrgPrefix.length);
   }
   return publicName;
-};
-
-export const getAvailableOrgs = async (mainOrg: string, dms: string) => {
-  const organizationsTree: CkanResponse<
-    Organization & { children: Organization[] }
-  > = await ky
-    .get(
-      `${dms}/api/3/action/group_tree_section?type=organization&id=${mainOrg}`
-    )
-    .json();
-
-  const { children, ...parent } = organizationsTree.result;
-  const orgsList = children;
-  orgsList.unshift(parent);
-  return orgsList.map((o) => o.name);
 };

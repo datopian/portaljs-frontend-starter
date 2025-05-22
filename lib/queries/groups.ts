@@ -6,29 +6,34 @@ import {
   privateToPublicOrgName,
   publicToPrivateGroupName,
 } from "./utils";
-import ky from "ky";
+import CkanRequest from "@portaljs/ckan-api-client-js";
+
+const DMS = process.env.NEXT_PUBLIC_DMS;
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export const getAllGroups = async ({
   detailed = true, // Whether to add group_show or not
 }: {
   detailed: boolean;
 }) => {
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const DMS = process.env.NEXT_PUBLIC_DMS;
   const mainGroup = `${mainOrg}-group`;
-  const groupsTree: CkanResponse<Group & { children: Group[] }> = await ky
-    .get(`${DMS}/api/3/action/group_tree_section?type=group&id=${mainGroup}`)
-    .json();
+  const groupsTree = await CkanRequest.get<
+    CkanResponse<Group & { children: Group[] }>
+  >(`group_tree_section?type=group&id=${mainGroup}`, {
+    ckanUrl: DMS,
+  });
 
   let children = groupsTree.result.children;
 
   if (detailed) {
     children = await Promise.all(
       children.map(async (g) => {
-        const groupDetails: CkanResponse<Group> = await ky
-          .get(`${DMS}/api/3/action/group_show?id=${g.id}`)
-          .json();
-
+        const groupDetails = await CkanRequest.get<CkanResponse<Group>>(
+          `group_show?id=${g.id}`,
+          {
+            ckanUrl: DMS,
+          }
+        );
         return groupDetails.result;
       })
     );
@@ -54,11 +59,10 @@ export const getGroup = async ({
   const mainGroup = `${mainOrg}-group`;
   const privateName = publicToPrivateGroupName(name, mainGroup);
 
-  const group: CkanResponse<Group> = await ky
-    .get(
-      `${DMS}/api/3/action/group_show?id=${privateName}&include_datasets=${include_datasets}`
-    )
-    .json();
+  const group = await CkanRequest.get<CkanResponse<Group>>(
+    `group_show?id=${privateName}&include_datasets=${include_datasets}`,
+    { ckanUrl: DMS }
+  );
 
   if (include_datasets) {
     group.result.packages.forEach((dataset: Dataset) => {

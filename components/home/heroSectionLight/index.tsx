@@ -1,25 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import SearchForm from "./SearchForm";
 
 import { Poppins } from "next/font/google";
 import {
-  BookmarkSlashIcon,
-  BuildingOffice2Icon,
-  ChevronDoubleRightIcon,
-  ClipboardDocumentIcon,
-  HashtagIcon,
-  RectangleGroupIcon,
-  ShareIcon,
-  TagIcon,
-} from "@heroicons/react/20/solid";
-import {
-  RiDashboard2Fill,
-  RiDashboard3Line,
   RiFileCopy2Line,
-  RiFolder3Line,
   RiFunctionLine,
-  RiOrganizationChart,
   RiTeamLine,
 } from "react-icons/ri";
 
