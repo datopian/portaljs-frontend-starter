@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { format } from "timeago.js";
 import { Dataset } from "@portaljs/ckan";
-import ResourceCard from "./ResourceCard";
 import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
-import { ClockIcon } from "@heroicons/react/20/solid";
 import { resourceBgColors } from "../_shared/FormatsColors";
 
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
