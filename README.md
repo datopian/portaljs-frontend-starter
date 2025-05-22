@@ -1,30 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PortalJS Frontend Starter
 
-## What is this project?
+> This is a CKAN-based PortalJS website bootstrapped with https://github.com/datopian/portaljs-frontend-starter
 
-This is supposed to be a template for the creation of frontend websites that talk interact with a multitenant CKAN instance to display results. you can just clone this code to a repo and set up the relevant environment variables, which are:
+## Usage
 
-1. NEXT_PUBLIC_ORG - This is the name of the main org used in the project
-2. NEXT_PUBLIC_DMS - This is the URL of the CKAN instance used
+This is a template for the creation of PortalJS CKAN decoupled frontends, powered by React and Next.js. 
 
-# Testing
+### PortalJS Cloud
 
-Testing can be done using the cypress commands, just start running the app(ideally on production mode as it is faster) and then on a separate terminal run `yarn test` this should trigger cypress, you can also run `yarn text-browser` which is going to open the cypress web ui.
+PortalJS Cloud uses this template for creating new portals.
 
-## Getting Started
+If you want to get started in minutes, navigate to https://cloud.portaljs.com and create an account - you can get started in a few minutes for free!
 
-First, run the development server:
+PortalJS Cloud will automatically setup a GitHub repository for your portal, based on this template, and deploy it.
+
+Your portal's GitHub repository can be found on your PortalJS Cloud dashboard, and you can raise PRs against it to customize your portal, or let us handle the customization for you by reaching out to us at portaljs@datopian.com.
+
+### Standalone
+
+In order to use this repo in standalone mode (i.e. without PortalJS Cloud), click on the "Use this template" button on the top right corner to replicate this code to a new repo.
+
+Then, you can start customizing it locally by following the development instructions bellow, and/or deploy it somewhere such as on Vercel.
+
+Instructions regarding environemnt variables can be found in the section below.
+
+> [!note]
+> In standalone mode, you are going to need your own dedicated CKAN instance.
+
+## Development
+
+1) Clone this repository
+
+2) Install the dependencies with `npm i`
+
+3) Create a new `.env` file with:
 
 ```bash
-npm run dev
-# or
-yarn dev
+# This is the URL of the CKAN instance. Use the example value if you are using PortalJS Cloud.
+NEXT_PUBLIC_DMS=https://api.cloud.portaljs.com 
+
+# Leave it empty if you are not using PortalJS Cloud. This is the name of the main organization for your portal in PortalJS Cloud. 
+# You can find the this value in the Organizations page in the PortalJS Cloud dashboard.
+NEXT_PUBLIC_ORG=my-org 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4) Run `npm run dev` to start the development server
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+5) Access `http://localhost:3000` in your browser
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Customization
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+This template was developed with Next.js/React and TailwindCSS. 
+
+In order to learn more about how it can be customized, check the following documentations:
+
+- https://react.dev/
+- https://nextjs.org/docs
+- https://v3.tailwindcss.com/docs/installation
+
+
