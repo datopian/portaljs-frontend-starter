@@ -1,12 +1,5 @@
-import { Field, Form, Formik } from "formik";
-import { Dispatch, SetStateAction, useState } from "react";
-import { Organization, PackageSearchOptions } from "@portaljs/ckan";
-import { Group } from "@portaljs/ckan";
-import useSWR from "swr";
-import { getAllGroups } from "@/lib/queries/groups";
-import { getAllOrganizations } from "@/lib/queries/orgs";
+import {  useState } from "react";
 import { useTheme } from "@/components/theme/theme-provider";
-import SelectCombobox from "@/components/_shared/SelectCombobox";
 import { useSearchState } from "./SearchContext";
 
 export default function DatasetSearchForm() {
@@ -43,25 +36,4 @@ export default function DatasetSearchForm() {
       </div>
     </form>
   );
-}
-
-{
-  /*<Formik
-      initialValues={{
-        org: "",
-        group: "",
-        query: options.query || "",
-      }}
-      enableReinitialize={true}
-      onSubmit={async (values) => {
-        const org = orgs.find((org) => org.name === values.org);
-        const group = groups.find((group) => group.name === values.group);
-        setOptions({
-          ...options,
-          groups: group ? [group.name] : [],
-          orgs: org ? [org.name] : [],
-          query: values.query,
-        });
-      }}
-    >*/
 }
