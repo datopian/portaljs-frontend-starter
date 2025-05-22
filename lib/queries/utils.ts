@@ -1,20 +1,10 @@
-export interface CkanResponse<T> {
-  help: string;
-  success: boolean;
-  result: T;
-}
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
-export const publicToPrivateDatasetName = (
-  publicName: string,
-  mainOrg: string
-) => {
+export const publicToPrivateDatasetName = (publicName: string) => {
   return `${mainOrg}--${publicName}`;
 };
 
-export const privateToPublicDatasetName = (
-  privateName: string,
-  mainOrg: string
-) => {
+export const privateToPublicDatasetName = (privateName: string) => {
   const mainOrgPrefix = `${mainOrg}--`;
   let publicName = privateName;
 
@@ -54,7 +44,7 @@ export const privateToPublicGroupName = (
   return publicName;
 };
 
-export const publicToPrivateOrgName = (publicName: string, mainOrg: string) => {
+export const publicToPrivateOrgName = (publicName: string) => {
   if (publicName === mainOrg) {
     return mainOrg;
   }
@@ -62,10 +52,7 @@ export const publicToPrivateOrgName = (publicName: string, mainOrg: string) => {
   return `${mainOrg}--${publicName}`;
 };
 
-export const privateToPublicOrgName = (
-  privateName: string,
-  mainOrg: string
-) => {
+export const privateToPublicOrgName = (privateName: string) => {
   if (privateName === mainOrg) {
     return mainOrg;
   }

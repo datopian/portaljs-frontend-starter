@@ -8,10 +8,10 @@ import { Dataset, PackageSearchOptions } from "@/schemas/dataset.interface";
 import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
 
 const DMS = process.env.NEXT_PUBLIC_DMS;
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export async function searchDatasets(options: PackageSearchOptions) {
   const baseAction = `package_search`;
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
   const facetFields = [
     "groups",
@@ -85,18 +85,17 @@ const joinTermsWithOr = (tems) => {
 
 export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
   const ckan = new CKAN(DMS);
-  const privateName = publicToPrivateDatasetName(name, mainOrg);
+  const privateName = publicToPrivateDatasetName(name);
   const dataset = await ckan.getDatasetDetails(privateName);
-  dataset.name = privateToPublicDatasetName(dataset.name, mainOrg);
+  dataset.name = privateToPublicDatasetName(dataset.name);
 
   return {
     ...dataset,
     _name: privateName,
     organization: {
       ...dataset.organization,
-      name: privateToPublicOrgName(dataset.organization.name, mainOrg),
+      name: privateToPublicOrgName(dataset.organization.name),
     },
   };
 };
