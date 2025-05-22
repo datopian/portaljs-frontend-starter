@@ -44,6 +44,19 @@ export const getAllOrganizations = async ({
 }: {
   detailed?: boolean;
 }) => {
+  if (!mainOrg) {
+    const organizations = await CkanRequest.get<CkanResponse<Organization[]>>(
+      `organization_list?all_fields=True`,
+      {
+        ckanUrl: DMS,
+      }
+    );
+
+    return organizations.result.map((o) => {
+      return { ...o, _name: o.name };
+    });
+  }
+
   /*
    * Get hierarchy from root org
    *

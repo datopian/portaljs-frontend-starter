@@ -1,10 +1,19 @@
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
+const mainGroup = `${mainOrg}-group`;
 
 export const publicToPrivateDatasetName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
+
   return `${mainOrg}--${publicName}`;
 };
 
 export const privateToPublicDatasetName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   const mainOrgPrefix = `${mainOrg}--`;
   let publicName = privateName;
 
@@ -15,10 +24,11 @@ export const privateToPublicDatasetName = (privateName: string) => {
   return publicName;
 };
 
-export const publicToPrivateGroupName = (
-  publicName: string,
-  mainGroup: string
-) => {
+export const publicToPrivateGroupName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
+
   if (publicName === mainGroup) {
     return mainGroup;
   }
@@ -26,10 +36,11 @@ export const publicToPrivateGroupName = (
   return `${mainGroup}--${publicName}`;
 };
 
-export const privateToPublicGroupName = (
-  privateName: string,
-  mainGroup: string
-) => {
+export const privateToPublicGroupName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   if (privateName === mainGroup) {
     return mainGroup;
   }
@@ -45,6 +56,10 @@ export const privateToPublicGroupName = (
 };
 
 export const publicToPrivateOrgName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
+
   if (publicName === mainOrg) {
     return mainOrg;
   }
@@ -53,6 +68,10 @@ export const publicToPrivateOrgName = (publicName: string) => {
 };
 
 export const privateToPublicOrgName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   if (privateName === mainOrg) {
     return mainOrg;
   }

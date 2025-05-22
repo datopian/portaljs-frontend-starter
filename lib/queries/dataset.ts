@@ -40,7 +40,7 @@ export async function searchDatasets(options: PackageSearchOptions) {
     queryParams.push(`sort=${options?.sort}`);
   }
 
-  let fqList: string[] = [`main_org:${mainOrg}`];
+  let fqList: string[] = [mainOrg ? `main_org:${mainOrg}` : ""];
 
   if (options?.fq) {
     fqList.push(options.fq);
