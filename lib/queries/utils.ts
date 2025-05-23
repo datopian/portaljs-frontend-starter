@@ -1,23 +1,19 @@
-import { Organization } from "@portaljs/ckan";
-import ky from "ky";
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
+const mainGroup = mainOrg ? `${mainOrg}-group` : undefined;
 
-export interface CkanResponse<T> {
-  help: string;
-  success: boolean;
-  result: T;
-}
+export const publicToPrivateDatasetName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
 
-export const publicToPrivateDatasetName = (
-  publicName: string,
-  mainOrg: string
-) => {
   return `${mainOrg}--${publicName}`;
 };
 
-export const privateToPublicDatasetName = (
-  privateName: string,
-  mainOrg: string
-) => {
+export const privateToPublicDatasetName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   const mainOrgPrefix = `${mainOrg}--`;
   let publicName = privateName;
 
@@ -28,10 +24,11 @@ export const privateToPublicDatasetName = (
   return publicName;
 };
 
-export const publicToPrivateGroupName = (
-  publicName: string,
-  mainGroup: string
-) => {
+export const publicToPrivateGroupName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
+
   if (publicName === mainGroup) {
     return mainGroup;
   }
@@ -39,10 +36,11 @@ export const publicToPrivateGroupName = (
   return `${mainGroup}--${publicName}`;
 };
 
-export const privateToPublicGroupName = (
-  privateName: string,
-  mainGroup: string
-) => {
+export const privateToPublicGroupName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   if (privateName === mainGroup) {
     return mainGroup;
   }
@@ -57,7 +55,11 @@ export const privateToPublicGroupName = (
   return publicName;
 };
 
-export const publicToPrivateOrgName = (publicName: string, mainOrg: string) => {
+export const publicToPrivateOrgName = (publicName: string) => {
+  if (!mainOrg) {
+    return publicName;
+  }
+
   if (publicName === mainOrg) {
     return mainOrg;
   }
@@ -65,10 +67,11 @@ export const publicToPrivateOrgName = (publicName: string, mainOrg: string) => {
   return `${mainOrg}--${publicName}`;
 };
 
-export const privateToPublicOrgName = (
-  privateName: string,
-  mainOrg: string
-) => {
+export const privateToPublicOrgName = (privateName: string) => {
+  if (!mainOrg) {
+    return privateName;
+  }
+
   if (privateName === mainOrg) {
     return mainOrg;
   }
@@ -80,19 +83,4 @@ export const privateToPublicOrgName = (
     publicName = publicName.slice(mainOrgPrefix.length);
   }
   return publicName;
-};
-
-export const getAvailableOrgs = async (mainOrg: string, dms: string) => {
-  const organizationsTree: CkanResponse<
-    Organization & { children: Organization[] }
-  > = await ky
-    .get(
-      `${dms}/api/3/action/group_tree_section?type=organization&id=${mainOrg}`
-    )
-    .json();
-
-  const { children, ...parent } = organizationsTree.result;
-  const orgsList = children;
-  orgsList.unshift(parent);
-  return orgsList.map((o) => o.name);
 };

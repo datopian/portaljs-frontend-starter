@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default function OrgPage({ group }): JSX.Element {
+export default function GroupPage({ group }): JSX.Element {
   const tabs = [
     {
       id: "datasets",

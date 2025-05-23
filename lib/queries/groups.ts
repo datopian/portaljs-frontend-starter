@@ -1,41 +1,58 @@
 import { Dataset, Group } from "@portaljs/ckan";
 import {
-  CkanResponse,
   privateToPublicDatasetName,
   privateToPublicGroupName,
   privateToPublicOrgName,
   publicToPrivateGroupName,
 } from "./utils";
-import ky from "ky";
+import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
+
+const DMS = process.env.NEXT_PUBLIC_DMS;
+const mainOrg = process.env.NEXT_PUBLIC_ORG;
+const mainGroup = `${mainOrg}-group`;
 
 export const getAllGroups = async ({
   detailed = true, // Whether to add group_show or not
 }: {
   detailed: boolean;
 }) => {
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const mainGroup = `${mainOrg}-group`;
-  const groupsTree: CkanResponse<Group & { children: Group[] }> = await ky
-    .get(`${DMS}/api/3/action/group_tree_section?type=group&id=${mainGroup}`)
-    .json();
+  if (!mainOrg) {
+    const organizations = await CkanRequest.get<CkanResponse<Group[]>>(
+      `group_list?all_fields=True`,
+      {
+        ckanUrl: DMS,
+      }
+    );
+
+    return organizations.result.map((o) => {
+      return { ...o, _name: o.name };
+    });
+  }
+
+  const groupsTree = await CkanRequest.get<
+    CkanResponse<Group & { children: Group[] }>
+  >(`group_tree_section?type=group&id=${mainGroup}`, {
+    ckanUrl: DMS,
+  });
 
   let children = groupsTree.result.children;
 
   if (detailed) {
     children = await Promise.all(
       children.map(async (g) => {
-        const groupDetails: CkanResponse<Group> = await ky
-          .get(`${DMS}/api/3/action/group_show?id=${g.id}`)
-          .json();
-
+        const groupDetails = await CkanRequest.get<CkanResponse<Group>>(
+          `group_show?id=${g.id}`,
+          {
+            ckanUrl: DMS,
+          }
+        );
         return groupDetails.result;
       })
     );
   }
 
   children = children.map((c) => {
-    const publicName = privateToPublicGroupName(c.name, mainGroup);
+    const publicName = privateToPublicGroupName(c.name);
     return { ...c, name: publicName };
   });
 
@@ -49,34 +66,24 @@ export const getGroup = async ({
   name: string;
   include_datasets?: boolean;
 }) => {
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const mainGroup = `${mainOrg}-group`;
-  const privateName = publicToPrivateGroupName(name, mainGroup);
+  const privateName = publicToPrivateGroupName(name);
 
-  const group: CkanResponse<Group> = await ky
-    .get(
-      `${DMS}/api/3/action/group_show?id=${privateName}&include_datasets=${include_datasets}`
-    )
-    .json();
+  const group = await CkanRequest.get<CkanResponse<Group>>(
+    `group_show?id=${privateName}&include_datasets=${include_datasets}`,
+    { ckanUrl: DMS }
+  );
 
   if (include_datasets) {
     group.result.packages.forEach((dataset: Dataset) => {
-      const publicOrgName = privateToPublicOrgName(
-        dataset.organization.name,
-        mainOrg
-      );
+      const publicOrgName = privateToPublicOrgName(dataset.organization.name);
       dataset.organization.name = publicOrgName;
 
-      const publicDatasetName = privateToPublicDatasetName(
-        dataset.name,
-        mainOrg
-      );
+      const publicDatasetName = privateToPublicDatasetName(dataset.name);
       dataset.name = publicDatasetName;
     });
   }
 
-  const publicName = privateToPublicGroupName(group.result.name, mainGroup);
+  const publicName = privateToPublicGroupName(group.result.name);
 
   return { ...group.result, name: publicName, _name: group.result.name };
 };

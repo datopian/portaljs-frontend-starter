@@ -1,5 +1,4 @@
 import { Resource } from "@portaljs/ckan";
-import { useEffect, useState } from "react";
 import { resourceTextColors } from "./FormatsColors";
 
 export default function MultipleResourcesCard({

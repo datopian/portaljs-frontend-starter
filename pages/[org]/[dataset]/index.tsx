@@ -16,9 +16,8 @@ import HeroSection from "@/components/_shared/HeroSection";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
-    const mainOrg = process.env.NEXT_PUBLIC_ORG;
     const datasetName = context.params?.dataset as string;
-    const privateDatasetName = publicToPrivateDatasetName(datasetName, mainOrg);
+    const privateDatasetName = publicToPrivateDatasetName(datasetName);
 
     if (!datasetName) {
       return {

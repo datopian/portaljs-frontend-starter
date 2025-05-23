@@ -1,7 +1,6 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { useField } from "formik";
 import { useSearchState } from "../dataset/search/SearchContext";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type MultiCheckboxProps = {
   name: string;
