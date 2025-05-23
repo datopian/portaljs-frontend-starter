@@ -1,5 +1,5 @@
 const mainOrg = process.env.NEXT_PUBLIC_ORG;
-const mainGroup = `${mainOrg}-group`;
+const mainGroup = mainOrg ? `${mainOrg}-group` : undefined;
 
 export const publicToPrivateDatasetName = (publicName: string) => {
   if (!mainOrg) {
