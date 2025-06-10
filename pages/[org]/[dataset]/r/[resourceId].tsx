@@ -13,54 +13,56 @@ import { PrimeReactProvider } from "primereact/api";
 import ResponsiveGridData from "@/components/responsiveGrid";
 
 const PdfViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.PdfViewer),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.PdfViewer),
+    { ssr: false }
 );
 
 const ExcelViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.Excel),
-  { ssr: false }
-);
-
-const RawCsvViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.FlatUiTable),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.Excel),
+    { ssr: false }
 );
 
 const MapViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.Map),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.Map),
+    { ssr: false }
 );
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
-  try {
-    const resourceId = context.params?.resourceId;
-    if (!resourceId) {
-      console.log("[!] resourceId not found");
-      return {
-        notFound: true,
-      };
+    const orgName = context.params?.org as string;
+    if (!orgName.startsWith("@")) {
+        return {
+            notFound: true,
+        };
     }
 
-    const resource = await ckan.getResourceMetadata(resourceId as string);
-    if (!resource) {
-      console.log("[!] Resource metadata not found");
-      return {
-        notFound: true,
-      };
-    }
+    const DMS = process.env.NEXT_PUBLIC_DMS;
+    const ckan = new CKAN(DMS);
+    try {
+        const resourceId = context.params?.resourceId;
+        if (!resourceId) {
+            console.log("[!] resourceId not found");
+            return {
+                notFound: true,
+            };
+        }
 
-    return {
-      props: { resource },
-    };
-  } catch (e) {
-    console.log(e);
-    return {
-      notFound: true,
-    };
-  }
+        const resource = await ckan.getResourceMetadata(resourceId as string);
+        if (!resource) {
+            console.log("[!] Resource metadata not found");
+            return {
+                notFound: true,
+            };
+        }
+
+        return {
+            props: { resource },
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            notFound: true,
+        };
+    }
 };
 
 export default function ResourcePage({

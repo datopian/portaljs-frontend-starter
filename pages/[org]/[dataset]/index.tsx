@@ -14,16 +14,18 @@ import { getDataset } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
-    const datasetName = context.params?.dataset as string;
-    const privateDatasetName = publicToPrivateDatasetName(datasetName);
+  const ckan = new CKAN(process.env.NEXT_PUBLIC_DMS);
+  const datasetName = context.params?.dataset as string;
+  const orgName = context.params?.org as string;
 
-    if (!datasetName) {
-      return {
-        notFound: true,
-      };
-    }
+  if (!datasetName || !orgName.startsWith("@")) {
+    return {
+      notFound: true,
+    };
+  }
+
+  try {
+    const privateDatasetName = publicToPrivateDatasetName(datasetName);
     let dataset = await getDataset({ name: datasetName as string });
     if (!dataset) {
       return {

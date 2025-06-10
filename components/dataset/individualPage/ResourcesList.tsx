@@ -39,7 +39,7 @@ export default function ResourcesList({
             ) ||
               resource?.iframe) && (
               <Link
-                href={`/${orgName}/${datasetName}/r/${resource.id}`}
+                href={`/@${orgName}/${datasetName}/r/${resource.id}`}
                 className="px-2 py-1 border  h-fit shadow hover:shadow-lg transition-all text-sm  text-center text-dark rounded font-roboto font-bold border-accent-50 hover:border-accent-100 hover:bg-accent-100  duration-150 flex items-center justify-center gap-1"
               >
                 <RiEyeLine />

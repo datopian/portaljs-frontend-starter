@@ -17,12 +17,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   let orgName = context.params?.org as string;
-  if (!orgName) {
+  if (!orgName || !orgName.includes("@")) {
     return {
       notFound: true,
     };
   }
-  orgName = orgName.includes("@") ? orgName.split("@")[1] : orgName;
+  orgName = orgName.split("@")[1];
   let org = await getOrganization({
     name: orgName as string,
     include_datasets: true,
