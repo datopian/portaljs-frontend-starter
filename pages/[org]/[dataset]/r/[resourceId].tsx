@@ -13,64 +13,69 @@ import { PrimeReactProvider } from "primereact/api";
 import ResponsiveGridData from "@/components/responsiveGrid";
 
 const PdfViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.PdfViewer),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.PdfViewer),
+    { ssr: false }
 );
 
 const ExcelViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.Excel),
-  { ssr: false }
-);
-
-const RawCsvViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.FlatUiTable),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.Excel),
+    { ssr: false }
 );
 
 const MapViewer = dynamic(
-  () => import("@portaljs/components").then((mod) => mod.Map),
-  { ssr: false }
+    () => import("@portaljs/components").then((mod) => mod.Map),
+    { ssr: false }
 );
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const DMS = process.env.NEXT_PUBLIC_DMS;
-  const ckan = new CKAN(DMS);
-  try {
-    const resourceId = context.params?.resourceId;
-    if (!resourceId) {
-      console.log("[!] resourceId not found");
-      return {
-        notFound: true,
-      };
+    let orgName = context.params?.org as string;
+    if (!orgName.startsWith("@")) {
+        return {
+            notFound: true,
+        };
     }
+    orgName = orgName.split("@")[1];
 
-    const resource = await ckan.getResourceMetadata(resourceId as string);
-    if (!resource) {
-      console.log("[!] Resource metadata not found");
-      return {
-        notFound: true,
-      };
+    const DMS = process.env.NEXT_PUBLIC_DMS;
+    const ckan = new CKAN(DMS);
+    try {
+        const resourceId = context.params?.resourceId;
+        if (!resourceId) {
+            console.log("[!] resourceId not found");
+            return {
+                notFound: true,
+            };
+        }
+
+        const resource = await ckan.getResourceMetadata(resourceId as string);
+        if (!resource) {
+            console.log("[!] Resource metadata not found");
+            return {
+                notFound: true,
+            };
+        }
+
+        return {
+            props: { resource, orgName },
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            notFound: true,
+        };
     }
-
-    return {
-      props: { resource },
-    };
-  } catch (e) {
-    console.log(e);
-    return {
-      notFound: true,
-    };
-  }
 };
 
 export default function ResourcePage({
   resource,
+  orgName
 }: {
   resource: Resource;
+  orgName: string
 }): JSX.Element {
   const resourceFormat = resource.format.toLowerCase();
   const router = useRouter();
-  const { org, dataset } = router.query;
+  const { dataset } = router.query;
 
   return (
     <PrimeReactProvider>
@@ -81,7 +86,7 @@ export default function ResourcePage({
       <Layout>
         <div className="custom-container pt-[30px]">
           <Link
-            href={`/@${org}/${dataset}`}
+            href={`/@${orgName}/${dataset}`}
             className="flex items-center  text-sm"
           >
             <RiArrowLeftLine className="text-[32px]" />

@@ -41,7 +41,7 @@ export default function DatasetNavCrumbs({
             </svg>
             Datasets
           </Link>
-          <Link href={`/${org.name}`} passHref className="font-semibold ">
+          <Link href={`/@${org.name}`} passHref className="font-semibold ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

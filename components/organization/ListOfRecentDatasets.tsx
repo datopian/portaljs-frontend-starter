@@ -12,7 +12,7 @@ export default function ListOfDatasets({
       {datasets.map((dataset) => (
         <Link
           key={dataset.id}
-          href={`/org/${dataset.organization?.name}/${dataset.name}`}
+          href={`/@${dataset.organization?.name}/${dataset.name}`}
           className={styles.card}
         >
           <h2>{dataset.title} &rarr;</h2>

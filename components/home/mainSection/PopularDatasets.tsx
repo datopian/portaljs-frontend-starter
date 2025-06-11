@@ -28,7 +28,7 @@ export default function PopularDatasets({
           {datasets.map((dataset, index) => (
             <Link
               key={index}
-              href={`/${dataset.organization.name}/${getDatasetName(
+              href={`/@${dataset.organization.name}/${getDatasetName(
                 dataset.name
               )}`}
               className="block mt-6 hover:text-accent transition-all"
