@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   let orgName = context.params?.org as string;
-  if (!orgName || !orgName.includes("@")) {
+  if (!orgName || !orgName.startsWith("@")) {
     return {
       notFound: true,
     };

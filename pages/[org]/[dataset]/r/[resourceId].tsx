@@ -28,12 +28,13 @@ const MapViewer = dynamic(
 );
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const orgName = context.params?.org as string;
+    let orgName = context.params?.org as string;
     if (!orgName.startsWith("@")) {
         return {
             notFound: true,
         };
     }
+    orgName = orgName.split("@")[1];
 
     const DMS = process.env.NEXT_PUBLIC_DMS;
     const ckan = new CKAN(DMS);
@@ -55,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
 
         return {
-            props: { resource },
+            props: { resource, orgName },
         };
     } catch (e) {
         console.log(e);
@@ -67,12 +68,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function ResourcePage({
   resource,
+  orgName
 }: {
   resource: Resource;
+  orgName: string
 }): JSX.Element {
   const resourceFormat = resource.format.toLowerCase();
   const router = useRouter();
-  const { org, dataset } = router.query;
+  const { dataset } = router.query;
 
   return (
     <PrimeReactProvider>
@@ -83,7 +86,7 @@ export default function ResourcePage({
       <Layout>
         <div className="custom-container pt-[30px]">
           <Link
-            href={`/@${org}/${dataset}`}
+            href={`/@${orgName}/${dataset}`}
             className="flex items-center  text-sm"
           >
             <RiArrowLeftLine className="text-[32px]" />
