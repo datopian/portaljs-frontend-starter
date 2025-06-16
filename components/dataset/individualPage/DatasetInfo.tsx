@@ -71,7 +71,7 @@ export default function DatasetInfo({
             />
           </svg>
           Created:{" "}
-          {dataset.metadata_created && format(dataset.metadata_created)}
+          {dataset.metadata_created && format(new Date(dataset.metadata_created + 'Z'))}
         </span>
         <span className="font-medium text-gray-500 inline">
           <svg
@@ -89,7 +89,7 @@ export default function DatasetInfo({
             />
           </svg>
           Updated:{" "}
-          {dataset.metadata_modified && format(dataset.metadata_modified)}
+          {dataset.metadata_modified && format(new Date(dataset.metadata_modified + 'Z'))}
         </span>
       </div>
       <div className="py-4 my-4 border-y">
