@@ -9,6 +9,14 @@ export function getDatasetName(name: string) {
 }
 
 export function getTimeAgo(timestamp: string) {
-  timestamp = timestamp.trim().endsWith('Z') ? timestamp : timestamp + 'Z';
-  return format(new Date(timestamp));
+  const trimmed = timestamp.trim();
+  const hasTZ = /Z$|[+-]\d{2}:\d{2}$/.test(trimmed);
+  const normalised = hasTZ ? trimmed : `${trimmed}Z`;
+
+  const date = new Date(normalised);
+  if (isNaN(date.getTime())) {
+    return timestamp;
+  }
+
+  return format(date);
 }
