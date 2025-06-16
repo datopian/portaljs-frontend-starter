@@ -1,5 +1,5 @@
-import { format } from "timeago.js";
 import { Activity } from "@portaljs/ckan";
+import { getTimeAgo } from "@/lib/utils";
 
 interface ActivityStreamProps {
   activities: Array<Activity>;
@@ -41,7 +41,7 @@ export default function ActivityStream({ activities }: ActivityStreamProps) {
                 : "A user"}{" "}
               {activity.activity_type}{" "}
               <a href="#">{activity.data?.package?.title}</a>{" "}
-              <span className="text-xs">{format(activity.timestamp)}</span>
+              <span className="text-xs">{getTimeAgo(activity.timestamp)}</span>
             </p>
           </div>
         </div>

@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { format } from "timeago.js";
 import { Dataset } from "@portaljs/ckan";
 import ResourcesBadges from "../_shared/ResourcesBadges";
 import { RiMapPinTimeLine, RiOrganizationChart } from "react-icons/ri";
-import { getDatasetName } from "@/lib/utils";
+import { getDatasetName, getTimeAgo } from "@/lib/utils";
 import { useTheme } from "@/components/theme/theme-provider";
 
 export default function DatasetItem({
@@ -39,7 +38,7 @@ export default function DatasetItem({
           <div className="flex items-center gap-2 ">
             <RiMapPinTimeLine className="text-accent" />
             <span className=" text-gray-500">
-              {dataset.metadata_modified && format(dataset.metadata_modified)}
+              {dataset.metadata_modified && getTimeAgo(dataset.metadata_modified)}
             </span>
           </div>
         </div>

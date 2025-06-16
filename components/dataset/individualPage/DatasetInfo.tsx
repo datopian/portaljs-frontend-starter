@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { format } from "timeago.js";
 import { Dataset, Resource, Tag } from "@portaljs/ckan";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+import { getTimeAgo } from "@/lib/utils";
 
 function uniqueFormat(resources) {
   const formats = resources.map((item: Resource) => item.format);
@@ -18,6 +18,7 @@ export default function DatasetInfo({
     { format: "rdf", label: "RDF" },
     { format: "ttl", label: "TTL" },
   ];
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-y-3">
@@ -71,7 +72,7 @@ export default function DatasetInfo({
             />
           </svg>
           Created:{" "}
-          {dataset.metadata_created && format(new Date(dataset.metadata_created + 'Z'))}
+          {dataset.metadata_created && getTimeAgo(dataset.metadata_created)}
         </span>
         <span className="font-medium text-gray-500 inline">
           <svg
@@ -89,7 +90,7 @@ export default function DatasetInfo({
             />
           </svg>
           Updated:{" "}
-          {dataset.metadata_modified && format(new Date(dataset.metadata_modified + 'Z'))}
+          {dataset.metadata_modified && getTimeAgo(dataset.metadata_modified)}
         </span>
       </div>
       <div className="py-4 my-4 border-y">
