@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import { format } from "timeago.js";
 import Layout from "@/components/_shared/Layout";
 import { Resource } from "@portaljs/ckan";
 import { CKAN } from "@portaljs/ckan";
@@ -11,6 +10,7 @@ import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
 import Head from "next/head";
 import { PrimeReactProvider } from "primereact/api";
 import ResponsiveGridData from "@/components/responsiveGrid";
+import { getTimeAgo } from "@/lib/utils";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -128,7 +128,7 @@ export default function ResourcePage({
                     />
                   </svg>
                   Created: {resource.created &&
-                    format(new Date(resource.created + 'Z'))}
+                    getTimeAgo(resource.created)}
                 </span>
                 <span className="font-medium text-gray-500 inline">
                   <svg
@@ -147,7 +147,7 @@ export default function ResourcePage({
                   </svg>
                   Updated:{" "}
                   {resource.metadata_modified &&
-                    format(new Date(resource.metadata_modified + 'Z'))}
+                    getTimeAgo(resource.metadata_modified)}
                 </span>
                 <span className="font-medium text-gray-500 inline">
                   <svg
