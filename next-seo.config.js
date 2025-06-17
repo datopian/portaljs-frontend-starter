@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 
-const title = "PortalJS frontend template";
+const title = "PortalJS Open Data Portal";
 const description =
   "Discover thousands of datasets, publish your own, and request data via Portal – an open data platform powered by PortalJS.";
 
