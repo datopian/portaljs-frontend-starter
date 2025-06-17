@@ -1,0 +1,15 @@
+{
+  "name": "PortalJS frontend template",
+  "short_name": "PortalJS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3F59B1",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
