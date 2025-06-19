@@ -26,12 +26,12 @@ export function GroupIndividualPageStructuredData({ group }) {
           },
           {
             position: 2,
-            name: 'Groups',
+            name: 'Groups Page',
             item: `${url}/groups`,
           },
           {
             position: 3,
-            name: 'Groups',
+            name: title,
             item: groupUrl,
           },
         ]}

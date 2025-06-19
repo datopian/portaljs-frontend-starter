@@ -25,7 +25,7 @@ export function OrganizationPageStructuredData() {
           },
           {
             position: 2,
-            name: 'Organizations',
+            name: 'Organizations Page',
             item: `${url}/organizations`,
           },
         ]}

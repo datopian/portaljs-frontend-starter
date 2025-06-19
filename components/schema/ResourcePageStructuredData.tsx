@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
 import Script from "next/script";
 
 export function ResourcePageStructuredData({ resource, orgName, dataset }) {
-  const title = resource.name
+  const title = resource.name || "Resource"
   const resourceUrl = `${url}/@${orgName}/${dataset}/r/${resource.id}`
   const description = resource.description || "Resource page of " + title
 
@@ -37,17 +37,17 @@ export function ResourcePageStructuredData({ resource, orgName, dataset }) {
           },
           {
             position: 2,
-            name: 'Organization',
+            name: orgName,
             item: `${url}/@${orgName}`,
           },
           {
             position: 3,
-            name: 'Dataset',
+            name: dataset,
             item: `${url}/@${orgName}/${dataset}`,
           },
           {
             position: 4,
-            name: 'Resource',
+            name: title,
             item: resourceUrl
           },
         ]}
