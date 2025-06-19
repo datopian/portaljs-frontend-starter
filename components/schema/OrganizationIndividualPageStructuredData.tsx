@@ -1,9 +1,9 @@
 import nextSeoConfig, { url } from "@/next-seo.config";
-import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd } from "next-seo";
+import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
 export function OrganizationIndividualPageStructuredData({ org }) {
   const title = org.name || org.title
-  const description = org.notes || "Organizations page of " + org
+  const description = org.notes || "Organizations page of " + title
   return (
     <>
       <LogoJsonLd
