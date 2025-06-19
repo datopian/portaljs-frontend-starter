@@ -3,16 +3,16 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBo
 
 export function DatasetPageStructuredData({ dataset }) {
   const title = dataset.title || dataset.name
+  const datasetUrl = `${url}/@${dataset.organization.name}/${dataset.name}`
   const description = dataset.notes || "Dataset page of " + title
-  const owner_org = dataset.organization.name || ""
   return (
     <>
       <LogoJsonLd
-        url={`${url}/@${owner_org}/${title}`}
+        url={datasetUrl}
         logo={`${url}/favicon.ico`}
       />
       <NextSeo
-        canonical={`${url}/@${owner_org}/${title}`}
+        canonical={datasetUrl}
         title={title}
         description={description}
         {...nextSeoConfig}
@@ -27,13 +27,13 @@ export function DatasetPageStructuredData({ dataset }) {
           {
             position: 2,
             name: 'Organizations',
-            item: `${url}/@${owner_org}/${title}`
+            item: datasetUrl
           },
         ]}
       />
       <DatasetJsonLd
-        id={`${url}/@${owner_org}/${title}#webpage`}
-        url={`${url}/@${owner_org}/${title}`}
+        id={`${datasetUrl}#webpage`}
+        url={datasetUrl}
         name={title}
         description={description}
       />
