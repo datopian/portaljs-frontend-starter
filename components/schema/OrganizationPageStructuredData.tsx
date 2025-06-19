@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBo
 
 export function OrganizationPageStructuredData() {
   const title = "Organizations page"
-  const description = "Organizations page of PortalJS Open Data Portal"
+  const description = "Organizations page of " + title
   return (
     <>
       <LogoJsonLd
