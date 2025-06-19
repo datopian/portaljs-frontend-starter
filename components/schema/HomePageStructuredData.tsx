@@ -5,7 +5,7 @@ export function HomePageStructuredData() {
   return (
     <>
       <LogoJsonLd
-        url={nextSeoConfig.canonical}
+        url={url}
         logo={`${url}/favicon.ico`}
       />
       <NextSeo
