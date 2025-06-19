@@ -1,5 +1,5 @@
 import nextSeoConfig, { url } from "@/next-seo.config";
-import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd, DatasetJsonLd } from "next-seo";
+import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
 
 export function DatasetPageStructuredData({ dataset }) {
   const title = dataset.title || dataset.name
@@ -26,7 +26,7 @@ export function DatasetPageStructuredData({ dataset }) {
           },
           {
             position: 2,
-            name: 'Organizations',
+            name: 'Dataset',
             item: datasetUrl
           },
         ]}

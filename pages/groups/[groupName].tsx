@@ -11,6 +11,7 @@ import GroupInfo from "../../components/groups/individualPage/GroupInfo";
 import { getGroup } from "@/lib/queries/groups";
 import { getDataset } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
+import { GroupIndividualPageStructuredData } from "@/components/schema/GroupIndividualPageStructuredData";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
@@ -69,10 +70,7 @@ export default function GroupPage({ group }): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>{group?.name ? group.name : "Group"}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <GroupIndividualPageStructuredData group={group} />
       {group && (
         <Layout>
           <HeroSection title={group.title} cols="6" />

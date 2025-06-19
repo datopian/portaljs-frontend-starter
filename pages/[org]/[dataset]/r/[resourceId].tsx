@@ -11,6 +11,7 @@ import Head from "next/head";
 import { PrimeReactProvider } from "primereact/api";
 import ResponsiveGridData from "@/components/responsiveGrid";
 import { getTimeAgo } from "@/lib/utils";
+import { ResourcePageStructuredData } from "@/components/schema/ResourcePageStructuredData";
 
 const PdfViewer = dynamic(
   () => import("@portaljs/components").then((mod) => mod.PdfViewer),
@@ -79,10 +80,7 @@ export default function ResourcePage({
 
   return (
     <PrimeReactProvider>
-      <Head>
-        <title>{`${resource.name}`}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <ResourcePageStructuredData resource={resource} orgName={orgName} dataset={dataset} />
       <Layout>
         <div className="custom-container pt-[30px]">
           <Link
