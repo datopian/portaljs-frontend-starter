@@ -4,8 +4,8 @@ const title = "PortalJS Open Data Portal";
 const description =
   "Discover thousands of datasets, publish your own, and request data via Portal – an open data platform powered by PortalJS.";
 
-const url = "https://portaljs-cloud-frontend-template.vercel.app/";
-const imageUrl = `${url}images/portaljs-frontend.png`;
+export const url = "https://portaljs-cloud-frontend-template.vercel.app";
+const imageUrl = `${url}/images/portaljs-frontend.png`;
 
 export default {
   title,
