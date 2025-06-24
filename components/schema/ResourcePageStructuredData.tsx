@@ -1,4 +1,4 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
 import Script from "next/script";
 
@@ -24,9 +24,23 @@ export function ResourcePageStructuredData({ resource, orgName, dataset }) {
       />
       <NextSeo
         canonical={resourceUrl}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: resourceUrl,
+          title: `${title} | ${siteTitle}`,
+          description: description,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[

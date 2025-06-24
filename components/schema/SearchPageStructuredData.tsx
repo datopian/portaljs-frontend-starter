@@ -1,10 +1,10 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, SiteLinksSearchBoxJsonLd } from "next-seo";
 import Script from "next/script";
 
 export function SearchPageStructuredData() {
   const title = "Search page"
-  const description = "Browse through multiple datasets available on " + title
+  const description = "Browse through multiple datasets available on " + siteTitle
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DataCatalog",
@@ -20,9 +20,23 @@ export function SearchPageStructuredData() {
       />
       <NextSeo
         canonical={`${url}/search`}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: `${url}/search`,
+          title: `${title} | ${siteTitle}`,
+          description: description,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[

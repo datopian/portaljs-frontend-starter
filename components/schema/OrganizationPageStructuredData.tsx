@@ -1,9 +1,9 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd } from "next-seo";
 
 export function OrganizationPageStructuredData() {
   const title = "Organizations page"
-  const description = "Organizations page of " + title
+  const description = "Organizations page of " + siteTitle
   return (
     <>
       <LogoJsonLd
@@ -12,9 +12,23 @@ export function OrganizationPageStructuredData() {
       />
       <NextSeo
         canonical={`${url}/organizations`}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: `${url}/organizations`,
+          title: `${title} | ${siteTitle}`,
+          description: description,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[

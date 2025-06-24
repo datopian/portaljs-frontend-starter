@@ -1,10 +1,12 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
 export function GroupIndividualPageStructuredData({ group }) {
   const title = group.name || group.title
   const groupUrl = `${url}/groups/${group.name}`
   const description = group.description || "Group page of " + title
+  const image = group.image_display_url || imageUrl
+
   return (
     <>
       <LogoJsonLd
@@ -13,9 +15,23 @@ export function GroupIndividualPageStructuredData({ group }) {
       />
       <NextSeo
         canonical={groupUrl}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: groupUrl,
+          title: `${title} | ${siteTitle}`,
+          description,
+          images: [
+            {
+              url: image,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[
@@ -37,7 +53,7 @@ export function GroupIndividualPageStructuredData({ group }) {
         ]}
       />
       <WebPageJsonLd
-        id={`${groupUrl}#webpage`}
+        id={`${groupUrl}#grouppage`}
         url={groupUrl}
         name={title}
         description={description}

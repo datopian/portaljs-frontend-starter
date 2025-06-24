@@ -1,4 +1,4 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
 
 export function DatasetPageStructuredData({ dataset }) {
@@ -15,9 +15,23 @@ export function DatasetPageStructuredData({ dataset }) {
       />
       <NextSeo
         canonical={datasetUrl}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: datasetUrl,
+          title: `${title} | ${siteTitle}`,
+          description: description,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[
@@ -43,6 +57,26 @@ export function DatasetPageStructuredData({ dataset }) {
         url={datasetUrl}
         name={title}
         description={description}
+      />
+      <DatasetJsonLd
+        id={`${datasetUrl}#dataset`}
+        url={datasetUrl}
+        name={title}
+        description={description}
+        creator={{
+          '@type': 'Organization',
+          name: ownerOrg,
+        }}
+        keywords={dataset.tags?.map(tag => tag.name) || []}
+        license={dataset.license_url}
+        distribution={
+          dataset.resources?.map(res => ({
+            '@type': 'DataDownload',
+            encodingFormat: res.format,
+            contentUrl: res.url,
+            name: res.name,
+          })) || []
+        }
       />
     </>
   );

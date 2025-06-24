@@ -1,9 +1,9 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd } from "next-seo";
 
 export function GroupPageStructuredData() {
   const title = "Groups page"
-  const description = "Groups page of " + title
+  const description = "Groups page of " + siteTitle
   return (
     <>
       <LogoJsonLd
@@ -12,9 +12,23 @@ export function GroupPageStructuredData() {
       />
       <NextSeo
         canonical={`${url}/groups`}
-        title={title}
+        title={`${title} | ${siteTitle}`}
         description={description}
-        {...nextSeoConfig}
+        openGraph={{
+          url: `${url}/groups`,
+          title: `${title} | ${siteTitle}`,
+          description: description,
+          images: [
+            {
+              url: imageUrl,
+              alt: title,
+              width: 1200,
+              height: 627,
+            },
+          ],
+          site_name: siteTitle,
+        }}
+        twitter={nextSeoConfig.twitter}
       />
       <BreadcrumbJsonLd
         itemListElements={[
