@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
 export function OrganizationIndividualPageStructuredData({ org }) {
   const title = org.name || org.title
-  const description = org.notes || "Organizations page of " + title
+  const description = org.notes || "Organization page of " + title
   const image = org.image_display_url || imageUrl
   return (
     <>
