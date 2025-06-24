@@ -10,9 +10,9 @@ export function ResourcePageStructuredData({ resource, orgName, dataset }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DataDownload",
-    "name": resource.name,
-    "encodingFormat": resource.format,
-    "contentUrl": resource.url,
+    "name": resource.name || title,
+    "encodingFormat": resource.format || "unknown",
+    "contentUrl": resource.url || resourceUrl,
     "description": description,
   };
 
