@@ -2,7 +2,7 @@ import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd } from "next-seo";
 
 export function OrganizationPageStructuredData() {
-  const title = "Organizations page"
+  const title = "Organizations"
   const description = "Organizations page of " + siteTitle
   return (
     <>
