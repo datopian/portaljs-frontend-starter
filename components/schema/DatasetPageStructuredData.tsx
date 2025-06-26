@@ -1,7 +1,8 @@
 import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
+import { Dataset } from "@portaljs/ckan";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
 
-export function DatasetPageStructuredData({ dataset }) {
+export function DatasetPageStructuredData({ dataset }: { dataset: Dataset }) {
   const title = dataset.title || dataset.name
   const ownerOrg = dataset?.organization?.name || "Organization"
   const datasetUrl = `${url}/@${ownerOrg}/${dataset.name}`
@@ -68,7 +69,7 @@ export function DatasetPageStructuredData({ dataset }) {
           name: ownerOrg,
         }}
         keywords={dataset.tags?.map(tag => tag.name) || []}
-        license={dataset.license_url}
+        license={dataset.license_title}
         distribution={
           dataset.resources?.map(res => ({
             '@type': 'DataDownload',

@@ -1,8 +1,9 @@
 import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
-import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, DatasetJsonLd } from "next-seo";
+import { Resource } from "@/schemas/resource.interface";
+import { BreadcrumbJsonLd, LogoJsonLd, NextSeo } from "next-seo";
 import Script from "next/script";
 
-export function ResourcePageStructuredData({ resource, orgName, dataset }) {
+export function ResourcePageStructuredData({ resource, orgName, dataset }: { resource: Resource, orgName: string, dataset: string }) {
   const title = resource.name || "Resource"
   const resourceUrl = `${url}/@${orgName}/${dataset}/r/${resource.id}`
   const description = resource.description || "Resource page of " + title

@@ -3,7 +3,6 @@ import { Organization } from "@portaljs/ckan";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
 export function OrganizationIndividualPageStructuredData({ org }: { org: Organization }) {
-  console.log(org)
   const encodedOrgName = encodeURIComponent(org.name || org.title || '')
   const orgUrl = `${url}/@${encodedOrgName}`
   const title = org.name || org.title
