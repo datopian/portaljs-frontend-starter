@@ -1,4 +1,4 @@
-import nextSeoConfig, { url } from "@/next-seo.config";
+import nextSeoConfig, { description, siteTitle, title, url } from "@/next-seo.config";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd, SiteLinksSearchBoxJsonLd } from "next-seo";
 
 export function HomePageStructuredData() {
@@ -9,6 +9,7 @@ export function HomePageStructuredData() {
         logo={`${url}/favicon.ico`}
       />
       <NextSeo
+        title={`${siteTitle} | ${title}`}
         {...nextSeoConfig}
       />
       <BreadcrumbJsonLd
@@ -23,8 +24,8 @@ export function HomePageStructuredData() {
       <WebPageJsonLd
         id={`${url}#webpage`}
         url={url}
-        name={nextSeoConfig.title}
-        description={nextSeoConfig.description}
+        name={siteTitle}
+        description={description}
       />
       <SiteLinksSearchBoxJsonLd
         url={url}

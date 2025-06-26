@@ -1,7 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 
 export const siteTitle = "PortalJS Open Data Portal";
-const description =
+export const title = "PortalJS";
+export const description =
   "Discover thousands of datasets, publish your own, and request data via Portal – an open data platform powered by PortalJS.";
 
 export const url = "https://portaljs-cloud-frontend-template.vercel.app";
@@ -9,8 +10,6 @@ export const imageUrl = `${url}/images/portaljs-frontend.png`;
 
 export default {
   siteTitle,
-  title: "%s",
-  titleTemplate: "%s",
   description,
   canonical: url,
   openGraph: {
