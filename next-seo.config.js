@@ -9,8 +9,8 @@ export const imageUrl = `${url}/images/portaljs-frontend.png`;
 
 export default {
   siteTitle,
-  title: "%s | PortalJS",
-  titleTemplate: "%s | PortalJS",
+  title: `${siteTitle} | PortalJS`,
+  titleTemplate: `${siteTitle} | PortalJS`,
   description,
   canonical: url,
   openGraph: {
