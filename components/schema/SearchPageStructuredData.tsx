@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, SiteLinksSearchBoxJsonLd } from 
 import Script from "next/script";
 
 export function SearchPageStructuredData() {
-  const title = "Search page"
+  const title = "Search datasets"
   const description = "Browse through multiple datasets available on " + siteTitle
   const jsonLd = {
     "@context": "https://schema.org",
