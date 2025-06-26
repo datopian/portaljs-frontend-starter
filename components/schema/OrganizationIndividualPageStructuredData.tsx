@@ -1,22 +1,26 @@
 import nextSeoConfig, { imageUrl, siteTitle, url } from "@/next-seo.config";
+import { Organization } from "@portaljs/ckan";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
-export function OrganizationIndividualPageStructuredData({ org }) {
+export function OrganizationIndividualPageStructuredData({ org }: { org: Organization }) {
+  console.log(org)
+  const encodedOrgName = encodeURIComponent(org.name || org.title || '')
+  const orgUrl = `${url}/@${encodedOrgName}`
   const title = org.name || org.title
-  const description = org.notes || "Organization page of " + title
+  const description = org.description || "Organization page of " + title
   const image = org.image_display_url || imageUrl
   return (
     <>
       <LogoJsonLd
-        url={`${url}/@${title}`}
+        url={orgUrl}
         logo={org.image_display_url || `${url}/favicon.ico`}
       />
       <NextSeo
-        canonical={`${url}/@${title}`}
+        canonical={orgUrl}
         title={`${title} | ${siteTitle}`}
         description={description}
         openGraph={{
-          url: `${url}/@${title}`,
+          url: orgUrl,
           title: `${title} | ${siteTitle}`,
           description: description,
           images: [
@@ -41,13 +45,13 @@ export function OrganizationIndividualPageStructuredData({ org }) {
           {
             position: 2,
             name: title,
-            item: `${url}/@${title}`,
+            item: orgUrl,
           },
         ]}
       />
       <WebPageJsonLd
-        id={`${url}/@${title}#webpage`}
-        url={`${url}/@${title}`}
+        id={`${orgUrl}#webpage`}
+        url={orgUrl}
         name={title}
         description={description}
       />
