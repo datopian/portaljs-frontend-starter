@@ -10,6 +10,7 @@ import HeroSection from "@/components/_shared/HeroSection";
 import { useTheme } from "@/components/theme/theme-provider";
 import { SearchStateProvider } from "@/components/dataset/search/SearchContext";
 import { PackageSearchOptions } from "@portaljs/ckan";
+import { SearchPageStructuredData } from "@/components/schema/SearchPageStructuredData";
 
 export async function getServerSideProps() {
   const initialRequestOption: PackageSearchOptions = {
@@ -46,10 +47,7 @@ export default function DatasetSearch({
 
   return (
     <>
-      <Head>
-        <title>Datasets</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SearchPageStructuredData />
       <Layout>
         <SearchStateProvider facets={searchFacets}>
           <div className="grid grid-rows-searchpage-hero">

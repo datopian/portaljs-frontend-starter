@@ -7,6 +7,7 @@ import TopBar from "../../components/_shared/TopBar";
 import SearchHero from "../../components/dataset/_shared/SearchHero";
 import { Group } from "@portaljs/ckan";
 import { getAllGroups } from "@/lib/queries/groups";
+import { GroupPageStructuredData } from "@/components/schema/GroupPageStructuredData";
 
 export async function getServerSideProps() {
   const groups = await getAllGroups({ detailed: true });
@@ -25,10 +26,7 @@ export default function GroupsPage({ groups }): JSX.Element {
   miniSearch.addAll(groups);
   return (
     <>
-      <Head>
-        <title>Groups</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <GroupPageStructuredData />
       <Main miniSearch={miniSearch} groups={groups} />
     </>
   );

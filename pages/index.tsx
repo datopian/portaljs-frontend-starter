@@ -5,6 +5,7 @@ import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
 import { getAllOrganizations } from "@/lib/queries/orgs";
 import HeroSectionLight from "@/components/home/heroSectionLight";
+import { HomePageStructuredData } from "@/components/schema/HomePageStructuredData";
 
 export async function getServerSideProps() {
   const datasets = await searchDatasets({
@@ -39,11 +40,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   return (
     <>
-      <Head>
-        <title>Open Data Portal Demo</title>
-        <meta name="description" content="Open Data Portal Demo" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <HomePageStructuredData />
       <HeroSectionLight stats={stats} />
       <MainSection groups={groups} datasets={datasets} />
     </>
