@@ -5,7 +5,7 @@ import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 export function OrganizationIndividualPageStructuredData({ org }: { org: Organization }) {
   const encodedOrgName = encodeURIComponent(org.name || org.title || '')
   const orgUrl = `${url}/@${encodedOrgName}`
-  const title = org.name || org.title
+  const title = org.title || org.name
   const description = org.description || "Organization page of " + title
   const image = org.image_display_url || imageUrl
   return (

@@ -3,7 +3,7 @@ import { Group } from "@portaljs/ckan";
 import { BreadcrumbJsonLd, LogoJsonLd, NextSeo, WebPageJsonLd } from "next-seo";
 
 export function GroupIndividualPageStructuredData({ group }: { group: Group }) {
-  const title = group.name || group.title
+  const title = group.title || group.name
   const groupUrl = `${url}/groups/${group.name}`
   const description = group.description || "Group page of " + title
   const image = group.image_display_url || imageUrl
