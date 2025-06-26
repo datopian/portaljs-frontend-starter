@@ -9,6 +9,7 @@ export const imageUrl = `${url}/images/portaljs-frontend.png`;
 
 export default {
   siteTitle,
+  title: "%s | PortalJS",
   titleTemplate: "%s | PortalJS",
   description,
   canonical: url,
