@@ -9,6 +9,7 @@ export const url = "https://portaljs-cloud-frontend-template.vercel.app";
 export const imageUrl = `${url}/images/portaljs-frontend.png`;
 
 export default {
+  defaultTitle: `${siteTitle} | ${title}`,
   siteTitle,
   description,
   canonical: url,
