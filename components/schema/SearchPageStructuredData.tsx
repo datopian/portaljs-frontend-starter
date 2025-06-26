@@ -55,8 +55,9 @@ export function SearchPageStructuredData() {
       <Script
         id="datacatalog-jsonld"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      >
+        {JSON.stringify(jsonLd)}
+      </Script>
       <SiteLinksSearchBoxJsonLd
         url={`${url}/search`}
         potentialActions={[

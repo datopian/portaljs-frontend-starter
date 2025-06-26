@@ -71,8 +71,9 @@ export function ResourcePageStructuredData({ resource, orgName, dataset }: { res
         id="datadownload-jsonld"
         type="application/ld+json"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      >
+        {JSON.stringify(jsonLd)}
+      </Script>
     </>
   );
 }

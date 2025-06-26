@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       activity_stream: activityStream,
     };
 
-    if ("@" + dataset.organization.name !== orgName) {
+    if (!dataset.organization || "@" + dataset.organization.name !== orgName) {
       return {
         notFound: true,
       };
