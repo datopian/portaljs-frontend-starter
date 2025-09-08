@@ -12,7 +12,6 @@ import {
   ChevronUpIcon,
   CircleStackIcon,
 } from "@heroicons/react/20/solid";
-import Link from "next/link";
 import { classNames } from "primereact/utils";
 
 export default function DatasetSearchFilters() {

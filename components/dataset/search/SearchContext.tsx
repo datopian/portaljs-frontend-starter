@@ -3,6 +3,7 @@ import { PackageSearchOptions } from "@/schemas/dataset.interface";
 import { useRouter } from "next/router";
 import { createContext, useContext } from "react";
 import useSWR from "swr";
+import { useRef, useEffect, useCallback } from "react";
 
 type setQueryParamFn<T> = (value: T) => void;
 
@@ -61,36 +62,55 @@ export const SearchStateProvider = ({
   };
 
   const packagesOptions = {
-      ...options,
-      rows: options.type === "dataset" ? options.limit : 0,
-      type: "dataset"
-  }
+    ...options,
+    rows: options.type === "dataset" ? options.limit : 0,
+    type: "dataset",
+  };
   const {
     data: packageSearchResults,
     isValidating: isLoadingPackageSearchResults,
-  } = useSWR(["package_search", JSON.stringify(packagesOptions)], async () => {
-    return searchDatasets(packagesOptions);
-  });
+  } = useSWR(
+    ["package_search", packagesOptions],
+    async (api, options) => {
+      return searchDatasets(options);
+    },
+    { use: [laggy] }
+  );
 
   const visualizationsOptions = {
-      ...options,
-      resFormat: [],
-      rows: options.type === "visualization" ? options.limit : 0,
-      type: "visualization"
-  }
+    ...options,
+    resFormat: [],
+    rows: options.type === "visualization" ? options.limit : 0,
+    type: "visualization",
+  };
   const {
     data: visualizationsSearchResults,
     isValidating: isLoadingVisualizations,
-  } = useSWR(["package_search", JSON.stringify(visualizationsOptions)], async () => {
-    return searchDatasets(visualizationsOptions);
-  });
+  } = useSWR(
+    ["visualization_package_search", visualizationsOptions],
+    async (api, options) => {
+      return searchDatasets(options);
+    },
+    { use: [laggy] }
+  );
 
-  const searchResults = options.type === "visualization" ? visualizationsSearchResults : packageSearchResults
-  const isLoading = options.type === "visualization" ? isLoadingVisualizations : isLoadingPackageSearchResults
+  const searchResults =
+    options.type === "visualization"
+      ? visualizationsSearchResults
+      : packageSearchResults;
+  const isLoading =
+    options.type === "visualization"
+      ? isLoadingVisualizations
+      : isLoadingPackageSearchResults;
 
-  const packageSearchFacets = packageSearchResults?.search_facets ?? facets;
-  const visualizationsSearchFacets = visualizationsSearchResults?.search_facets ?? facets;
-  const searchFacets = options.type === "visualization" ? visualizationsSearchFacets : packageSearchFacets
+  const packageSearchFacets = packageSearchResults?.search_facets ?? {};
+  const visualizationsSearchFacets =
+    visualizationsSearchResults?.search_facets ?? {};
+  const searchFacets =
+    options.type === "visualization"
+      ? visualizationsSearchFacets
+      : packageSearchFacets;
+
 
   const value: SearchStateContext = {
     options,
@@ -103,7 +123,7 @@ export const SearchStateProvider = ({
     visualizationsSearchFacets,
     searchResults,
     searchFacets,
-    isLoading
+    isLoading,
   };
 
   return (
@@ -124,3 +144,41 @@ const parseArQueryParam = (queryParam: any) => {
 
   return [];
 };
+
+// This is a SWR middleware for keeping the data even if key changes.
+function laggy(useSWRNext) {
+  return (key, fetcher, config) => {
+    // Use a ref to store previous returned data.
+    const laggyDataRef = useRef();
+
+    // Actual SWR hook.
+    const swr = useSWRNext(key, fetcher, config);
+
+    useEffect(() => {
+      // Update ref if data is not undefined.
+      if (swr.data !== undefined) {
+        laggyDataRef.current = swr.data;
+      }
+    }, [swr.data]);
+
+    // Expose a method to clear the laggy data, if any.
+    const resetLaggy = useCallback(() => {
+      laggyDataRef.current = undefined;
+    }, []);
+
+    // Fallback to previous data if the current data is undefined.
+    const dataOrLaggyData =
+      swr.data === undefined ? laggyDataRef.current : swr.data;
+
+    // Is it showing previous data?
+    const isLagging =
+      swr.data === undefined && laggyDataRef.current !== undefined;
+
+    // Also add a `isLagging` field to SWR.
+    return Object.assign({}, swr, {
+      data: dataOrLaggyData,
+      isLagging,
+      resetLaggy,
+    });
+  };
+}

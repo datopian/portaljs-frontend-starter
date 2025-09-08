@@ -47,7 +47,6 @@ export default function DatasetSearch({
   return (
     <>
       <SearchPageStructuredData />
-
       <SWRConfig value={{ fallback }}>
         <SearchStateProvider facets={searchFacets}>
           <SearchPageContent />
