@@ -1,22 +1,23 @@
-import { PackageSearchOptions } from "@portaljs/ckan";
+import { searchDatasets } from "@/lib/queries/dataset";
+import { PackageSearchOptions } from "@/schemas/dataset.interface";
 import { useRouter } from "next/router";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
-
-type Tab = "datasets" | "insights";
+import { createContext, useContext } from "react";
+import useSWR from "swr";
 
 type setQueryParamFn<T> = (value: T) => void;
 
 interface SearchStateContext {
-  searchFacets: any;
+  packageSearchFacets: any;
   options: PackageSearchOptions;
   setOptions: setQueryParamFn<Partial<PackageSearchOptions>>;
-  setSearchFacets: Dispatch<SetStateAction<{}>>;
+  packageSearchResults: any;
+  isLoadingPackageSearchResults: boolean;
+  visualizationsSearchResults: any;
+  isLoadingVisualizations: boolean;
+  visualizationsSearchFacets: any;
+  searchResults: any;
+  searchFacets: any;
+  isLoading: boolean;
 }
 
 export const SearchStateContext = createContext<SearchStateContext | null>(
@@ -34,7 +35,6 @@ export const SearchStateProvider = ({
 }) => {
   const router = useRouter();
   const { query } = router;
-  const [searchFacets, setSearchFacets] = useState(facets);
 
   const setQueryParam = (
     partial:
@@ -57,13 +57,53 @@ export const SearchStateProvider = ({
     resFormat: parseArQueryParam(query?.resFormat),
     query: (query?.query as string) ?? "",
     sort: (query?.sort as string) ?? "score desc",
+    type: (query?.type as string) ?? "dataset",
   };
+
+  const packagesOptions = {
+      ...options,
+      rows: options.type === "dataset" ? options.limit : 0,
+      type: "dataset"
+  }
+  const {
+    data: packageSearchResults,
+    isValidating: isLoadingPackageSearchResults,
+  } = useSWR(["package_search", JSON.stringify(packagesOptions)], async () => {
+    return searchDatasets(packagesOptions);
+  });
+
+  const visualizationsOptions = {
+      ...options,
+      resFormat: [],
+      rows: options.type === "visualization" ? options.limit : 0,
+      type: "visualization"
+  }
+  const {
+    data: visualizationsSearchResults,
+    isValidating: isLoadingVisualizations,
+  } = useSWR(["package_search", JSON.stringify(visualizationsOptions)], async () => {
+    return searchDatasets(visualizationsOptions);
+  });
+
+  const searchResults = options.type === "visualization" ? visualizationsSearchResults : packageSearchResults
+  const isLoading = options.type === "visualization" ? isLoadingVisualizations : isLoadingPackageSearchResults
+
+  const packageSearchFacets = packageSearchResults?.search_facets ?? facets;
+  const visualizationsSearchFacets = visualizationsSearchResults?.search_facets ?? facets;
+  const searchFacets = options.type === "visualization" ? visualizationsSearchFacets : packageSearchFacets
 
   const value: SearchStateContext = {
     options,
     setOptions: (options) => setQueryParam(options),
+    packageSearchFacets: packageSearchFacets,
+    packageSearchResults,
+    isLoadingPackageSearchResults,
+    visualizationsSearchResults,
+    isLoadingVisualizations,
+    visualizationsSearchFacets,
+    searchResults,
     searchFacets,
-    setSearchFacets,
+    isLoading
   };
 
   return (
