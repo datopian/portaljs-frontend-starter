@@ -47,16 +47,12 @@ export interface PackageSearchOptions {
     groups: Array<string>;
     orgs: Array<string>;
     tags: Array<string>;
-    vocab_diseases?: Array<string>;
-    vocab_geographies?: Array<string>;
-    vocab_regions?: Array<string>;
-    temporal_coverage_start?: string;
-    temporal_coverage_end?: string;
     query?: string;
     resFormat?: Array<string>;
     sort?: string;
     include_private?: boolean;
     fq?: string;
+    type?: string;
 }
 
 export interface PackageFacetOptions {
