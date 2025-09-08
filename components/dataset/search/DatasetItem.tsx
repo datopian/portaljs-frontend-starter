@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { Dataset } from "@portaljs/ckan";
 import ResourcesBadges from "../_shared/ResourcesBadges";
-import { RiMapPinTimeLine, RiOrganizationChart } from "react-icons/ri";
+import {
+  RiMapPinTimeLine,
+  RiOrganizationChart,
+  RiPriceTagLine,
+} from "react-icons/ri";
 import { getDatasetName, getTimeAgo } from "@/lib/utils";
 import { useTheme } from "@/components/theme/theme-provider";
+import { TagIcon } from "@heroicons/react/20/solid";
 
 export default function DatasetItem({
   dataset,
@@ -38,9 +43,18 @@ export default function DatasetItem({
           <div className="flex items-center gap-2 ">
             <RiMapPinTimeLine className="text-accent" />
             <span className=" text-gray-500">
-              {dataset.metadata_modified && getTimeAgo(dataset.metadata_modified)}
+              {dataset.metadata_modified &&
+                getTimeAgo(dataset.metadata_modified)}
             </span>
           </div>
+          {!!dataset.tags?.length && (
+            <div className="flex items-center gap-2 ">
+              <RiPriceTagLine className="text-accent" />
+              <span className="text-gray-500 line-clamp-1">
+                {dataset.tags.map((t) => t.display_name).join(", ")}
+              </span>
+            </div>
+          )}
         </div>
         <div className="mt-2">
           <ResourcesBadges resources={dataset.resources} />
