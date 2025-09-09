@@ -51,6 +51,7 @@ module.exports = {
         roboto: ["Roboto", "sans-serif"],
         inter: ["Inter", "sans-serif"],
         raleway: ["raleway", "sans-serif"],
+        poppins: ["var(--font-poppins)"]
       },
       boxShadow: {
         blogImg: "inset 0 0 0 50vw rgba(0,28,49,0.76)",

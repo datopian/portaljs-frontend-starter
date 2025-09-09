@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Dataset } from "@portaljs/ckan";
 import { useTheme } from "@/components/theme/theme-provider";
 import { getDatasetName } from "@/lib/utils";
+import { Dataset } from "@/schemas/dataset.interface";
 
 type DatasetLinkProps = Pick<Dataset, "title" | "metadata_modified">;
 
@@ -50,7 +50,7 @@ function DatasetLink({ title, metadata_modified }: DatasetLinkProps) {
   return (
     <div>
       <h2 className="font-inter font-semibold text-xl">{title}</h2>
-      <span className="font-roboto font-light text-[12px] flex items-center gap-1 text-[#1F2633] font-light">
+      <span className="font-roboto font-light text-[12px] flex items-center gap-1 text-[#1F2633]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

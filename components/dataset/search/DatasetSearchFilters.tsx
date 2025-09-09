@@ -47,14 +47,12 @@ export default function DatasetSearchFilters() {
             <DatasetTypeOption
               title="Datasets"
               Icon={CircleStackIcon}
-              href="/search"
               type="dataset"
               count={packageSearchResults?.count}
             />
             <DatasetTypeOption
               title="Visualizations"
               Icon={ChartBarIcon}
-              href="/search?type=visualization"
               type="visualization"
               count={visualizationsSearchResults?.count}
             />

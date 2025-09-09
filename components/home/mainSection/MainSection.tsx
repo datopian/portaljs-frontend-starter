@@ -1,4 +1,3 @@
-import { Dataset } from "@portaljs/ckan";
 import { Group } from "@portaljs/ckan";
 import GroupCard from "../../groups/GroupCard";
 import PopularDatasets from "./PopularDatasets";
@@ -8,17 +7,13 @@ import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import {
   ArrowLongRightIcon,
-  ArrowRightIcon,
-  ArrowUpOnSquareStackIcon,
-  MagnifyingGlassIcon,
-  PaperAirplaneIcon,
 } from "@heroicons/react/20/solid";
 import {
   RiQuestionnaireLine,
   RiSearch2Line,
-  RiSendPlane2Line,
   RiUploadCloud2Line,
 } from "react-icons/ri";
+import { Dataset } from "@/schemas/dataset.interface";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
