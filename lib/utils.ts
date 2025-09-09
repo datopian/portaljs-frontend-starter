@@ -20,3 +20,10 @@ export function getTimeAgo(timestamp: string) {
 
   return format(date);
 }
+
+export function capitalizeFirstLetter(str: string) {
+  if (str.length === 0) {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

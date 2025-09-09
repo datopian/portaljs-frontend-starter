@@ -60,17 +60,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function DatasetPage({ dataset }): JSX.Element {
   const tabs = [
-    {
-      id: "resources",
-      content: (
-        <ResourcesList
-          resources={dataset?.resources}
-          orgName={dataset.organization ? dataset.organization.name : ""}
-          datasetName={dataset.name}
-        />
-      ),
-      title: "Resources",
-    },
+    ...(dataset.type != "visualization"
+      ? [
+          {
+            id: "resources",
+            content: (
+              <ResourcesList
+                resources={dataset?.resources}
+                orgName={dataset.organization ? dataset.organization.name : ""}
+                datasetName={dataset.name}
+              />
+            ),
+            title: "Resources",
+          },
+        ]
+      : []),
     {
       id: "information",
       content: <DatasetOverview dataset={dataset} />,
@@ -92,6 +96,8 @@ export default function DatasetPage({ dataset }): JSX.Element {
       <Layout>
         <HeroSection title={dataset.title} cols="6" />
         <DatasetNavCrumbs
+          datasetType={dataset.type}
+          datasetsLinkHref={dataset.type === "visualization" ? "/search?type=visualization" : "/search"}
           org={{
             name: dataset.organization?.name,
             title: dataset.organization?.title,
