@@ -3,8 +3,6 @@ import GroupCard from "../../groups/GroupCard";
 import PopularDatasets from "./PopularDatasets";
 import ActionCard from "../actions/actionCard";
 import Link from "next/link";
-
-import { Montserrat } from "next/font/google";
 import {
   ArrowLongRightIcon,
 } from "@heroicons/react/20/solid";
@@ -15,9 +13,6 @@ import {
 } from "react-icons/ri";
 import { Dataset } from "@/schemas/dataset.interface";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-});
 
 export default function MainSection({
   groups,
@@ -62,7 +57,7 @@ export default function MainSection({
           {groups.length > 4 && (
             <Link
               href="/groups"
-              className={`${montserrat.className}  font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
+              className={`font-montserrat font-semibold flex items-center gap-1 uppercase hover:text-darkaccent ml-auto w-fit absolute right-0 top-[-30px]`}
             >
               View all categories
               <ArrowLongRightIcon width={16} />

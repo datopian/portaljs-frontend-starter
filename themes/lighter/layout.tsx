@@ -1,12 +1,7 @@
 import React, { FC, ReactNode, useCallback } from "react";
 import styles from "./styles.module.scss";
-import { Inter } from "next/font/google";
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
-
-const inter = Inter({
-  subsets: ["latin"],
-});
 
 const LigtherTheme = ({
   Header,
@@ -118,7 +113,7 @@ const LigtherTheme = ({
       >
         Skip to main content
       </a>
-      <div className={` ${styles.LightTheme} ${inter.className} relative`}>
+      <div className={` ${styles.LightTheme} font-inter relative`}>
         {Header && <Header />}
         <div className="content-wrapper">
           {Sidebar && <Sidebar />}
