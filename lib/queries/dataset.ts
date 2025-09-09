@@ -82,14 +82,15 @@ export async function searchDatasets(options: PackageSearchOptions) {
       search_facets: {
         [k: string]: {
           title: string;
-          items: { name: string; display_name: string; coult: number }[];
+          items: { name: string; display_name: string; count: number }[];
         };
       };
     }>
   >(action, { ckanUrl: DMS });
 
-  if (tagVocabName in res.result?.search_facets) {
-    res.result.search_facets["tags"] = res.result.search_facets[tagVocabName];
+  const facets = res.result && res.result.search_facets;
+  if (facets && tagVocabName in facets) {
+    res.result.search_facets["tags"] = facets[tagVocabName];
   }
 
   return { ...res.result, datasets: res.result.results };

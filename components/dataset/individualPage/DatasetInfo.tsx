@@ -24,11 +24,12 @@ export default function DatasetInfo({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col gap-y-3">
-        {dataset.type === "visualization" && (
+        {dataset.type === "visualization" && !!dataset.external_url && (
           <a
             href={dataset.external_url}
             className={`font-medium flex items-center gap-1 text-accent`}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <RiExternalLinkLine className="w-5 h-5" />
             Access Visualization

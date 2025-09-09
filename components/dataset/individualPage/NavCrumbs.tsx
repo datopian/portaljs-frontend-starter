@@ -3,8 +3,8 @@ import Link from "next/link";
 import { RiHome3Line } from "react-icons/ri";
 
 export default function DatasetNavCrumbs({
-  datasetType,
-  datasetsLinkHref,
+  datasetType = "dataset",
+  datasetsLinkHref = "/search",
   org,
   dataset,
 }: {

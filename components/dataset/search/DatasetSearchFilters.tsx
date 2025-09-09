@@ -159,7 +159,7 @@ export default function DatasetSearchFilters() {
                 Refine by <span className="text-accent">Tags</span>
               </>
             }
-            showClear={options.resFormat.length > 0}
+            showClear={options.tags.length > 0}
             clearAction={() => {
               setOptions({
                 tags: [],
@@ -253,7 +253,7 @@ function DatasetTypeOption({
             tags: [],
             groups: [],
             orgs: [],
-            query: []
+            query: ""
           });
         }
         setOptions(newOptions);

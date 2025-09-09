@@ -49,7 +49,6 @@ module.exports = {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         roboto: ["Roboto", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
         raleway: ["raleway", "sans-serif"],
         poppins: ["var(--font-poppins)"],
         montserrat: ["var(--font-montserrat)"],

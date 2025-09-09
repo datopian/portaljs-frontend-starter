@@ -63,7 +63,7 @@ export const SearchStateProvider = ({
 
   const packagesOptions = {
     ...options,
-    rows: options.type === "dataset" ? options.limit : 0,
+    offset: options.type != "dataset" ? 0 : options.offset,
     type: "dataset",
   };
   const {
@@ -80,7 +80,7 @@ export const SearchStateProvider = ({
   const visualizationsOptions = {
     ...options,
     resFormat: [],
-    rows: options.type === "visualization" ? options.limit : 0,
+    offset: options.type != "visualization" ? 0 : options.offset,
     type: "visualization",
   };
   const {

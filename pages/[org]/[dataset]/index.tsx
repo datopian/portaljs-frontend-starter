@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import DatasetInfo from "@/components/dataset/individualPage/DatasetInfo";
 import DatasetOverview from "@/components/dataset/individualPage/DatasetOverview";
 import DatasetNavCrumbs from "@/components/dataset/individualPage/NavCrumbs";
