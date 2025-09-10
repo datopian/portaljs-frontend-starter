@@ -40,7 +40,7 @@ export default function HeroSectionLight({
               count={stats.datasetCount}
               label="Dataset"
             />
-            {stats.visualizationCount && <Stat
+            {!!stats.visualizationCount && <Stat
               Icon={RiBarChartLine}
               href="/search?type=visualization"
               count={stats.visualizationCount}
