@@ -4,8 +4,8 @@ import { useSearchState } from "./SearchContext";
 
 export default function DatasetSearchForm() {
   const { theme } = useTheme();
-  const { setOptions, options: searchOptions, searchFacets } = useSearchState();
-  const [q, setQ] = useState("");
+  const { setOptions, options } = useSearchState();
+  const [q, setQ] = useState(options.query ?? "");
   const handleSubmit = (e) => {
     e.preventDefault();
     setOptions({

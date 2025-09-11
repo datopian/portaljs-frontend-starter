@@ -1,19 +1,19 @@
-import Link from "next/link";
 import SearchForm from "./SearchForm";
 
-import { Poppins } from "next/font/google";
-import {
-  RiFileCopy2Line,
-  RiFunctionLine,
-  RiTeamLine,
-} from "react-icons/ri";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
+import { RiBarChartLine, RiFileCopy2Line, RiFunctionLine, RiTeamLine } from "react-icons/ri";
+import { Stat } from "../heroSection/Stats";
 
-export default function HeroSectionLight({ stats }) {
+export default function HeroSectionLight({
+  stats,
+}: {
+  stats: {
+    orgCount: number;
+    groupCount: number;
+    datasetCount: number;
+    visualizationCount: number;
+  };
+}) {
   return (
     <div>
       <div className="custom-container mx-auto bg-white">
@@ -32,57 +32,32 @@ export default function HeroSectionLight({ stats }) {
             <SearchForm />
           </div>
           <div
-            className={`${poppins.className} lg:ml-auto lg:pr-[135px] flex lg:flex-col justify-start gap-[40px] flex flex-wrap `}
+            className={`lg:ml-auto lg:pr-[135px] flex lg:flex-col justify-start gap-[40px] flex-wrap `}
           >
-            <Link
-              href={`/search`}
-              className={`flex items-center gap-[20px] hover:text-accent transition-all`}
-            >
-              <span className="text-accent">
-                <RiFileCopy2Line className="text-[40px]" width={40} />
-              </span>
-              <div className="flex flex-col gap-0">
-                <span className="font-bold text-[32px] leading-[40px]">
-                  {stats.datasetCount}
-                </span>
-                <span className="text-[16px] leading-[24px]">
-                  Dataset{stats.datasetCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            </Link>
-            <Link
+            <Stat
+              Icon={RiFileCopy2Line}
+              href="/search"
+              count={stats.datasetCount}
+              label="Dataset"
+            />
+            {!!stats.visualizationCount && <Stat
+              Icon={RiBarChartLine}
+              href="/search?type=visualization"
+              count={stats.visualizationCount}
+              label="Visualization"
+            />}
+            <Stat
+              Icon={RiFunctionLine}
               href="/groups"
-              className="flex items-center gap-[20px] hover:text-accent transition-all"
-            >
-              <span className="text-accent">
-                <RiFunctionLine className="text-[40px]" width={40} />
-              </span>
-
-              <div className="flex flex-col gap-0">
-                <span className="font-bold text-[32px] leading-[40px]">
-                  {stats.groupCount}
-                </span>
-                <span className="text-[16px] leading-[24px]">
-                  Group{stats.groupCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            </Link>
-            <Link
+              count={stats.groupCount}
+              label="Group"
+            />
+            <Stat
+              Icon={RiTeamLine}
               href="/organizations"
-              className="flex items-center gap-[20px] hover:text-accent transition-all"
-            >
-              <span className="text-accent">
-                <RiTeamLine className="text-[40px]" width={40} />
-              </span>
-              <div className="flex flex-col gap-0">
-                <span className="font-bold text-[32px] leading-[40px]">
-                  {stats.orgCount}
-                </span>
-                <span className="text-[16px] leading-[24px]">
-                  Organization{stats.orgCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            </Link>
+              count={stats.orgCount}
+              label="Organization"
+            />
           </div>
         </div>
       </div>

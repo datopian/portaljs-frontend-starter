@@ -1,8 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import { useState } from "react";
 import Pagination from "./Pagination";
-import DatasetCard from "./DatasetCard";
-import { searchDatasets } from "@/lib/queries/dataset";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -19,28 +16,17 @@ export default function ListOfDatasets() {
 }
 
 function ListItems() {
-  const { options, setOptions, setSearchFacets, searchFacets } =
-    useSearchState();
-  const { data: packageSearchResults, isValidating } = useSWR(
-    ["package_search", JSON.stringify(options)],
-    async () => {
-      return searchDatasets(options);
-    }
-  );
+  const { options, setOptions, searchResults, isLoading } = useSearchState();
 
   const [subsetOfPages, setSubsetOfPages] = useState(0);
-
-  useEffect(() => {
-    if (packageSearchResults?.search_facets)
-      setSearchFacets(packageSearchResults.search_facets);
-  }, [packageSearchResults, setSearchFacets]);
 
   return (
     <>
       <div className="flex justify-between flex-col md:flex-row md:items-center flex-wrap gap-3">
         <div className="flex gap-2">
           <h2 className="text-[23px] leading-[28px] capitalize font-bold  ">
-            {packageSearchResults?.count} Datasets
+            {searchResults?.count}{" "}
+            {options.type === "visualization" ? "Visualizations" : "Datasets"}
           </h2>
         </div>
         <div className="flex gap-2 cursor-pointer">
@@ -65,15 +51,15 @@ function ListItems() {
 
       <FilterBadges />
       <div className="flex flex-col gap-8 mt-4">
-        {packageSearchResults?.datasets?.map((dataset) => (
+        {searchResults?.datasets?.map((dataset) => (
           <DatasetItem key={dataset.id} dataset={dataset} />
         ))}
       </div>
 
       <div className="mt-10">
         <PackagePagination
-          isLoading={isValidating}
-          count={packageSearchResults?.count}
+          isLoading={isLoading}
+          count={searchResults?.count}
           subsetOfPages={subsetOfPages}
           setSubsetOfPages={setSubsetOfPages}
         />
@@ -83,109 +69,111 @@ function ListItems() {
 }
 
 function FilterBadges() {
-  const { options, setOptions, setSearchFacets, searchFacets } =
-    useSearchState();
+  const { options, setOptions, searchFacets } = useSearchState();
+
+  const getActiveFilters = (optionKey: string, facetKey: string) => {
+    if (
+      options.hasOwnProperty(optionKey) &&
+      searchFacets.hasOwnProperty(facetKey)
+    ) {
+      const activeFilters = options[optionKey]
+        .map((af) =>
+          searchFacets[facetKey].items.find((item) => item.name === af)
+        )
+        .filter((item) => !!item);
+      return activeFilters ?? [];
+    }
+    return [];
+  };
+
+  const filters = {
+    resFormat: getActiveFilters("resFormat", "res_format"),
+    orgs: getActiveFilters("orgs", "organization"),
+    groups: getActiveFilters("groups", "groups"),
+    tags: getActiveFilters("tags", "tags"),
+  };
+
+  const activeFiltersCount = Object.keys(filters)
+    .map((fk) => filters[fk]?.length ?? 0)
+    .reduce((a, v) => {
+      return a + v;
+    }, 0);
+
   return (
     <div className="border-b border-gray-100 pb-2">
-      {(options.resFormat?.length > 0 ||
-        options.groups?.length > 0 ||
-        options.orgs?.length > 0) && (
+      {!!activeFiltersCount && (
         <span className="text-xs  text-gray-800 mb-2 inline-block">
           Applied Filters{" "}
           <span className="font-[600]">
-            (
-            {options.resFormat?.length +
-              options.orgs?.length +
-              options.groups?.length}
+            ({activeFiltersCount}
             ):
           </span>
         </span>
       )}
 
       <div className="flex gap-2 flex-wrap">
-        {options.orgs.length > 0 &&
-          options.orgs.map((org) => (
-            <span
-              key={org}
+        {filters.orgs.length > 0 &&
+          filters.orgs.map((org) => (
+            <ActiveFilter
+              key={org.name}
+              label={org.display_name}
               onClick={() => {
                 setOptions({
-                  orgs: options.orgs.filter((item) => item !== org),
+                  orgs: options.orgs.filter((item) => item !== org.name),
                 });
               }}
-              className="inline-flex items-center cursor-pointer gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
-            >
-              {
-                searchFacets.organization?.items.find((i) => i.name === org)
-                  ?.display_name
-              }
-              <button
-                type="button"
-                className="group relative -mr-1 size-3.5 rounded-sm hover:bg-gray-500/20"
-              >
-                <XMarkIcon width={14} />
-                <span className="absolute -inset-1"></span>
-              </button>
-            </span>
+            />
           ))}
 
-        {options.groups.length > 0 &&
-          options.groups.map((g) => (
-            <span
-              key={g}
-              className="inline-flex items-center cursor-pointer gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+        {filters.groups.length > 0 &&
+          filters.groups.map((g) => (
+            <ActiveFilter
+              key={g.name}
+              label={g.display_name}
               onClick={() => {
                 setOptions({
-                  groups: options.groups.filter((item) => item !== g),
+                  groups: options.groups.filter((item) => item !== g.name),
                 });
               }}
-            >
-              {
-                searchFacets.groups?.items.find((i) => i.name === g)
-                  ?.display_name
-              }
-              <button
-                type="button"
-                className="group relative -mr-1 size-3.5 rounded-sm hover:bg-gray-500/20"
-              >
-                <XMarkIcon width={14} />
-                <span className="absolute -inset-1"></span>
-              </button>
-            </span>
+            />
           ))}
 
-        {options.resFormat.length > 0 &&
-          options.resFormat.map((f) => (
-            <span
-              key={f}
+        {filters.tags.length > 0 &&
+          filters.tags.map((t) => (
+            <ActiveFilter
+              key={t.name}
+              label={t.display_name}
               onClick={() => {
                 setOptions({
-                  resFormat: options.resFormat.filter((item) => item !== f),
+                  tags: options.tags.filter((item) => item !== t.name),
                 });
               }}
-              className="inline-flex items-center cursor-pointer gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
-            >
-              {
-                searchFacets.res_format?.items.find((i) => i.name === f)
-                  ?.display_name
-              }
-              <button
-                type="button"
-                className="group relative -mr-1 size-3.5 rounded-sm hover:bg-gray-500/20"
-              >
-                <XMarkIcon width={14} />
-                <span className="absolute -inset-1"></span>
-              </button>
-            </span>
+            />
           ))}
-        {(options.resFormat?.length > 0 ||
-          options.groups?.length > 0 ||
-          options.orgs?.length > 0) && (
+
+        {filters.resFormat.length > 0 &&
+          filters.resFormat.map((f) => (
+            <ActiveFilter
+              key={f.name}
+              label={f.display_name}
+              onClick={() => {
+                setOptions({
+                  resFormat: options.resFormat.filter(
+                    (item) => item !== f.name
+                  ),
+                });
+              }}
+            />
+          ))}
+
+        {(!!activeFiltersCount) && (
           <span
             onClick={() => {
               setOptions({
                 resFormat: [],
                 groups: [],
                 orgs: [],
+                tags: []
               });
             }}
             className="inline-flex h-fit w-fit cursor-pointer ml-auto items-center gap-x-0.5 rounded-md bg-gray-900 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10"
@@ -262,5 +250,31 @@ function ResultsNotFound() {
         </span>
       </div>
     </div>
+  );
+}
+
+function ActiveFilter({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <span
+      onClick={() => {
+        onClick();
+      }}
+      className="inline-flex items-center cursor-pointer gap-x-0.5 rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      {label}
+      <button
+        type="button"
+        className="group relative -mr-1 size-3.5 rounded-sm hover:bg-gray-500/20"
+      >
+        <XMarkIcon width={14} />
+        <span className="absolute -inset-1"></span>
+      </button>
+    </span>
   );
 }

@@ -22,7 +22,8 @@ export interface Dataset {
     private?: boolean;
     state?: "active" | "inactive" | "deleted";
     title?: string;
-    type?: "dataset";
+    type?: "dataset" | "visualization";
+    external_url?: string;
     url?: string;
     version?: string;
     activity_stream?: Array<Activity>;
@@ -30,10 +31,6 @@ export interface Dataset {
     organization?: Organization;
     groups?: Array<Group>;
     tags?: Array<Tag>;
-    diseases?: Array<string>;
-    diseases_names?: Array<string>;
-    geographies_names?: Array<string>;
-    regions_names?: Array<string>;
     sources?: Array<{ url: string; title: string }>;
     temporal_coverage_start?: string;
     temporal_coverage_end?: string;
@@ -47,16 +44,12 @@ export interface PackageSearchOptions {
     groups: Array<string>;
     orgs: Array<string>;
     tags: Array<string>;
-    vocab_diseases?: Array<string>;
-    vocab_geographies?: Array<string>;
-    vocab_regions?: Array<string>;
-    temporal_coverage_start?: string;
-    temporal_coverage_end?: string;
     query?: string;
     resFormat?: Array<string>;
     sort?: string;
     include_private?: boolean;
     fq?: string;
+    type?: string;
 }
 
 export interface PackageFacetOptions {

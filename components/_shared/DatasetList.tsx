@@ -1,5 +1,4 @@
 import { Dataset } from "@portaljs/ckan";
-import DatasetCard from "../dataset/search/DatasetCard";
 import DatasetItem from "../dataset/search/DatasetItem";
 
 interface DatasetListProps {

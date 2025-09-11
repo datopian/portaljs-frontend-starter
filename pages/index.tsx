@@ -1,5 +1,4 @@
 import type { InferGetServerSidePropsType } from "next";
-import Head from "next/head";
 import MainSection from "../components/home/mainSection/MainSection";
 import { searchDatasets } from "@/lib/queries/dataset";
 import { getAllGroups } from "@/lib/queries/groups";
@@ -14,6 +13,15 @@ export async function getServerSideProps() {
     tags: [],
     groups: [],
     orgs: [],
+    type: "dataset"
+  });
+  const visualizations = await searchDatasets({
+    offset: 0,
+    limit: 0,
+    tags: [],
+    groups: [],
+    orgs: [],
+    type: "visualization"
   });
   const groups = await getAllGroups({ detailed: true });
   const orgs = await getAllOrganizations({ detailed: true });
@@ -21,6 +29,7 @@ export async function getServerSideProps() {
     datasetCount: datasets.count,
     groupCount: groups.length,
     orgCount: orgs.length,
+    visualizationCount: visualizations.count
   };
   return {
     props: {

@@ -49,8 +49,10 @@ module.exports = {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         roboto: ["Roboto", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
         raleway: ["raleway", "sans-serif"],
+        poppins: ["var(--font-poppins)"],
+        montserrat: ["var(--font-montserrat)"],
+        inter: ["var(--font-inter)"]
       },
       boxShadow: {
         blogImg: "inset 0 0 0 50vw rgba(0,28,49,0.76)",
