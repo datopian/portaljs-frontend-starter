@@ -51,7 +51,7 @@ function ListItems() {
 
       <FilterBadges />
       <div className="flex flex-col gap-8 mt-4">
-        {searchResults?.datasets?.map((dataset) => (
+        {searchResults?.results?.map((dataset) => (
           <DatasetItem key={dataset.id} dataset={dataset} />
         ))}
       </div>

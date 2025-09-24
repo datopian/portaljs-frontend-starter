@@ -66,6 +66,7 @@ export const SearchStateProvider = ({
     offset: options.type != "dataset" ? 0 : options.offset,
     type: "dataset",
   };
+  // NOTE: our goal is to get rid of this call
   const {
     data: packageSearchResults,
     isValidating: isLoadingPackageSearchResults,
@@ -76,6 +77,20 @@ export const SearchStateProvider = ({
     },
     { use: [laggy] }
   );
+
+  const { data: cachedDatasets, isValidating: isLoadingCachedDatasets } =
+    useSWR([packagesOptions], async (options) => {
+      const searchParams = new URLSearchParams();
+      searchParams.set("limit", String(options.limit));
+      const page = Math.floor(options.offset ?? 0 / options.limit) + 1;
+      searchParams.set("page", String(page));
+      searchParams.set("query", String(options.query));
+      const datasets = await fetch(
+        `/api/datasets/search?${searchParams.toString()}`
+      );
+      const data = await datasets.json();
+      return data;
+    });
 
   const visualizationsOptions = {
     ...options,
@@ -97,11 +112,11 @@ export const SearchStateProvider = ({
   const searchResults =
     options.type === "visualization"
       ? visualizationsSearchResults
-      : packageSearchResults;
+      : cachedDatasets;
   const isLoading =
     options.type === "visualization"
       ? isLoadingVisualizations
-      : isLoadingPackageSearchResults;
+      : isLoadingCachedDatasets;
 
   const packageSearchFacets = packageSearchResults?.search_facets ?? {};
   const visualizationsSearchFacets =
@@ -110,7 +125,6 @@ export const SearchStateProvider = ({
     options.type === "visualization"
       ? visualizationsSearchFacets
       : packageSearchFacets;
-
 
   const value: SearchStateContext = {
     options,
