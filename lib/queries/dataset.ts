@@ -8,13 +8,11 @@ import { Dataset, PackageSearchOptions } from "@/schemas/dataset.interface";
 import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
 
 const DMS = process.env.NEXT_PUBLIC_DMS;
-const mainOrg = process.env.NEXT_PUBLIC_ORG;
 
 export async function searchDatasets(options: PackageSearchOptions) {
   const baseAction = `package_search`;
-  const tagVocabName = mainOrg ? `vocab_portal-tags--${mainOrg}` : "tags";
 
-  const facetFields = ["groups", "organization", "res_format", tagVocabName]
+  const facetFields = ["groups", "organization", "res_format", "tags"]
     .map((f) => `"${f}"`)
     .join(",");
 
@@ -36,7 +34,7 @@ export async function searchDatasets(options: PackageSearchOptions) {
     queryParams.push(`sort=${options?.sort}`);
   }
 
-  let fqList: string[] = [mainOrg ? `main_org:${mainOrg}` : ""];
+  let fqList: string[] = [];
 
   if (options?.fq) {
     fqList.push(options.fq);
@@ -52,7 +50,7 @@ export async function searchDatasets(options: PackageSearchOptions) {
   }
 
   if (options?.tags?.length) {
-    fqListGroups.push(`${tagVocabName}:(${joinTermsWithOr(options?.tags)})`);
+    fqListGroups.push(`tags:(${joinTermsWithOr(options?.tags)})`);
   }
 
   if (options?.resFormat?.length) {
@@ -87,11 +85,6 @@ export async function searchDatasets(options: PackageSearchOptions) {
       };
     }>
   >(action, { ckanUrl: DMS });
-
-  const facets = res.result && res.result.search_facets;
-  if (facets && tagVocabName in facets) {
-    res.result.search_facets["tags"] = facets[tagVocabName];
-  }
 
   return { ...res.result, datasets: res.result.results };
 }

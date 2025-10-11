@@ -8,55 +8,18 @@ import {
 import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
 
 const DMS = process.env.NEXT_PUBLIC_DMS;
-const mainOrg = process.env.NEXT_PUBLIC_ORG;
-const mainGroup = `${mainOrg}-group`;
 
-export const getAllGroups = async ({
-  detailed = true, // Whether to add group_show or not
-}: {
-  detailed: boolean;
-}) => {
-  if (!mainOrg) {
-    const organizations = await CkanRequest.get<CkanResponse<Group[]>>(
+export const getAllGroups = async () => {
+    const groups = await CkanRequest.get<CkanResponse<Group[]>>(
       `group_list?all_fields=True`,
       {
         ckanUrl: DMS,
       }
     );
 
-    return organizations.result.map((o) => {
+    return groups.result.map((o) => {
       return { ...o, _name: o.name };
     });
-  }
-
-  const groupsTree = await CkanRequest.get<
-    CkanResponse<Group & { children: Group[] }>
-  >(`group_tree_section?type=group&id=${mainGroup}`, {
-    ckanUrl: DMS,
-  });
-
-  let children = groupsTree.result.children;
-
-  if (detailed) {
-    children = await Promise.all(
-      children.map(async (g) => {
-        const groupDetails = await CkanRequest.get<CkanResponse<Group>>(
-          `group_show?id=${g.id}`,
-          {
-            ckanUrl: DMS,
-          }
-        );
-        return groupDetails.result;
-      })
-    );
-  }
-
-  children = children.map((c) => {
-    const publicName = privateToPublicGroupName(c.name);
-    return { ...c, name: publicName };
-  });
-
-  return children;
 };
 
 export const getGroup = async ({
