@@ -29,24 +29,10 @@ export const getGroup = async ({
   name: string;
   include_datasets?: boolean;
 }) => {
-  const privateName = publicToPrivateGroupName(name);
-
   const group = await CkanRequest.get<CkanResponse<Group>>(
-    `group_show?id=${privateName}&include_datasets=${include_datasets}`,
+    `group_show?id=${name}&include_datasets=${include_datasets}`,
     { ckanUrl: DMS }
   );
 
-  if (include_datasets) {
-    group.result.packages.forEach((dataset: Dataset) => {
-      const publicOrgName = privateToPublicOrgName(dataset.organization.name);
-      dataset.organization.name = publicOrgName;
-
-      const publicDatasetName = privateToPublicDatasetName(dataset.name);
-      dataset.name = publicDatasetName;
-    });
-  }
-
-  const publicName = privateToPublicGroupName(group.result.name);
-
-  return { ...group.result, name: publicName, _name: group.result.name };
+  return { ...group.result, _name: group.result.name };
 };

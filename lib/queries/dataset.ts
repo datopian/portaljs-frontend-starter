@@ -96,13 +96,11 @@ const joinTermsWithOr = (tems) => {
 export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
-  const privateName = publicToPrivateDatasetName(name);
-  const dataset = await ckan.getDatasetDetails(privateName);
-  dataset.name = privateToPublicDatasetName(dataset.name);
+  const dataset = await ckan.getDatasetDetails(name);
 
   return {
     ...dataset,
-    _name: privateName,
+    _name: name,
     organization: {
       ...dataset.organization,
       name: privateToPublicOrgName(dataset.organization.name),
