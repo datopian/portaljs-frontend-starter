@@ -4,8 +4,6 @@ import MultipleResourcesCard from "../_shared/MultipleResourcesCard";
 import { resourceBgColors } from "../_shared/FormatsColors";
 import { getTimeAgo } from "@/lib/utils";
 
-const mainOrg = process.env.NEXT_PUBLIC_ORG;
-
 export default function DatasetCard({
   dataset,
   showOrg = true,
@@ -68,10 +66,7 @@ export default function DatasetCard({
     );
   }
 
-  const datasetName =
-    dataset.name?.indexOf(`${mainOrg}--`) >= 0
-      ? dataset.name?.split(`${mainOrg}--`)[1]
-      : dataset.name;
+  const datasetName = dataset.name;
 
   return (
     <Link href={`/@${dataset.organization.name}/${datasetName}`} className="">

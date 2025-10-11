@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useTheme } from "@/components/theme/theme-provider";
-import { getDatasetName } from "@/lib/utils";
 import { Dataset } from "@/schemas/dataset.interface";
 
 type DatasetLinkProps = Pick<Dataset, "title" | "metadata_modified">;
@@ -28,9 +27,7 @@ export default function PopularDatasets({
           {datasets.map((dataset, index) => (
             <Link
               key={index}
-              href={`/@${dataset.organization.name}/${getDatasetName(
-                dataset.name
-              )}`}
+              href={`/@${dataset.organization.name}/${dataset.name}`}
               className="block mt-6 hover:text-accent transition-all"
             >
               <DatasetLink

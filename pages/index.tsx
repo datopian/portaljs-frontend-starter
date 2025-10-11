@@ -23,8 +23,8 @@ export async function getServerSideProps() {
     orgs: [],
     type: "visualization"
   });
-  const groups = await getAllGroups({ detailed: true });
-  const orgs = await getAllOrganizations({ detailed: true });
+  const groups = await getAllGroups();
+  const orgs = await getAllOrganizations();
   const stats = {
     datasetCount: datasets.count,
     groupCount: groups.length,
@@ -35,7 +35,6 @@ export async function getServerSideProps() {
     props: {
       datasets: datasets.datasets,
       groups,
-      orgs,
       stats,
     },
   };
@@ -44,7 +43,6 @@ export async function getServerSideProps() {
 export default function Home({
   datasets,
   groups,
-  orgs,
   stats,
 }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
   return (

@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     );
     group = { ...group, packages: packagesWithResources };
   }
-  const activityStream = await ckan.getGroupActivityStream(group._name);
+  const activityStream = await ckan.getGroupActivityStream(group.name);
   if (!group) {
     return {
       notFound: true,

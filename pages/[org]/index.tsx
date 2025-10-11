@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const activityStream = await ckan.getOrgActivityStream(org._name);
+  const activityStream = await ckan.getOrgActivityStream(org.name);
   if (!org) {
     return {
       notFound: true,

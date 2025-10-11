@@ -6,9 +6,8 @@ import {
   RiOrganizationChart,
   RiPriceTagLine,
 } from "react-icons/ri";
-import { getDatasetName, getTimeAgo } from "@/lib/utils";
+import { getTimeAgo } from "@/lib/utils";
 import { useTheme } from "@/components/theme/theme-provider";
-import { TagIcon } from "@heroicons/react/20/solid";
 
 export default function DatasetItem({
   dataset,
@@ -23,7 +22,7 @@ export default function DatasetItem({
 
   return (
     <Link
-      href={`/@${dataset.organization.name}/${getDatasetName(dataset.name)}`}
+      href={`/@${dataset.organization.name}/${dataset.name}`}
       className={`flex items-start gap-4 hover:bg-white hover:shadow-lg transition-all p-4 rounded-[10px] ${styles.shadowMd}`}
     >
       <span className="min-w-[5px] min-h-[5px] bg-accent rounded-full mt-3 hidden"></span>
