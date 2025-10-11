@@ -1,10 +1,4 @@
-import { Dataset, Group } from "@portaljs/ckan";
-import {
-  privateToPublicDatasetName,
-  privateToPublicGroupName,
-  privateToPublicOrgName,
-  publicToPrivateGroupName,
-} from "./utils";
+import { Group } from "@portaljs/ckan";
 import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
 
 const DMS = process.env.NEXT_PUBLIC_DMS;
@@ -17,9 +11,7 @@ export const getAllGroups = async () => {
       }
     );
 
-    return groups.result.map((o) => {
-      return { ...o, _name: o.name };
-    });
+    return groups.result
 };
 
 export const getGroup = async ({
@@ -34,5 +26,5 @@ export const getGroup = async ({
     { ckanUrl: DMS }
   );
 
-  return { ...group.result, _name: group.result.name };
+  return group.result
 };

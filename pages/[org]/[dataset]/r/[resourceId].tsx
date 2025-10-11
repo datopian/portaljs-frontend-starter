@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { RiArrowLeftLine } from "react-icons/ri";
 import ResourcesBadges from "@/components/dataset/_shared/ResourcesBadges";
-import Head from "next/head";
 import { PrimeReactProvider } from "primereact/api";
 import ResponsiveGridData from "@/components/responsiveGrid";
 import { getTimeAgo } from "@/lib/utils";

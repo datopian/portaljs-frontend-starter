@@ -1,9 +1,4 @@
 import { CKAN } from "@portaljs/ckan";
-import {
-  privateToPublicDatasetName,
-  privateToPublicOrgName,
-  publicToPrivateDatasetName,
-} from "./utils";
 import { Dataset, PackageSearchOptions } from "@/schemas/dataset.interface";
 import CkanRequest, { CkanResponse } from "@portaljs/ckan-api-client-js";
 
@@ -97,13 +92,5 @@ export const getDataset = async ({ name }: { name: string }) => {
   const DMS = process.env.NEXT_PUBLIC_DMS;
   const ckan = new CKAN(DMS);
   const dataset = await ckan.getDatasetDetails(name);
-
-  return {
-    ...dataset,
-    _name: name,
-    organization: {
-      ...dataset.organization,
-      name: privateToPublicOrgName(dataset.organization.name),
-    },
-  };
+  return dataset
 };

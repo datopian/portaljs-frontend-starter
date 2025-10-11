@@ -13,7 +13,7 @@ function uniqueFormat(resources) {
 export default function DatasetInfo({
   dataset,
 }: {
-  dataset: Dataset & { _name: string };
+  dataset: Dataset;
 }) {
   const metaFormats = [
     { format: "jsonld", label: "JSON-LD" },
@@ -132,7 +132,7 @@ export default function DatasetInfo({
           {metaFormats.map((item) => (
             <div key={item.format}>
               <Link
-                href={`${process.env.NEXT_PUBLIC_DMS}/dataset/${dataset._name}.${item.format}`}
+                href={`${process.env.NEXT_PUBLIC_DMS}/dataset/${dataset.name}.${item.format}`}
                 className="font-semibold group flex gap-0.5 hover:text-darkaccent"
               >
                 <div className="text-accent group-hover:text-darkaccent transition flex items-center justify-center">
