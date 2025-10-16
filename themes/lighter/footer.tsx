@@ -1,6 +1,7 @@
 import PortalDefaultLogo from "@/components/_shared/PortalDefaultLogo";
 import { useTheme } from "@/components/theme/theme-provider";
 import Image from "next/image";
+import Link from "next/link";
 
 interface IconProps {
   className: string;
@@ -178,9 +179,18 @@ const LighterThemeFooter: React.FC = () => {
         </div>
       </div>
       <div
-        className={`custom-container flex flex-col flex-wrap py-6 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap`}
+        className={`custom-container flex flex-col items-center flex-wrap py-6 mx-auto md:flex-row md:items-center   md:flex-nowrap`}
       >
         <PortalDefaultLogo />
+
+        <div className="md:ml-auto mt-4 md:mt-0">
+          <Link
+            className="flex flex-col md:flex-row items-center gap-1"
+            href="https://portaljs.com"
+          >
+            <span className="text-sm">Built with</span><span className="font-extrabold text-[#1f2937] text-xl sm:text-lg font-roboto ">🌀 PortalJS</span>
+          </Link>
+        </div>
       </div>
     </footer>
   );
