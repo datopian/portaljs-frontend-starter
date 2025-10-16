@@ -1,7 +1,5 @@
 import PortalDefaultLogo from "@/components/_shared/PortalDefaultLogo";
 import { useTheme } from "@/components/theme/theme-provider";
-import Image from "next/image";
-import Link from "next/link";
 
 interface IconProps {
   className: string;
