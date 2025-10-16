@@ -1,9 +1,11 @@
 import Link from "next/link";
 import {  Resource, Tag } from "@portaljs/ckan";
-import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+import { ArrowDownTrayIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { getTimeAgo } from "@/lib/utils";
 import { Dataset } from "@/schemas/dataset.interface";
 import { RiExternalLinkLine } from "react-icons/ri";
+import { useEffect, useRef, useState } from "react";
+import MarkdownRenderer from "@/components/_shared/MarkdownRenderer";
 
 function uniqueFormat(resources) {
   const formats = resources.map((item: Resource) => item.format);
@@ -15,11 +17,27 @@ export default function DatasetInfo({
 }: {
   dataset: Dataset & { _name: string };
 }) {
+  const [isTruncated, setIsTruncated] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  const description =
+    dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description";
+
   const metaFormats = [
     { format: "jsonld", label: "JSON-LD" },
     { format: "rdf", label: "RDF" },
     { format: "ttl", label: "TTL" },
   ];
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (el) {
+      requestAnimationFrame(() => {
+        setIsTruncated(el.scrollHeight > el.clientHeight);
+      });
+    }
+  }, [dataset.notes]);
 
   return (
     <div className="flex flex-col">
@@ -112,9 +130,30 @@ export default function DatasetInfo({
         </span>
       </div>
       <div className="py-4 my-4 border-y">
-        <p className="text-sm font-normal text-stone-500 line-clamp-4">
-          {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
-        </p>
+        <div
+          ref={textRef}
+          className={`text-sm font-normal text-stone-500 transition-all ${
+            !showFullDescription ? "line-clamp-4" : ""
+          }`}
+        >
+          <MarkdownRenderer content={description}/>
+        </div>
+        {isTruncated && (
+          <button
+            onClick={() => setShowFullDescription(!showFullDescription)}
+            className="mt-2 border-b border-accent text-stone-500 hover:text-accent"
+          >
+            {showFullDescription ? (
+              <span className="flex items-center">
+                Read less <ChevronUpIcon className="text-accent w-4" />
+              </span>
+            ) : (
+              <span className="flex items-center">
+                Read more <ChevronDownIcon className="text-accent w-4" />
+              </span>
+            )}
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap gap-1">
         {dataset.tags?.map((tag: Tag) => (
