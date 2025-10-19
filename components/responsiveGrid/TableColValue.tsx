@@ -13,7 +13,7 @@ export default function TableColumnValue({ column, value }) {
       } ${isPinned ? "sticky left-[-1px] bg-accent-50 z-10 font-medium" : ""}`}
       role="gridcell"
       tabIndex={0}
-      aria-label={value}
+      aria-label={_value}
     >
       <span className="block max-w-[400px] w-[max-content]">{_value}</span>
       {isPinned && (
