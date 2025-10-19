@@ -4,13 +4,16 @@ import TableColumnValue from "./TableColValue";
 import TableHead from "./TableHead";
 
 export default function TableData() {
-  const { paginatedData, columns } = useResourceData();
+  const { paginatedData, columns, data } = useResourceData();
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft = 0;
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollLeft = 0;
+        } }, 100);
     }
-  }, [paginatedData, columns]);
+  }, [data]);
   return (
     <div ref={scrollRef} className="overflow-auto max-h-[750px] relative border-y min-h-[500px] w-full">
       {/* Table */}
