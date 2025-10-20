@@ -1,11 +1,21 @@
+import { useEffect, useRef } from "react";
 import { useResourceData } from "./DataProvider";
 import TableColumnValue from "./TableColValue";
 import TableHead from "./TableHead";
 
 export default function TableData() {
-  const { paginatedData, columns } = useResourceData();
+  const { paginatedData, columns, data } = useResourceData();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollRef.current) {
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollLeft = 0;
+        } }, 100);
+    }
+  }, [data]);
   return (
-    <div className="overflow-auto max-h-[750px] relative border-y min-h-[500px] w-full">
+    <div ref={scrollRef} className="overflow-auto max-h-[750px] relative border-y min-h-[500px] w-full">
       {/* Table */}
       <table
         className="min-w-full table-auto border-collapse border-0 static"
