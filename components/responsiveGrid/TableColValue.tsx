@@ -15,7 +15,7 @@ export default function TableColumnValue({ column, value }) {
       tabIndex={0}
       aria-label={_value}
     >
-      <span className="block max-w-[400px] w-[max-content]">{_value}</span>
+      <span className="block max-w-[400px] break-words  w-[max-content]">{_value}</span>
       {isPinned && (
         <span className="absolute right-[-1px] h-full w-[1px] bg-gray-100 top-0"></span>
       )}
