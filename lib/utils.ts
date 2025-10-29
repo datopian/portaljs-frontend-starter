@@ -6,15 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-function stripOrgPrefix(name: string) {
-  const mainOrg = process.env.NEXT_PUBLIC_ORG;
-  const strippedName =
-    name?.indexOf(`${mainOrg}--`) >= 0 ? name?.split(`${mainOrg}--`)[1] : name;
-  return strippedName;
-}
-export const getDatasetName = stripOrgPrefix;
-export const getOrganizationName = stripOrgPrefix;
-
 export function getTimeAgo(timestamp: string) {
   const trimmed = timestamp.trim();
   const hasTZ = /Z$|[+-]\d{2}:\d{2}$/.test(trimmed);
