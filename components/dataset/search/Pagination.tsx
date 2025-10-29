@@ -63,7 +63,7 @@ export default function Pagination({
           {x + 1}
         </button>
       ))}
-      {subsetOfPages !== Math.ceil(count / max) && count > 50 && (
+      {count > max * options.limit && (subsetOfPages + max) * options.limit < count && (
         <button
           className="font-semibold flex items-center gap-2"
           onClick={() => setSubsetOfPages(subsetOfPages + max)}
