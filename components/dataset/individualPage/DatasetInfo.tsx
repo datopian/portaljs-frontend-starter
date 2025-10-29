@@ -1,9 +1,15 @@
 import Link from "next/link";
-import {  Resource, Tag } from "@portaljs/ckan";
-import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+import { Resource, Tag } from "@portaljs/ckan";
+import {
+  ArrowDownTrayIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@heroicons/react/20/solid";
 import { getTimeAgo } from "@/lib/utils";
 import { Dataset } from "@/schemas/dataset.interface";
 import { RiExternalLinkLine } from "react-icons/ri";
+import { useEffect, useRef, useState } from "react";
+import MarkdownRenderer from "@/components/_shared/MarkdownRenderer";
 
 function uniqueFormat(resources) {
   const formats = resources.map((item: Resource) => item.format);
@@ -15,11 +21,27 @@ export default function DatasetInfo({
 }: {
   dataset: Dataset;
 }) {
+  const [isTruncated, setIsTruncated] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  const description =
+    dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description";
+
   const metaFormats = [
     { format: "jsonld", label: "JSON-LD" },
     { format: "rdf", label: "RDF" },
     { format: "ttl", label: "TTL" },
   ];
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (el) {
+      requestAnimationFrame(() => {
+        setIsTruncated(el.scrollHeight > el.clientHeight);
+      });
+    }
+  }, [dataset.notes]);
 
   return (
     <div className="flex flex-col">
@@ -92,6 +114,43 @@ export default function DatasetInfo({
           Created:{" "}
           {dataset.metadata_created && getTimeAgo(dataset.metadata_created)}
         </span>
+        {dataset.source && dataset.source.length > 0 && (
+          <div className="font-medium text-gray-500">
+            <div className="flex items-start gap-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5 text-accent inline-block mt-0.5 flex-shrink-0"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                />
+              </svg>
+              <div className="flex flex-col gap-1">
+                <span>Source{dataset.source.length > 1 ? "s" : ""}:</span>
+                <div className="flex flex-col gap-1.5">
+                  {dataset.source.map((url, index) => (
+                    <a
+                      key={index}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:text-darkaccent flex items-center gap-1 break-all transition"
+                    >
+                      <RiExternalLinkLine className="w-4 h-4 flex-shrink-0" />
+                      <span className="underline">{url}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <span className="font-medium text-gray-500 inline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -112,9 +171,30 @@ export default function DatasetInfo({
         </span>
       </div>
       <div className="py-4 my-4 border-y">
-        <p className="text-sm font-normal text-stone-500 line-clamp-4">
-          {dataset.notes?.replace(/<\/?[^>]+(>|$)/g, "") || "No description"}
-        </p>
+        <div
+          ref={textRef}
+          className={`text-sm font-normal text-stone-500 transition-all ${
+            !showFullDescription ? "line-clamp-4" : ""
+          }`}
+        >
+          <MarkdownRenderer content={description} />
+        </div>
+        {isTruncated && (
+          <button
+            onClick={() => setShowFullDescription(!showFullDescription)}
+            className="mt-2 border-b border-accent text-stone-500 hover:text-accent"
+          >
+            {showFullDescription ? (
+              <span className="flex items-center">
+                Read less <ChevronUpIcon className="text-accent w-4" />
+              </span>
+            ) : (
+              <span className="flex items-center">
+                Read more <ChevronDownIcon className="text-accent w-4" />
+              </span>
+            )}
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap gap-1">
         {dataset.tags?.map((tag: Tag) => (
