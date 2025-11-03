@@ -10,6 +10,7 @@ import DatasetList from "@/components/_shared/DatasetList";
 import { CKAN } from "@portaljs/ckan";
 import { getOrganization } from "@/lib/queries/orgs";
 import { getDataset } from "@/lib/queries/dataset";
+import { searchDatasets } from "@/lib/queries/dataset";
 
 import HeroSection from "@/components/_shared/HeroSection";
 import { OrganizationIndividualPageStructuredData } from "@/components/schema/OrganizationIndividualPageStructuredData";
@@ -26,26 +27,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   orgName = orgName.split("@")[1];
   let org = await getOrganization({
     name: orgName as string,
-    include_datasets: true,
+    include_datasets: false,
   });
 
-  if (org.packages) {
-    const packagesWithResources = await Promise.all(
-      org.packages.map(async (dataset) => {
-        try {
-          const fullDataset = await getDataset({ name: dataset.name });
-          return fullDataset || null;
-        } catch (err) {
-          console.error(`Failed to fetch dataset: ${dataset.name}`, err);
-          return null;
-        }
-      })
-    );
+  console.log("Fetched organization:", org);
 
-    org = {
-      ...org,
-      packages: packagesWithResources.filter(Boolean),
-    };
+  let initialDatasets = null
+
+  if (org.package_count) {
+    initialDatasets = await searchDatasets({
+      fq: `organization:${org._name}`,
+      offset: 0,
+      limit: 10,
+      type: "dataset",
+      query: "",
+      sort: "metadata_modified desc",
+      groups: [],
+      orgs: [],
+      tags: [],
+      resFormat: [],
+    });
   }
 
   const activityStream = await ckan.getOrgActivityStream(org._name);
@@ -54,27 +55,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       notFound: true,
     };
   }
-  org = { ...org, activity_stream: activityStream };
+  org = { ...org, activity_stream: activityStream};
   return {
     props: {
       org,
+      initialDatasets,
     },
   };
 };
 
-export default function OrgPage({ org }): JSX.Element {
+export default function OrgPage({ org, initialDatasets }): JSX.Element {
   const tabs = [
     {
       id: "datasets",
-      content: org.packages ? (
-        <DatasetList datasets={org.packages ? org.packages : []} />
-      ) : (
-        ""
+      content: (
+        <DatasetList type="organization" name={org._name} initialDatasets={initialDatasets} />
       ),
       title: "Datasets",
     },
     {
-      id: "activity-stream",
+      id: "activity-stream",  
       content: (
         <ActivityStream
           activities={org?.activity_stream ? org.activity_stream : []}
