@@ -10,7 +10,7 @@
 
 Powered by **[Next.js](https://nextjs.org)**, **[React](https://react.dev/)**, and **[Tailwind CSS](https://tailwindcss.com/)**
 
-**[🚀 Live Demo](https://portaljs-cloud-frontend-template.vercel.app/) • [📖 Documentation](https://portaljs.com/docs) • [☁️ PortalJS Cloud](https://cloud.portaljs.com/) • [🌐 Website](https://portaljs.com/)**
+**[🚀 Live Demo](https://demo.portaljs.com/) • [📖 Documentation](https://portaljs.com/docs) • [☁️ PortalJS Cloud](https://cloud.portaljs.com/) • [🌐 Website](https://portaljs.com/)**
 
 </div>
 
