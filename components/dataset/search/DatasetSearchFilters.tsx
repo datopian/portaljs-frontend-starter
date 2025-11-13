@@ -259,13 +259,13 @@ function DatasetTypeOption({
         setOptions(newOptions);
       }}
       className={classNames(
-        "flex items-center justify-between w-full",
-        !isActive && "opacity-50",
+        "flex items-center justify-between w-full ",
+        !isActive && "font-normal",
         "hover:opacity-100 transition-all"
       )}
     >
-      <div className="flex items-center gap-3">
-        <Icon className={classNames("w-5 h-5", isActive && "text-accent")} />{" "}
+      <div className={`flex items-center gap-3 ${isActive ? "text-accent" : ""}`}>
+        <Icon className={classNames("w-5 h-5")} />{" "}
         {title}
       </div>
       {!!count && (
