@@ -1,0 +1,8 @@
+{
+  "routes": [
+    "/",
+    "/groups",
+    "/organizations",
+    "/search"
+  ]
+}
