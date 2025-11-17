@@ -30,7 +30,10 @@ export default function SearchHero({
       <section className={`grid row-start-3 row-span-2 col-span-full pt-4 `}>
         <div className={`custom-container bg-white ${styles.shadowMd}`}>
           <div className="">
-            <form className="min-h-[70px] flex flex-col lg:flex-row bg-white pr-5 py-3 rounded-xl">
+            <form className="min-h-[70px] flex flex-col lg:flex-row bg-white pr-5 py-3 rounded-xl" onSubmit={e => {
+              e.preventDefault();
+              return false;
+            }}>
               <input
                 type="text"
                 placeholder={`Search for ${title}`}
@@ -43,6 +46,12 @@ export default function SearchHero({
                 value={searchValue}
                 aria-label={`Search ${title}`}
               />
+              <button
+                type="submit"
+                className="sr-only"
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>
