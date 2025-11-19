@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_URL: http://localhost:3000
-      NEXT_PUBLIC_DMS: https://api.cloud.portaljs.com
-      NEXT_PUBLIC_ORG: datopian
+      NEXT_PUBLIC_DMS: https://api.cloud.portaljs.com/@datopian
 
     steps:
       - name: 🧩 Checkout repository
