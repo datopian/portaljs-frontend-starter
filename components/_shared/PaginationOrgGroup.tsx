@@ -1,18 +1,28 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
-import { useSearchState } from "./SearchContext";
+import { Dispatch, SetStateAction } from "react";
+
+interface PaginationProps {
+  subsetOfPages: number;
+  setSubsetOfPages: Dispatch<SetStateAction<number>>;
+  count: number;
+  offset?: number;
+  onPageChange?: (newOffset: number) => void;
+}
 
 export default function Pagination({
   subsetOfPages,
   setSubsetOfPages,
   count,
-}: {
-  subsetOfPages: number;
-  setSubsetOfPages: Dispatch<SetStateAction<number>>;
-  count: number;
-}) {
-  const { options, setOptions } = useSearchState();
-
+  offset,
+  onPageChange,
+}: PaginationProps) {
   const max = 10;
+  const currentPage = offset !== undefined ? offset / max : 0;
+
+  const handlePageClick = (pageIndex: number) => {
+    if (onPageChange) {
+      onPageChange(pageIndex * max);
+    }
+  };
 
   return (
     <div className="flex gap-2 align-center">
@@ -42,19 +52,11 @@ export default function Pagination({
         <button
           key={x}
           className={`${
-            x == options.offset / max
-              ? "bg-accent !h-9 !w-9 rounded-[10px] text-white"
+            x === currentPage
+              ? "bg-accent-100 !h-9 !w-9 rounded-[10px] text-black"
               : ""
           } px-2 font-semibold`}
-          onClick={() => {
-            setOptions({ ...options, offset: x * max });
-            if (typeof window !== "undefined") {
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth", // Makes the scroll smooth
-              });
-            }
-          }}
+          onClick={() => handlePageClick(x)}
           style={{
             display:
               x >= subsetOfPages && x < subsetOfPages + max ? "block" : "none",
@@ -63,7 +65,7 @@ export default function Pagination({
           {x + 1}
         </button>
       ))}
-      {count > max * options.limit && (subsetOfPages + max) * options.limit < count && (
+      {count > max * max && (subsetOfPages + max) * max < count && (
         <button
           className="font-semibold flex items-center gap-2"
           onClick={() => setSubsetOfPages(subsetOfPages + max)}

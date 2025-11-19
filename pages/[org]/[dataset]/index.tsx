@@ -8,7 +8,6 @@ import Layout from "@/components/_shared/Layout";
 import Tabs from "@/components/_shared/Tabs";
 import { CKAN } from "@portaljs/ckan";
 import styles from "styles/DatasetInfo.module.scss";
-import { publicToPrivateDatasetName } from "@/lib/queries/utils";
 import { getDataset } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
 import { DatasetPageStructuredData } from "@/components/schema/DatasetPageStructuredData";
@@ -25,16 +24,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   try {
-    const privateDatasetName = publicToPrivateDatasetName(datasetName);
     let dataset = await getDataset({ name: datasetName as string });
     if (!dataset) {
       return {
         notFound: true,
       };
     }
-    const activityStream = await ckan.getDatasetActivityStream(
-      privateDatasetName
-    );
+    const activityStream = await ckan.getDatasetActivityStream(datasetName);
     dataset = {
       ...dataset,
       activity_stream: activityStream,
@@ -50,7 +46,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         dataset,
       },
     };
-  } catch {
+  } catch (e) {
+    console.error(e);
     return {
       notFound: true,
     };
@@ -96,7 +93,11 @@ export default function DatasetPage({ dataset }): JSX.Element {
         <HeroSection title={dataset.title} cols="6" />
         <DatasetNavCrumbs
           datasetType={dataset.type}
-          datasetsLinkHref={dataset.type === "visualization" ? "/search?type=visualization" : "/search"}
+          datasetsLinkHref={
+            dataset.type === "visualization"
+              ? "/search?type=visualization"
+              : "/search"
+          }
           org={{
             name: dataset.organization?.name,
             title: dataset.organization?.title,

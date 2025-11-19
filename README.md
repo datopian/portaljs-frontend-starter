@@ -10,7 +10,7 @@
 
 Powered by **[Next.js](https://nextjs.org)**, **[React](https://react.dev/)**, and **[Tailwind CSS](https://tailwindcss.com/)**
 
-**[🚀 Live Demo](https://portaljs-cloud-frontend-template.vercel.app/) • [📖 Documentation](https://portaljs.com/docs) • [☁️ PortalJS Cloud](https://cloud.portaljs.com/) • [🌐 Website](https://portaljs.com/)**
+**[🚀 Live Demo](https://demo.portaljs.com/) • [📖 Documentation](https://portaljs.com/docs) • [☁️ PortalJS Cloud](https://cloud.portaljs.com/) • [🌐 Website](https://portaljs.com/)**
 
 </div>
 
@@ -66,11 +66,7 @@ Then, you can start customizing it locally by following the development instruct
 
 ```bash
 # This is the URL of the CKAN instance. Use the example value if you are using PortalJS Cloud.
-NEXT_PUBLIC_DMS=https://api.cloud.portaljs.com
-
-# Leave it empty if you are not using PortalJS Cloud. This is the name of the main organization for your portal in PortalJS Cloud.
-# You can find the this value in the Organizations page in the PortalJS Cloud dashboard.
-NEXT_PUBLIC_ORG=my-org
+NEXT_PUBLIC_DMS=https://api.cloud.portaljs.com/@my-portal-main-org-name
 ```
 
 4) Run `npm run dev` to start the development server

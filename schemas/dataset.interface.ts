@@ -36,6 +36,7 @@ export interface Dataset {
     temporal_coverage_end?: string;
     coverage_type?: string;
     data_type?: string;
+    source?: string[];
 }
 
 export interface PackageSearchOptions {

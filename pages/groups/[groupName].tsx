@@ -9,7 +9,7 @@ import styles from "@/styles/DatasetInfo.module.scss";
 import GroupNavCrumbs from "../../components/groups/individualPage/GroupNavCrumbs";
 import GroupInfo from "../../components/groups/individualPage/GroupInfo";
 import { getGroup } from "@/lib/queries/groups";
-import { getDataset } from "@/lib/queries/dataset";
+import { getDataset, searchDatasets } from "@/lib/queries/dataset";
 import HeroSection from "@/components/_shared/HeroSection";
 import { GroupIndividualPageStructuredData } from "@/components/schema/GroupIndividualPageStructuredData";
 
@@ -24,15 +24,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   let group = await getGroup({
     name: groupName as string,
-    include_datasets: true,
+    include_datasets: false,
   });
-  if (group.packages) {
-    const packagesWithResources = await Promise.all(
-      group.packages.map(async (dataset) => getDataset({ name: dataset.name }))
-    );
-    group = { ...group, packages: packagesWithResources };
+  let initialDatasets = null;
+  if (group.package_count) {
+    initialDatasets = await searchDatasets({
+      fq: `groups:${group._name}`,
+      offset: 0,
+      limit: 10,
+      type: "dataset",
+      query: "",
+      sort: "metadata_modified desc",
+      groups: [],
+      orgs: [],
+      tags: [],
+      resFormat: [],
+    });
   }
-  const activityStream = await ckan.getGroupActivityStream(group._name);
+  const activityStream = await ckan.getGroupActivityStream(group.name);
   if (!group) {
     return {
       notFound: true,
@@ -42,24 +51,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       group,
+      initialDatasets,
     },
   };
 };
 
-export default function GroupPage({ group }): JSX.Element {
+export default function GroupPage({ group, initialDatasets }): JSX.Element {
   const tabs = [
     {
       id: "datasets",
-      content: group.packages ? (
-        <DatasetList datasets={group.packages ? group.packages : []} />
-      ) : (
-        ""
+      content:  (
+        <DatasetList type="group" name={group._name} initialDatasets={initialDatasets} />
       ),
       title: "Datasets",
     },
     {
       id: "activity-stream",
-      content: (
+    content: (
         <ActivityStream
           activities={group?.activity_stream ? group.activity_stream : []}
         />
