@@ -1,0 +1,65 @@
+name: Accessibility CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: http://localhost:3000
+      NEXT_PUBLIC_DMS: https://api.cloud.portaljs.com/@datopian
+
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧱 Build Next.js app
+        run: npm run build
+
+      - name: 🗺️ Generate routes manifest
+        run: npm run generate:routes
+
+      - name: 🎭 Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: 🚀 Run accessibility tests (Playwright + Pa11y + Lighthouse)
+        run: |
+          npm i -D start-server-and-test
+          npx start-server-and-test 'npm run start' $BASE_URL \
+            'npx playwright test && npm run test:pa11y && npm run test:lhci'
+
+      - name: 📤 Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          if-no-files-found: ignore
+
+      - name: 📤 Upload Pa11y report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pa11y-report
+          path: pa11y-report.ndjson
+          if-no-files-found: ignore
+
+      - name: 📤 Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lhci-report
+          path: lhci-report
+          if-no-files-found: ignore
