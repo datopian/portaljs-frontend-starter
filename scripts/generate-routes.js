@@ -118,8 +118,8 @@ async function getSampleCkanRoutes() {
     const resourceId = firstResource.id;
 
     // Your file structure: /[org]/[dataset]/index → route: /org/dataset
-    const datasetRoute = `/${org}/${datasetName}`;
-    const resourceRoute = `/${org}/${datasetName}/r/${resourceId}`;
+    const datasetRoute = `/@${org}/${datasetName}`;
+    const resourceRoute = `/@${org}/${datasetName}/r/${resourceId}`;
 
     return [datasetRoute, resourceRoute];
   } catch (err) {
