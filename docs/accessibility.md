@@ -138,9 +138,7 @@ npm run test:lhci
 Must be set locally or in GitHub Actions:
 
 ```bash
-BASE_URL=http://localhost:3000
-NEXT_PUBLIC_DMS=https://api.cloud.portaljs.com
-NEXT_PUBLIC_ORG=datopian
+NEXT_PUBLIC_DMS=https://api.cloud.portaljs.com/@datopian
 ```
 
 ---
