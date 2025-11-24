@@ -18,7 +18,7 @@ export default function DatasetList({ type, name, initialDatasets }: DatasetList
   const limit = 10;
 
   const fq = type === "organization" 
-    ? `(organization:${name})` 
+    ? `(owner_org:${name})` 
     : `(groups:${name})`;
 
   const { data: searchResults, isValidating } = useSWR(
