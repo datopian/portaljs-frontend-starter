@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (org.package_count) {
     initialDatasets = await searchDatasets({
-      fq: `organization:${org._name}`,
+      fq: `owner_org:${org.id}`,
       offset: 0,
       limit: 10,
       type: "dataset",
@@ -69,7 +69,7 @@ export default function OrgPage({ org, initialDatasets }): JSX.Element {
     {
       id: "datasets",
       content: (
-        <DatasetList type="organization" name={org._name} initialDatasets={initialDatasets} />
+        <DatasetList type="organization" name={org.id} initialDatasets={initialDatasets} />
       ),
       title: "Datasets",
     },

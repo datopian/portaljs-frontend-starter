@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let initialDatasets = null;
   if (group.package_count) {
     initialDatasets = await searchDatasets({
-      fq: `groups:${group._name}`,
+      fq: `groups:${group.name}`,
       offset: 0,
       limit: 10,
       type: "dataset",
@@ -61,7 +61,8 @@ export default function GroupPage({ group, initialDatasets }): JSX.Element {
     {
       id: "datasets",
       content:  (
-        <DatasetList type="group" name={group._name} initialDatasets={initialDatasets} />
+        //TO DO: index search by group name
+        <DatasetList type="group" name={group?.groups[0]?.name+'--'+group.name} initialDatasets={initialDatasets} />
       ),
       title: "Datasets",
     },

@@ -10,7 +10,7 @@ import { getAllGroups } from "@/lib/queries/groups";
 import { GroupPageStructuredData } from "@/components/schema/GroupPageStructuredData";
 
 export async function getServerSideProps() {
-  const groups = await getAllGroups({ detailed: true });
+  const groups = await getAllGroups();
   return {
     props: {
       groups,
