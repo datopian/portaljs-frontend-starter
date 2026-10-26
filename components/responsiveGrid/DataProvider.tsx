@@ -39,7 +39,6 @@ interface DataStateContextProps {
   updateFilter: Function;
   toggleColumnVisibility: Function;
   togglePinColumn: Function;
-  setTableData: Function;
   setCurrentPage: Dispatch<SetStateAction<number>>;
   setSortConfig: Dispatch<SetStateAction<sortConfigProps>>;
   setVisibleColumns: Dispatch<SetStateAction<string[]>>;
@@ -73,17 +72,13 @@ export const DataStateProvider = ({
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const setTableData = (stringData) => {
-    const result: any = parseData(stringData);
-    setData(result.data);
-  };
-
   const handleGlobalFilterChange = (value) => {
     // const value = e.target.value;
     if (debounceTimeoutRef.current) clearTimeout(debounceTimeoutRef.current);
     debounceTimeoutRef.current = setTimeout(() => {
       setGlobalFilter(value);
-    }, 1000);
+      setCurrentPage(1);
+    }, 300);
   };
 
   const toggleSettingsDropdown = () => {
@@ -161,13 +156,9 @@ export const DataStateProvider = ({
     // Apply global filter
     if (
       globalFilter &&
-      !Object.values(row).some((value) => {
-        console.log(value);
-        return value
-          ?.toString()
-          .toLowerCase()
-          .includes(globalFilter.toLowerCase());
-      })
+      !Object.values(row).some((value) =>
+        value?.toString().toLowerCase().includes(globalFilter.toLowerCase())
+      )
     ) {
       return false;
     }
@@ -240,7 +231,6 @@ export const DataStateProvider = ({
     setCurrentPage,
     setSortConfig,
     setVisibleColumns,
-    setTableData,
   };
 
   return (
